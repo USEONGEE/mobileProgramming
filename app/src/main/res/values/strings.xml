@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UcanHealth</string>
+    <string name="open">open</string>
+    <string name="closed">closed</string>
 </resources>
