@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 public class addRoutineDialog extends Dialog {
     private TextView txt_contents;
-    private Button closeDIalogBtn;
+    private Button closeDialogBtn;
     public addRoutineDialog(@NonNull Context context) {
         super(context);
     }
@@ -30,8 +30,8 @@ public class addRoutineDialog extends Dialog {
 
         setContentView(R.layout.add_routine);
 
-        closeDIalogBtn = findViewById(R.id.clsoeBtn);
-        closeDIalogBtn.setOnClickListener(closeDialog);
+        closeDialogBtn = findViewById(R.id.clsoeBtn);
+        closeDialogBtn.setOnClickListener(closeDialog);
     }
 
     private View.OnClickListener closeDialog = new View.OnClickListener() {
