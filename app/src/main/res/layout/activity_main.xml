@@ -16,20 +16,11 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-<<<<<<< HEAD
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawerlayout"
         app:headerLayout="@layout/header">
-=======
-        android:layout_height="wrap_content"
-        android:text="유캔모프"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
->>>>>>> b6caa0c7395e7c058b20ed824814e1b1bef8a75c
 
     </com.google.android.material.navigation.NavigationView>
 
