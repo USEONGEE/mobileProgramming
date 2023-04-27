@@ -1,5 +1,5 @@
 package com.example.ucanhealth;
-
+import com.example.ucanhealth.addRoutineDialog;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +20,16 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private addRoutineDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.InitializeLayout();
+
+        Button addRoutineBtn = findViewById(R.id.addButton);
+        addRoutineBtn.setOnClickListener(listener);
     }
 
     public void InitializeLayout() {
@@ -78,4 +83,19 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    public void Dialog() {
+        dialog = new addRoutineDialog(MainActivity.this);
+        dialog.setTitle(R.string.add_routine);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Dialog();
+        }
+    };
 }
