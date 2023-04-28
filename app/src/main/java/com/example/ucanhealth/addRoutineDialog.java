@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,16 +22,9 @@ import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
 import com.example.ucanhealth.sqlite.FeedReaderDbHelper;
 
 public class addRoutineDialog extends Dialog {
-
-    private ExerciseTypeDbHelper dbHelper;
-    private SQLiteDatabase db_read;
-    private SQLiteDatabase db_write;
-    private Button closeDialogBtn;
-    private Button addBtn;
-
-    private EditText category;
-    private EditText exercise_type;
-    private EditText exercise;
+    addExerciseDialog dialog;
+    Button addBtn;
+    Button closeBtn;
     public addRoutineDialog(@NonNull Context context) {
         super(context);
     }
@@ -47,18 +41,11 @@ public class addRoutineDialog extends Dialog {
 
         setContentView(R.layout.add_routine);
 
-        closeDialogBtn = findViewById(R.id.clsoeBtn);
-        closeDialogBtn.setOnClickListener(closeDialog);
-
-        // edit text
-
-        // db
-        dbHelper = new ExerciseTypeDbHelper(getContext());
-        db_read = dbHelper.getReadableDatabase();
-        db_write = dbHelper.getWritableDatabase();
-
         addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(setExercise);
+        addBtn.setOnClickListener(openExerciseDialog);
+
+        closeBtn = findViewById(R.id.closeBtn);
+        closeBtn.setOnClickListener(closeDialog);
     }
 
     private View.OnClickListener closeDialog = new View.OnClickListener() {
@@ -68,45 +55,20 @@ public class addRoutineDialog extends Dialog {
         }
     };
 
-    public boolean isNull(String str) {
-        return str.equals("");
-    }
-
-    public View.OnClickListener setExercise = new View.OnClickListener() {
+    private View.OnClickListener openExerciseDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            category = findViewById(R.id.category);
-            exercise_type = findViewById(R.id.exercise_type);
-            exercise = findViewById(R.id.exercise);
-
-            // EditText값 가져오고 지우기
-            String categoryText = category.getText().toString(); category.setText("");
-            String exercise_typeText = exercise_type.getText().toString(); exercise_type.setText("");
-            String exerciseText = exercise.getText().toString(); exercise.setText("");
-
-            if(isNull(categoryText) && isNull(exercise_typeText) && isNull(exerciseText)) {
-                return;
-            }
-
-            ContentValues values = new ContentValues();
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY, categoryText);
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE, exercise_typeText);
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE, exerciseText);
-
-            long newRowId = db_write.insert(ExerciseType.ExerciseTypeEntry.TABLE_NAME,null,values);
-
-            if(newRowId == -1)
-                Log.i("insert", "fail");
-            else
-                Log.i("insert", "success");
+            Dialog();
         }
     };
 
-//    public View.OnClickListener getExercise = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//
-//        }
-//    }
+    public void Dialog() {
+        dialog = new addExerciseDialog(getContext());
+        dialog.setTitle(R.string.add_routine);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
 
 }
