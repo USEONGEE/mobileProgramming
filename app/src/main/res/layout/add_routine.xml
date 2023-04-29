@@ -42,17 +42,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_bias="0.0">
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <TextView
+                <LinearLayout
+                    android:id="@+id/todayExerciseListContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="pull up"
-                    android:textSize="20dp" />
-
-            </LinearLayout>
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="pull up"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </ScrollView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <LinearLayout
+                    android:id="@+id/exerciseListContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
                     <TextView
@@ -71,9 +76,6 @@
                         android:textSize="20dp" />
                 </LinearLayout>
             </ScrollView>
-
-
-
         </LinearLayout>
 
         <Button
