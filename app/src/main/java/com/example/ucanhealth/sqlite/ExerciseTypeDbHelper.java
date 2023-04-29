@@ -13,9 +13,6 @@ public class ExerciseTypeDbHelper extends SQLiteOpenHelper {
                     ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " TEXT," +
                     ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE + " TEXT UNIQUE)";
 
-
-
-
     public static final String DATABASE_NAME = "UcanHealth.db";
     public static final int DATABASE_VERSION = 1;
     private static final String SQL_DELETE_ENTRIES =
@@ -39,6 +36,4 @@ public class ExerciseTypeDbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-
-
 }

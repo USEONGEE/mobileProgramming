@@ -18,8 +18,8 @@ import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
 
 public class addExerciseDialog extends Dialog {
 
+    Context context;
     private ExerciseTypeDbHelper dbHelper;
-    private SQLiteDatabase db_read;
     private SQLiteDatabase db_write;
     private Button closeDialogBtn;
     private Button addBtn;
@@ -29,6 +29,7 @@ public class addExerciseDialog extends Dialog {
     private EditText exercise;
     public addExerciseDialog(@NonNull Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -50,14 +51,13 @@ public class addExerciseDialog extends Dialog {
 
         // db
         dbHelper = new ExerciseTypeDbHelper(getContext());
-        db_read = dbHelper.getReadableDatabase();
         db_write = dbHelper.getWritableDatabase();
 
         addBtn = findViewById(R.id.addBtn);
         addBtn.setOnClickListener(setExercise);
     }
 
-    private View.OnClickListener closeDialog = new View.OnClickListener() {
+    private final View.OnClickListener closeDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             dismiss();
@@ -98,11 +98,6 @@ public class addExerciseDialog extends Dialog {
         }
     };
 
-//    public View.OnClickListener getExercise = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//
-//        }
-//    }
+
 
 }
