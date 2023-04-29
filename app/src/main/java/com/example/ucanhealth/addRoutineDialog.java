@@ -3,6 +3,7 @@ package com.example.ucanhealth;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +39,7 @@ public class addRoutineDialog extends Dialog {
     Button addBtn;
     Button closeBtn;
     Spinner spinner;
+    String currCategory; // 현재 선택된 카테고리를 나타냄. Spinner에서 하나가 선택되면 바로 이 값을 채워줘야한다.
 
     public addRoutineDialog(@NonNull Context context) {
         super(context);
@@ -62,6 +65,8 @@ public class addRoutineDialog extends Dialog {
 
         dbHelper = new ExerciseTypeDbHelper(getContext());
         db_read = dbHelper.getReadableDatabase();
+
+        spinner = findViewById(R.id.spinner);
         getSpinner();
 
         exerciseListContainer = findViewById(R.id.exerciseListContainer);
@@ -87,6 +92,13 @@ public class addRoutineDialog extends Dialog {
         dialog.setTitle(R.string.add_routine);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
+        // 호출한 다이얼로그가 종료되면 실행할 함수
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                setButtonFromExerciseList();
+            }
+        });
         dialog.show();
     }
 
@@ -131,10 +143,24 @@ public class addRoutineDialog extends Dialog {
                 android.R.layout.simple_spinner_item, dataList);
 
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 선택된 항목 처리
+                String selectedValue = parent.getItemAtPosition(position).toString();
+                currCategory = selectedValue;
+                setButtonFromExerciseList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 선택된 항목이 없는 경우 처리
+            }
+        });
     }
 
 
-    public void setButtonFromExerciseList(String selectedCategory) {
+    public void setButtonFromExerciseList() {
         // 현재 container에 있는 리스트 지우기
         for (int i = 0; i < exerciseListContainer.getChildCount(); i++) {
             View view = exerciseListContainer.getChildAt(i);
@@ -144,7 +170,7 @@ public class addRoutineDialog extends Dialog {
         }
 
         // container에 리스트 추가하기
-        List<String> exerciseList = readExerciseListFromDb(selectedCategory);
+        List<String> exerciseList = readExerciseListFromDb(currCategory);
         for (int i = 0 ; i < exerciseList.size(); i++) {
             TextView textView = new TextView(getContext());
             textView.setText(exerciseList.get(i));
