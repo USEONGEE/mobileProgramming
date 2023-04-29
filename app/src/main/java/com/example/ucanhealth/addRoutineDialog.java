@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class addRoutineDialog extends Dialog {
     addExerciseDialog dialog;
     Button addBtn;
     Button closeBtn;
+    Spinner spinner;
 
     public addRoutineDialog(@NonNull Context context) {
         super(context);
@@ -54,6 +57,9 @@ public class addRoutineDialog extends Dialog {
 
         closeBtn = findViewById(R.id.closeBtn);
         closeBtn.setOnClickListener(closeDialog);
+
+        dbHelper = new ExerciseTypeDbHelper(getContext());
+        getSpinner();
     }
 
     private View.OnClickListener closeDialog = new View.OnClickListener() {
@@ -84,7 +90,7 @@ public class addRoutineDialog extends Dialog {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                "DISTINCT" + ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY
+                "DISTINCT " + ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY
         };
 
         String sortOrder =
@@ -111,6 +117,14 @@ public class addRoutineDialog extends Dialog {
         return category;
     };
 
+    public void getSpinner() {
+        spinner = findViewById(R.id.spinner);
 
+        List<String> dataList = readCategoryFromDb();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_spinner_item, dataList);
+
+        spinner.setAdapter(adapter);
+    }
 
 }
