@@ -170,6 +170,10 @@ public class addRoutineDialog extends Dialog {
         }
 
         // container에 리스트 추가하기
+        // 현재 리스트가 TextView를 추가하는 것으로 구현되어 있으나 Button으로 구현해야함
+        // + Button을 클릭하면 routine을 추가할 수 있는 다이얼로그를 생성하는 이벤트리스너 등록해야함
+        // + routine을 추가하는 다이얼로그 만들어야함
+        // + routine을 추가하는 다이얼로그에서 이용할 DB를 좀 더 상세하게 생각해보아야 함
         List<String> exerciseList = readExerciseListFromDb(currCategory);
         for (int i = 0 ; i < exerciseList.size(); i++) {
             TextView textView = new TextView(getContext());
