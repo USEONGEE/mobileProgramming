@@ -7,6 +7,7 @@ public class UserExerciseLog {
 
     public static class UserExerciseLogEntry implements BaseColumns {
         public static final String TABLE_NAME = "UserExerciseLog";
+        public static final String COLUMN_EXERCISE = "exercise";
         public static final String COLUMN_REPS = "repetition";
         public static final String COLUMN_WEIGHT = "weight";
         public static final String COLUMN_SET_COUNT = "set_count";

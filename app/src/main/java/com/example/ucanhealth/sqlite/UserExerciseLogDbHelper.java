@@ -11,8 +11,9 @@ public class UserExerciseLogDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + UserExerciseLog.UserExerciseLogEntry.TABLE_NAME + " (" +
                     UserExerciseLog.UserExerciseLogEntry._ID + " INTEGER PRIMARY KEY," +
-                    UserExerciseLog.UserExerciseLogEntry.COLUMN_REPS  + " TEXT," +
-                    UserExerciseLog.UserExerciseLogEntry.COLUMN_WEIGHT  + " TEXT," +
+                    UserExerciseLog.UserExerciseLogEntry.COLUMN_EXERCISE  + " TEXT," +
+                    UserExerciseLog.UserExerciseLogEntry.COLUMN_REPS  + " INTEGER," +
+                    UserExerciseLog.UserExerciseLogEntry.COLUMN_WEIGHT  + " REAL," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_SET_COUNT  + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " TEXT," +
