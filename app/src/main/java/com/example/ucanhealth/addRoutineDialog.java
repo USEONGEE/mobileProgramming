@@ -1,32 +1,25 @@
 package com.example.ucanhealth;
 
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.ucanhealth.sqlite.ExerciseType;
 import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
-import com.example.ucanhealth.sqlite.FeedReaderDbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +66,15 @@ public class addRoutineDialog extends Dialog {
     }
 
 
-    private View.OnClickListener closeDialog = new View.OnClickListener() {
+    private final View.OnClickListener closeDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            db_read.close();
             dismiss();
         }
     };
 
-    private View.OnClickListener openExerciseDialog = new View.OnClickListener() {
+    private final View.OnClickListener openExerciseDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Dialog();
@@ -103,8 +97,6 @@ public class addRoutineDialog extends Dialog {
     }
 
     public List<String> readCategoryFromDb(){
-        db_read = dbHelper.getReadableDatabase();
-
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -183,7 +175,7 @@ public class addRoutineDialog extends Dialog {
 
     }
 
-    public List<String> readExerciseListFromDb(String selectedCategory){
+    public List<String> readExerciseListFromDb(@NonNull String selectedCategory){
         // Query 결과로 받아올 column 정의하기
         String[] projection = {
                 ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE

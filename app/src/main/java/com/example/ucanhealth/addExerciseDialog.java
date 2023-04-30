@@ -60,6 +60,7 @@ public class addExerciseDialog extends Dialog {
     private final View.OnClickListener closeDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            db_write.close();
             dismiss();
         }
     };
