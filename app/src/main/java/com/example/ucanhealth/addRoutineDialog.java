@@ -30,6 +30,8 @@ public class addRoutineDialog extends Dialog {
     private SQLiteDatabase db_write;
     private SQLiteDatabase db_read;
     Button addBtn;
+    Button closeBtn;
+    TextView exerciseView;
     EditText repEditText;
     EditText totalSetEditText;
     EditText weightEditText;
@@ -53,14 +55,22 @@ public class addRoutineDialog extends Dialog {
         // View들 init하기
         initView();
 
-        dbHelper = new UserExerciseLogDbHelper(getContext());
+        //dbHelper = new UserExerciseLogDbHelper(getContext());
+        dbHelper = new UserExerciseLogDbHelper(getContext().getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
+
         db_read = dbHelper.getReadableDatabase();
 
+        addBtn.setOnClickListener(addRoutineAndCloseDialog);
+        closeBtn.setOnClickListener(closeDialog);
     }
 
     private void initView() {
+        exerciseView = findViewById(R.id.exercise);
+        exerciseView.setText(exercise);
+
         addBtn = findViewById(R.id.addBtn);
+        closeBtn = findViewById(R.id.closeBtn);
 
         repEditText = findViewById(R.id.rep);
         repEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -74,12 +84,19 @@ public class addRoutineDialog extends Dialog {
 
 
     // 루틴 추가해야됨
-    private final View.OnClickListener addRoutine = new View.OnClickListener() {
+    private final View.OnClickListener addRoutineAndCloseDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             addRoutineToDb();
             db_write.close();
             db_read.close();
+            dismiss();
+        }
+    };
+
+    private final View.OnClickListener closeDialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
             dismiss();
         }
     };
@@ -113,7 +130,7 @@ public class addRoutineDialog extends Dialog {
     private int getRoutineCount() {
         String query = String.format("SELECT COUNT(*) FROM %s WHERE %s = %s",UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
                 UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE,
-                getRoutineCount());
+                getCurrentDate());
 
         Cursor cursor = db_read.rawQuery(query, null);
         cursor.moveToFirst();

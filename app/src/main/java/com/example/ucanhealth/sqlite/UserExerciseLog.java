@@ -13,7 +13,7 @@ public class UserExerciseLog {
         public static final String COLUMN_SET_COUNT = "set_count";
         public static final String COLUMN_TOTAL_SET_COUNT = "total_set_count";
         public static final String COLUMN_DATE = "date";
-        public static final String COLUMN_ORDER = "order";
+        public static final String COLUMN_ORDER = "exercise_order";
     }
 
 }
