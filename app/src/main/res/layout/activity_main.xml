@@ -22,6 +22,12 @@
         app:menu="@menu/drawerlayout"
         app:headerLayout="@layout/header">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go_Calendar"
+            android:id="@+id/Go_Calendar"
+            />
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout

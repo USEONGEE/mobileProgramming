@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.InitializeLayout();
+
+
     }
 
     public void InitializeLayout() {
