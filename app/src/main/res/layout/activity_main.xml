@@ -11,7 +11,8 @@
     <include
         layout="@layout/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -22,17 +23,15 @@
         app:menu="@menu/drawerlayout"
         app:headerLayout="@layout/header">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Go_Calendar"
-            android:id="@+id/Go_Calendar"
-            />
+
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
         <ImageView
             android:id="@+id/stateImage"
             android:layout_width="362dp"

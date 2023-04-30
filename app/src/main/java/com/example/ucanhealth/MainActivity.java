@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         this.InitializeLayout();
 
+        Button buttonShedule = findViewById(R.id.Go_Calendar);
+
+        buttonShedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goBS = new Intent(MainActivity.this, exerciseScheduler.class);
+                startActivity(goBS);
+                finish();
+            }
+        });
 
     }
 
