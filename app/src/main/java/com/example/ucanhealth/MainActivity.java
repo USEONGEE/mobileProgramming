@@ -27,17 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.InitializeLayout();
 
-        Button buttonShedule = findViewById(R.id.Go_Calendar);
-
-        buttonShedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goBS = new Intent(MainActivity.this, exerciseScheduler.class);
-                startActivity(goBS);
-                finish();
-            }
-        });
-
     }
 
     public void InitializeLayout() {
