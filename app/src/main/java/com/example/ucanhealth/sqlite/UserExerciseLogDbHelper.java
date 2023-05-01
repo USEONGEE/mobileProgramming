@@ -18,11 +18,11 @@ public class UserExerciseLogDbHelper extends SQLiteOpenHelper {
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_SET_COUNT  + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " TEXT," +
-                    UserExerciseLog.UserExerciseLogEntry.COLUMN_ORDER + " INTEGER UNIQUE)";
+                    UserExerciseLog.UserExerciseLogEntry.COLUMN_ORDER + " INTEGER)";
 
     public static final String DATABASE_NAME = "UcanHealth.db";
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + UserExerciseLog.UserExerciseLogEntry.TABLE_NAME;

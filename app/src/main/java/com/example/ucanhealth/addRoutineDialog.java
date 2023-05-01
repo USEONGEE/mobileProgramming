@@ -58,7 +58,6 @@ public class addRoutineDialog extends Dialog {
         //dbHelper = new UserExerciseLogDbHelper(getContext());
         dbHelper = new UserExerciseLogDbHelper(getContext().getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
-
         db_read = dbHelper.getReadableDatabase();
 
         addBtn.setOnClickListener(addRoutineAndCloseDialog);
@@ -108,6 +107,8 @@ public class addRoutineDialog extends Dialog {
         float weight = Float.parseFloat(totalSetEditText.getText().toString());
         String today = getCurrentDate();
         int order = getRoutineCount() + 1;
+
+        Log.i("insert", today); //
 
         ContentValues values = new ContentValues();
         values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_EXERCISE,exercise);

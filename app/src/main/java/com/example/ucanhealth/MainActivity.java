@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // navigation 객체에 이벤트 리스너 달기
         navigationView.setNavigationItemSelectedListener(menuItem -> {
+            Log.i("clicked","success");
             switch (menuItem.getItemId())
             {
                 case R.id.menuitem1:

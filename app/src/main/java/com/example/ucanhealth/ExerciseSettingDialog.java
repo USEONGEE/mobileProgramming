@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -63,11 +64,22 @@ public class ExerciseSettingDialog extends Dialog {
 
         exerciseTypeDbHelper = new ExerciseTypeDbHelper(getContext());
         exerciseTypeDb_read = exerciseTypeDbHelper.getReadableDatabase();
+
         userExerciseLogDbHelper = new UserExerciseLogDbHelper((getContext()));
         userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
 
+        // 66번째 line에서 UserExerciseLog table이 생성이 안 되었으면 생성하기 위한 코드 but 수정해야됨..
+        try {
+            userExerciseLogDbHelper.onCreate(userExerciseLogDb_read);
+        }
+        catch(Exception e) {
+
+        }
+
         // Spinner
         getSpinner();
+
+        setButtonInRoutineListContainer();
     }
 
     public void init() {
@@ -178,6 +190,7 @@ public class ExerciseSettingDialog extends Dialog {
         // + routine을 추가하는 다이얼로그 만들어야함 (완료)
         // + routine을 추가하는 다이얼로그에서 이용할 DB를 좀 더 상세하게 생각해보아야 함 (완료)
         List<String> exerciseList = readExerciseListFromDb(currCategory);
+
         for (int i = 0 ; i < exerciseList.size(); i++) {
             String exercise = exerciseList.get(i);
             Button button = new Button(getContext());
@@ -196,27 +209,30 @@ public class ExerciseSettingDialog extends Dialog {
         // 현재 container에 있는 리스트 지우기
         for (int i = todayExerciseListContainer.getChildCount() - 1;  i >= 0; i--) {
             View view = todayExerciseListContainer.getChildAt(i);
-            if (view instanceof Button) { // TextView 인 경우만 처리
-                todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
-            }
+            todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
+
         }
+
         Cursor cursor = userExerciseLogDbHelper.getRoutineByDate(userExerciseLogDb_read, getCurrentDate());
+
         while(cursor.moveToNext()) {
+            Log.i("makeButton","success");
             Button button = new Button(getContext());
             String exercise = cursor.getString(0);
             String reps = cursor.getString(1).toString();
             String weight = cursor.getString(2).toString();
-            String totalSet = cursor.getString(3).toString();
+            String totalSet = cursor.getString(4).toString();
             
             String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
             button.setText(text);
-            
+
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // 해당 버튼을 클릭하면 루틴항목을 수정하는 다이얼로그를 호출해야함
                 }
             });
+            todayExerciseListContainer.addView(button);
         }
 
     }
@@ -287,7 +303,7 @@ public class ExerciseSettingDialog extends Dialog {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
+        Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
