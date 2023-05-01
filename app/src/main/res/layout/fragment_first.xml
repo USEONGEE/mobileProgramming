@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FirstFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r1" />
+
+                <Button
+                    android:id="@+id/button_Routine1"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView1"
+                    android:background="#FFFFFF"
+                    android:text="Routine 1"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine1"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView1"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine1"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView1"
+                    android:text="79"
+                    android:textSize="25dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r3" />
+
+                <Button
+                    android:id="@+id/button_Routine2"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:background="#FFFFFF"
+                    android:text="Routine 2"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine2"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine2"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView2"
+                    android:text="88"
+                    android:textSize="25dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r4" />
+
+                <Button
+                    android:id="@+id/button_Routine3"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:background="#FFFFFF"
+                    android:text="Routine 3"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine3"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine3"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:text="49"
+                    android:textSize="25dp" />
+            </RelativeLayout>
+<!--
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r4" />
+
+                <Button
+                    android:id="@+id/button_Routine4"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:background="#FFFFFF"
+                    android:text="Routine 4"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine4"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine4"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView4"
+                    android:text="15"
+                    android:textSize="25dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r5" />
+
+                <Button
+                    android:id="@+id/button_Routine5"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView5"
+                    android:background="#FFFFFF"
+                    android:text="Routine 5"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine5"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView5"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine5"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView5"
+                    android:text="8"
+                    android:textSize="25dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="168dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/r6" />
+
+                <Button
+                    android:id="@+id/button_Routine6"
+                    android:layout_width="219dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/imageView6"
+                    android:background="#FFFFFF"
+                    android:text="Routine 6"
+                    android:textColor="#282828"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/button_Routine6"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/imageView6"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/button_Routine6"
+                    android:layout_marginLeft="54dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_toRightOf="@id/imageView6"
+                    android:text="7"
+                    android:textSize="25dp" />
+            </RelativeLayout>-->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
