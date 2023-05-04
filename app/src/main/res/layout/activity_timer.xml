@@ -24,9 +24,12 @@
 
     </com.google.android.material.navigation.NavigationView>
 
+    <!--전체 레이아웃-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!--이미지-->
         <ImageView
             android:id="@+id/stateImage"
             android:layout_width="200dp"
@@ -36,24 +39,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.489"
-            app:layout_constraintVertical_bias="0.221" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.2" />
 
-        <TextView
-            android:id="@+id/todayRoutine"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Today's routine"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/stateImage"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintStart_toStartOf="@id/stateImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop = "20dp"/>
-
+        <!--이미지 아래 들어가는 전체 부분-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
             android:background="#D8D8D8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,90 +54,239 @@
             app:layout_constraintTop_toBottomOf="@+id/stateImage"
             app:layout_constraintVertical_bias="0.639"
             >
-
+            <!--exercise n 컨테이너-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id = "@+id/container_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
+                android:background="@drawable/border">
+
                 <TextView
-                    android:id= "@+id/routine_1"
+                    android:id= "@+id/exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "- Routine 1"
+                    android:text = "Exercise "
                     android:textSize="20sp"
                     android:layout_margin="5dp" />
 
-                <ImageButton
-                    android:id= "@+id/button_1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src = "@drawable/arrow_right"
-                    android:background="#00ffffff"/>
+                <TextView
+                    android:id= "@+id/nth_exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "1"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <!--운동 세트 컨테이너-->
+            <LinearLayout
                 android:id = "@+id/container_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/container_1"
-                app:layout_constraintBottom_toTopOf="@id/container_3"
-                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                >
+                android:background="@drawable/border">
 
                 <TextView
-                    android:id= "@+id/routine_2"
+                    android:id= "@+id/current_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "- Routine 2"
+                    android:text = "1"
                     android:textSize="20sp"
                     android:layout_margin="5dp"/>
 
-                <ImageButton
-                    android:id= "@+id/button_2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src = "@drawable/arrow_right"
-                    android:background="#00ffffff"
-                     />
+                <TextView
+                    android:id= "@+id/slicer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "/"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:id= "@+id/total_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "n"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            </LinearLayout>
+
+            <!--weight,number,set가 들어가는 컨테이너-->
+            <LinearLayout
                 android:id = "@+id/container_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/container_2"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:orientation= "vertical"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                >
+                android:background="@drawable/border">
 
-                <TextView
-                    android:id= "@+id/routine_3"
+                <!--Weight를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                    android:id= "@+id/weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "- Routine 3"
+                    android:text = "Weight:"
                     android:textSize="20sp"
                     android:layout_margin = "5dp"/>
 
-                <ImageButton
-                    android:id= "@+id/button_3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src = "@drawable/arrow_right"
-                    android:background="#00ffffff"
-                    />
+                    <TextView
+                        android:id= "@+id/input_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:ems = "4"
+                        android:background="#00ffffff"
+                        android:layout_margin = "5dp"/>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <TextView
+                        android:id= "@+id/kg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "kg"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
 
+                </LinearLayout>
+
+                <!--Number를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                        android:id= "@+id/number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Number:"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id = "@+id/input_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems = "4"
+                        android:background="#00ffffff"
+                        android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id= "@+id/times"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "times"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                </LinearLayout>
+
+                <!-- Set를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                        android:id= "@+id/set"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Set:"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                    <LinearLayout
+                        android:id = "@+id/container_1_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:id= "@+id/input_set"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint = "1"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                        <TextView
+                            android:id= "@+id/slicer_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "/"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                        <TextView
+                            android:id= "@+id/total_set_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "n"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id= "@+id/set_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "set"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#00FF00"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#0000FF"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
