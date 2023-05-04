@@ -3,6 +3,7 @@ package com.example.ucanhealth;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -139,15 +140,16 @@ public class MainActivity extends AppCompatActivity {
 
         // textView 꾸며야함
         while(cursor.moveToNext()) {
-            Log.i("makeButton","success");
             TextView textView = new TextView(this);
             String exercise = cursor.getString(0);
-            String reps = cursor.getString(1).toString();
-            String weight = cursor.getString(2).toString();
-            String totalSet = cursor.getString(4).toString();
+//            String reps = cursor.getString(1).toString();
+//            String weight = cursor.getString(2).toString();
+//            String totalSet = cursor.getString(4).toString();
 
-            String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
+            String text = exercise;
             textView.setText(text);
+            textView.setTextSize(20);
+            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
 
             todayExerciseListContainer.addView(textView);
         }
