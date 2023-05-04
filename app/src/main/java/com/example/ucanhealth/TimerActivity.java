@@ -7,24 +7,35 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class TimerActivity extends AppCompatActivity {
 
+    private static final String TAG = "TimerActivity";  //오류 발생시 로그캣 찍어보려고 만들어둔 변수.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
         this.settingSideBar();
+        this.ExerciseClicked();
     }
 
+    /*사이드 바 관련 함수*/
     public void settingSideBar()
     {
         // toolbar 생성
@@ -90,5 +101,47 @@ public class TimerActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    public void ExerciseClicked()
+    {
+        Button btn_exercise = findViewById(R.id.btn_exercise);
+        final TextView[] timer_exercise = {findViewById(R.id.timer_exercise)};
+
+        final int[] count = {0};
+        final Timer[] timer = {null};
+
+        btn_exercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 타이머 객체를 생성, 타이머의 작동 방식을 설정
+                if(timer[0] == null) {
+                    timer[0] = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            count[0]++; // 카운트를 1 증가
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 카운트를 출력
+                                    int minutes = count[0] / 60;
+                                    int seconds = count[0] % 60;
+                                    timer_exercise[0].setText(String.format("%d:%02d", minutes, seconds));
+                                }
+                            });
+                        }
+                    };
+                    // 타이머를 시작.
+                    timer[0].scheduleAtFixedRate(task, 0, 1000);
+                    btn_exercise.setText(getString(R.string.start));
+                } else {
+                    // 타이머가 돌아가는 상태에서 버튼을 누르면 타이머 일시정지.
+                    timer[0].cancel();
+                    timer[0] = null;
+                    btn_exercise.setText(getString(R.string.stop));
+                }
+            }
+        });
     }
 }
