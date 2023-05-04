@@ -123,7 +123,7 @@ public class ExerciseSettingDialog extends Dialog {
             String[] selectionArgs = {getCurrentDate()};
             Log.i("delete",getCurrentDate());
 
-            userExerciseLogDb_write.delete(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+            userExerciseLogDb_write.delete(ExerciseType.ExerciseTypeEntry.TABLE_NAME,
                     selection,
                     selectionArgs);
 
