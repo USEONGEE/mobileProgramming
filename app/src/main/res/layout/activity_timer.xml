@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <include
+        layout="@layout/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawerlayout"
+        app:headerLayout="@layout/header">
+
+    </com.google.android.material.navigation.NavigationView>
+
+    <!--전체 레이아웃-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--이미지-->
+        <ImageView
+            android:id="@+id/stateImage"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:src="@drawable/pose"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <!--이미지 아래 들어가는 전체 부분-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#D8D8D8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stateImage"
+            app:layout_constraintVertical_bias="0.639"
+            >
+            <!--exercise n 컨테이너-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id = "@+id/container_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:id= "@+id/exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Exercise "
+                    android:textSize="20sp"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:id= "@+id/nth_exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "1"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--운동 세트 컨테이너-->
+            <LinearLayout
+                android:id = "@+id/container_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:id= "@+id/current_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "1"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id= "@+id/slicer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "/"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id= "@+id/total_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "n"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+            <!--weight,number,set가 들어가는 컨테이너-->
+            <LinearLayout
+                android:id = "@+id/container_3"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:orientation= "vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/border">
+
+                <!--Weight를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                    android:id= "@+id/weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Weight:"
+                    android:textSize="20sp"
+                    android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id= "@+id/input_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:ems = "4"
+                        android:background="#00ffffff"
+                        android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id= "@+id/kg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "kg"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                </LinearLayout>
+
+                <!--Number를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                        android:id= "@+id/number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Number:"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id = "@+id/input_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems = "4"
+                        android:background="#00ffffff"
+                        android:layout_margin = "5dp"/>
+
+                    <TextView
+                        android:id= "@+id/times"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "times"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                </LinearLayout>
+
+                <!-- Set를 담는 container-->
+                <LinearLayout
+                    android:id = "@+id/container_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height = "wrap_content">
+
+                    <TextView
+                        android:id= "@+id/set"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Set:"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                    <LinearLayout
+                        android:id = "@+id/container_1_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:id= "@+id/input_set"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint = "1"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                        <TextView
+                            android:id= "@+id/slicer_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "/"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                        <TextView
+                            android:id= "@+id/total_set_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "n"
+                            android:textSize="20sp"
+                            android:layout_margin="5dp"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id= "@+id/set_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "set"
+                        android:textSize="20sp"
+                        android:layout_margin = "5dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#00FF00"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#0000FF"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
