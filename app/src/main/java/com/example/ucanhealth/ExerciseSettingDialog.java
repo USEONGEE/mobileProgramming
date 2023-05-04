@@ -37,6 +37,7 @@ public class ExerciseSettingDialog extends Dialog {
     LinearLayout todayExerciseListContainer;
     addExerciseDialog exerciseDialog;
     addRoutineDialog routineDialog;
+    modifyRoutineDialog modifyRoutineDialog;
     Button addBtn;
     Button deleteAllBtn;
     Button closeBtn;
@@ -63,7 +64,7 @@ public class ExerciseSettingDialog extends Dialog {
         addBtn.setOnClickListener(openExerciseDialog);
 
         // 현재 Dialog를 닫는 button
-        closeBtn.setOnClickListener(closeExerciseDialog);
+        closeBtn.setOnClickListener(closeCurrentDialog);
 
         // 루틴을 전부 다 지우는 buton
         deleteAllBtn.setOnClickListener(deleteAllRoutine);
@@ -77,6 +78,7 @@ public class ExerciseSettingDialog extends Dialog {
 
         // 66번째 line에서 UserExerciseLog table이 생성이 안 되었으면 생성하기 위한 코드 but 수정해야됨..
         try {
+            exerciseTypeDbHelper.onCreate(exerciseTypeDb_read);
             userExerciseLogDbHelper.onCreate(userExerciseLogDb_read);
         }
         catch(Exception e) {
@@ -99,7 +101,7 @@ public class ExerciseSettingDialog extends Dialog {
     }
 
 
-    private final View.OnClickListener closeExerciseDialog = new View.OnClickListener() {
+    private final View.OnClickListener closeCurrentDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             exerciseTypeDb_read.close();
@@ -257,7 +259,7 @@ public class ExerciseSettingDialog extends Dialog {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // 해당 버튼을 클릭하면 루틴항목을 수정하는 다이얼로그를 호출해야함
+                    ModifyRoutineDialog(exercise);
                 }
             });
             todayExerciseListContainer.addView(button);
@@ -276,8 +278,9 @@ public class ExerciseSettingDialog extends Dialog {
         };
 
         // where절
-        String selection = ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " = ?";
-        String[] selectionArgs = { selectedItem };
+        String selection = ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " = ? AND " +
+                ExerciseType.ExerciseTypeEntry.COLUMN_SHOW + " = ?";
+        String[] selectionArgs = { selectedItem, "1" };
 
         // 정렬
         String sortOrder =
@@ -307,11 +310,11 @@ public class ExerciseSettingDialog extends Dialog {
 
     /**
      * exerciseListContainer에 포함된 버튼을 누르면 루틴을 추가하기 위한 다이얼로그를 생성
-     * @param seledtedExercise -> 운동 종목
+     * @param selectedExercise -> 운동 종목
      * @reuturn null
      */
-    public void RoutineDialog(String seledtedExercise) {
-        routineDialog = new addRoutineDialog(getContext(), seledtedExercise);
+    public void RoutineDialog(String selectedExercise) {
+        routineDialog = new addRoutineDialog(getContext(), selectedExercise);
         routineDialog.setTitle(R.string.add_routine);
         routineDialog.getWindow().setGravity(Gravity.CENTER);
         routineDialog.setCancelable(true);
@@ -323,6 +326,21 @@ public class ExerciseSettingDialog extends Dialog {
             }
         });
         routineDialog.show();
+    }
+
+    public void ModifyRoutineDialog(String selectedRoutine) {
+        modifyRoutineDialog = new modifyRoutineDialog(getContext(),selectedRoutine);
+        modifyRoutineDialog.getWindow().setGravity(Gravity.CENTER);
+        modifyRoutineDialog.setCancelable(true);
+        // 호출한 다이얼로그가 종료되면 실행할 함수
+        modifyRoutineDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                setButtonInRoutineListContainer();
+            }
+        });
+
+        modifyRoutineDialog.show();
     }
 
     public String getCurrentDate() {

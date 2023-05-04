@@ -92,6 +92,7 @@ public class addExerciseDialog extends Dialog {
             values.put(ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY, categoryText);
             values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE, exercise_typeText);
             values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE, exerciseText);
+            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_SHOW, 1);
 
             long newRowId = db_write.insert(ExerciseType.ExerciseTypeEntry.TABLE_NAME,null,values);
 
@@ -99,6 +100,9 @@ public class addExerciseDialog extends Dialog {
                 Log.i("insert", "fail");
             else
                 Log.i("insert", "success");
+
+            db_write.close();
+            dismiss();
         }
     };
 

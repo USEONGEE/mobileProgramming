@@ -11,6 +11,7 @@ public class ExerciseTypeDbHelper extends SQLiteOpenHelper {
                     ExerciseType.ExerciseTypeEntry._ID + " INTEGER PRIMARY KEY," +
                     ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY  + " TEXT," +
                     ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " TEXT," +
+                    ExerciseType.ExerciseTypeEntry.COLUMN_SHOW + " INTEGER," +
                     ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE + " TEXT UNIQUE)";
 
     public static final String DATABASE_NAME = "UcanHealth.db";

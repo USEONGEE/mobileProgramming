@@ -102,9 +102,9 @@ public class addRoutineDialog extends Dialog {
 
     private void addRoutineToDb() {
 
-        int rep = Integer.parseInt(repEditText.getText().toString());
-        int totalSet = Integer.parseInt(totalSetEditText.getText().toString());
-        float weight = Float.parseFloat(totalSetEditText.getText().toString());
+        int rep = Integer.parseInt(repEditText.getText().toString()); repEditText.setText("");
+        int totalSet = Integer.parseInt(totalSetEditText.getText().toString()); totalSetEditText.setText("");
+        float weight = Float.parseFloat(weightEditText.getText().toString()); weightEditText.setText("");
         String today = getCurrentDate();
         int order = getRoutineCount() + 1;
 

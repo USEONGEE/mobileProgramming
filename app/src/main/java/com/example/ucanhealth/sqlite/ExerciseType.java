@@ -10,6 +10,8 @@ public final class ExerciseType {
         public static final String COLUMN_CATEGORY = "category"; // health
         public static final String COLUMN_EXERCISE_TYPE = "exercise_type"; // 등, 가슴, 팔, 다리
         public static final String COLUMN_EXERCISE = "exercise";
+
+        public static final String COLUMN_SHOW = "show";
     }
 
 }
