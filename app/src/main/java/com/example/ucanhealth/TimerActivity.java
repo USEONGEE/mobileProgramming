@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -81,13 +82,13 @@ public class TimerActivity extends AppCompatActivity {
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        if(drawer.isDrawerOpen(GravityCompat.START))
-        {
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else
-        {
-            super.onBackPressed();
+        else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

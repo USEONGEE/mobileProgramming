@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ExerciseSettingDialog dialog;
     Button addRoutineBtn;
+    Button startBtn;
     private LinearLayout todayExerciseListContainer;
     private UserExerciseLogDbHelper userExerciseLogDbHelper;
     private SQLiteDatabase userExerciseLogDb_read;
@@ -40,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         addRoutineBtn.setOnClickListener(openExerciseSettingDialog);
+        startBtn.setOnClickListener(startExercise);
         setButtonInRoutineListContainer();
     }
     public void init() {
         addRoutineBtn = findViewById(R.id.addButton);
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
+        startBtn = findViewById(R.id.startBtn);
 
         userExerciseLogDbHelper = new UserExerciseLogDbHelper(this);
         userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
+        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menuicon);
 
@@ -157,4 +161,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
         return String.format("%04d-%02d-%02d", year, month, day);
     }
+
+    public View.OnClickListener startExercise = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+            startActivity(intent);
+        }
+    };
 }
