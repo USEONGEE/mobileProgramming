@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 
 import com.example.ucanhealth.sqlite.ExerciseType;
 import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
+import com.example.ucanhealth.sqlite.UserExerciseLog;
 import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
 
 import java.util.ArrayList;
@@ -31,11 +32,13 @@ public class ExerciseSettingDialog extends Dialog {
     private SQLiteDatabase exerciseTypeDb_read;
     private UserExerciseLogDbHelper userExerciseLogDbHelper;
     private SQLiteDatabase userExerciseLogDb_read;
+    private SQLiteDatabase userExerciseLogDb_write;
     LinearLayout exerciseListContainer;
     LinearLayout todayExerciseListContainer;
     addExerciseDialog exerciseDialog;
     addRoutineDialog routineDialog;
     Button addBtn;
+    Button deleteAllBtn;
     Button closeBtn;
     Spinner spinner;
     String currCategory; // 현재 선택된 카테고리를 나타냄. Spinner에서 하나가 선택되면 바로 이 값을 채워줘야한다.
@@ -62,11 +65,15 @@ public class ExerciseSettingDialog extends Dialog {
         // 현재 Dialog를 닫는 button
         closeBtn.setOnClickListener(closeExerciseDialog);
 
+        // 루틴을 전부 다 지우는 buton
+        deleteAllBtn.setOnClickListener(deleteAllRoutine);
+
+        // db connector
         exerciseTypeDbHelper = new ExerciseTypeDbHelper(getContext());
         exerciseTypeDb_read = exerciseTypeDbHelper.getReadableDatabase();
-
         userExerciseLogDbHelper = new UserExerciseLogDbHelper((getContext()));
         userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
+        userExerciseLogDb_write = userExerciseLogDbHelper.getWritableDatabase();
 
         // 66번째 line에서 UserExerciseLog table이 생성이 안 되었으면 생성하기 위한 코드 but 수정해야됨..
         try {
@@ -86,6 +93,7 @@ public class ExerciseSettingDialog extends Dialog {
         addBtn = findViewById(R.id.addBtn);
         closeBtn = findViewById(R.id.closeBtn);
         spinner = findViewById(R.id.spinner);
+        deleteAllBtn = findViewById(R.id.deleteAllBtn);
         exerciseListContainer = findViewById(R.id.exerciseListContainer);
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
     }
@@ -95,6 +103,8 @@ public class ExerciseSettingDialog extends Dialog {
         @Override
         public void onClick(View view) {
             exerciseTypeDb_read.close();
+            userExerciseLogDb_read.close();
+            userExerciseLogDb_write.close();
             dismiss();
         }
     };
@@ -103,6 +113,21 @@ public class ExerciseSettingDialog extends Dialog {
         @Override
         public void onClick(View view) {
             ExerciseDialog();
+        }
+    };
+
+    private final View.OnClickListener deleteAllRoutine = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String selection = UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " LIKE ?";
+            String[] selectionArgs = {getCurrentDate()};
+            Log.i("delete",getCurrentDate());
+
+            userExerciseLogDb_write.delete(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+                    selection,
+                    selectionArgs);
+
+            setButtonInRoutineListContainer();
         }
     };
 
@@ -155,7 +180,10 @@ public class ExerciseSettingDialog extends Dialog {
     };
 
     public void getSpinner() {
-        List<String> dataList = readCategoryFromDb();
+//        List<String> dataList = readCategoryFromDb();
+        String[] dataList = {
+                "back", "chest", "shoulder", "leg", "arm", "core"
+        };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_spinner_item, dataList);
 
@@ -234,23 +262,22 @@ public class ExerciseSettingDialog extends Dialog {
             });
             todayExerciseListContainer.addView(button);
         }
-
     }
 
     /**
      * DB에서 특정 카테고리에 포함된 운동종목 리스트를 반환하는 메소드
-     * @param selectedCategory -> 선택된 카테고리
+     * @param selectedItem -> 선택된 카테고리
      * @return exerciseList -> 카테고리에 해당하는 모든 운동종목 리스트
      */
-    public List<String> readExerciseListFromDb(@NonNull String selectedCategory){
+    public List<String> readExerciseListFromDb(@NonNull String selectedItem){
         // Query 결과로 받아올 column 정의하기
         String[] projection = {
                 ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE
         };
 
         // where절
-        String selection = ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY + " = ?";
-        String[] selectionArgs = { selectedCategory };
+        String selection = ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " = ?";
+        String[] selectionArgs = { selectedItem };
 
         // 정렬
         String sortOrder =

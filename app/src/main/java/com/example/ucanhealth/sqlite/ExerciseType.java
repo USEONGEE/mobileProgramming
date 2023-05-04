@@ -7,8 +7,8 @@ public final class ExerciseType {
 
     public static class ExerciseTypeEntry implements BaseColumns {
         public static final String TABLE_NAME = "ExerciseType";
-        public static final String COLUMN_CATEGORY = "category";
-        public static final String COLUMN_EXERCISE_TYPE = "exercise_type";
+        public static final String COLUMN_CATEGORY = "category"; // health
+        public static final String COLUMN_EXERCISE_TYPE = "exercise_type"; // 등, 가슴, 팔, 다리
         public static final String COLUMN_EXERCISE = "exercise";
     }
 

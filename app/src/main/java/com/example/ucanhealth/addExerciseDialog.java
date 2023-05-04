@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
@@ -19,13 +22,14 @@ import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
 public class addExerciseDialog extends Dialog {
 
     Context context;
+
     private ExerciseTypeDbHelper dbHelper;
     private SQLiteDatabase db_write;
     private Button closeDialogBtn;
     private Button addBtn;
-
-    private EditText category;
-    private EditText exercise_type;
+    private Spinner spinner;
+    String exercise_typeText;
+    final String categoryText = "Health";
     private EditText exercise;
     public addExerciseDialog(@NonNull Context context) {
         super(context);
@@ -55,6 +59,9 @@ public class addExerciseDialog extends Dialog {
 
         addBtn = findViewById(R.id.addBtn);
         addBtn.setOnClickListener(setExercise);
+
+        spinner = findViewById(R.id.spinner);
+        getSpinner();
     }
 
     private final View.OnClickListener closeDialog = new View.OnClickListener() {
@@ -72,16 +79,12 @@ public class addExerciseDialog extends Dialog {
     public View.OnClickListener setExercise = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            category = findViewById(R.id.category);
-            exercise_type = findViewById(R.id.exercise_type);
             exercise = findViewById(R.id.exercise);
 
             // EditText값 가져오고 지우기
-            String categoryText = category.getText().toString(); category.setText("");
-            String exercise_typeText = exercise_type.getText().toString(); exercise_type.setText("");
             String exerciseText = exercise.getText().toString(); exercise.setText("");
 
-            if(isNull(categoryText) && isNull(exercise_typeText) && isNull(exerciseText)) {
+            if(isNull(exercise_typeText) && isNull(exerciseText)) {
                 return;
             }
 
@@ -99,6 +102,26 @@ public class addExerciseDialog extends Dialog {
         }
     };
 
+    public void getSpinner() {
+        String[] dataList = {
+                "back", "chest", "shoulder", "leg", "arm", "core"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_spinner_item, dataList);
 
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 선택된 항목 처리
+                String selectedValue = parent.getItemAtPosition(position).toString();
+                exercise_typeText = selectedValue;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 선택된 항목이 없는 경우 처리
+            }
+        });
+    }
 
 }

@@ -129,14 +129,15 @@ public class addRoutineDialog extends Dialog {
     }
 
     private int getRoutineCount() {
-        String query = String.format("SELECT COUNT(*) FROM %s WHERE %s = %s",UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
                 UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE,
                 getCurrentDate());
+        Cursor cursor = db_read.rawQuery(sql, null);
 
-        Cursor cursor = db_read.rawQuery(query, null);
-        cursor.moveToFirst();
+        cursor.moveToNext();
+
         int count = cursor.getInt(0);
-        cursor.close();
+        Log.i("count",String.valueOf(count));
 
         return count;
     }

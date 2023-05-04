@@ -6,19 +6,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ExerciseSettingDialog dialog;
+    Button addRoutineBtn;
+    private LinearLayout todayExerciseListContainer;
+    private UserExerciseLogDbHelper userExerciseLogDbHelper;
+    private SQLiteDatabase userExerciseLogDb_read;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
         this.InitializeLayout();
 
-        Button addRoutineBtn = findViewById(R.id.addButton);
-        addRoutineBtn.setOnClickListener(listener);
+        init();
+        addRoutineBtn.setOnClickListener(openExerciseSettingDialog);
+        setButtonInRoutineListContainer();
+    }
+    public void init() {
+        addRoutineBtn = findViewById(R.id.addButton);
+        todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
+
+        userExerciseLogDbHelper = new UserExerciseLogDbHelper(this);
+        userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
     }
 
     public void InitializeLayout() {
@@ -88,13 +108,53 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle(R.string.add_routine);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                setButtonInRoutineListContainer();
+            }
+        });
         dialog.show();
     }
 
-    private View.OnClickListener listener = new View.OnClickListener() {
+    private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Dialog();
         }
     };
+
+    public void setButtonInRoutineListContainer() {
+        // 현재 container에 있는 리스트 지우기
+        for (int i = todayExerciseListContainer.getChildCount() - 1;  i >= 0; i--) {
+            View view = todayExerciseListContainer.getChildAt(i);
+            todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
+        }
+
+        Cursor cursor = userExerciseLogDbHelper.getRoutineByDate(userExerciseLogDb_read, getCurrentDate());
+
+        // textView 꾸며야함
+        while(cursor.moveToNext()) {
+            Log.i("makeButton","success");
+            TextView textView = new TextView(this);
+            String exercise = cursor.getString(0);
+            String reps = cursor.getString(1).toString();
+            String weight = cursor.getString(2).toString();
+            String totalSet = cursor.getString(4).toString();
+
+            String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
+            textView.setText(text);
+
+            todayExerciseListContainer.addView(textView);
+        }
+    }
+
+    public String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
+        return String.format("%04d-%02d-%02d", year, month, day);
+    }
 }

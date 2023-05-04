@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.033" />
 
+
         <LinearLayout
             android:id="@+id/constraintLayout"
             android:layout_width="342dp"
@@ -43,6 +44,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_bias="0.0">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:text="오늘 운동 목록" />
+
+                <Button
+                    android:id="@+id/deleteAllBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="delete all"
+                    android:textSize="10dp"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,7 +77,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="152dp"
                     android:layout_height="wrap_content"
