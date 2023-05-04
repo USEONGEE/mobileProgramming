@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UcanHealth</string>
+    <string name="open">open</string>
+    <string name="closed">closed</string>
+    <string name="add_routine">루틴 추가하기</string>
+    <string name="gym">gym</string>
+</resources>
