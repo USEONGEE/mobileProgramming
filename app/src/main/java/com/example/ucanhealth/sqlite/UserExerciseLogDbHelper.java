@@ -23,7 +23,7 @@ public class UserExerciseLogDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "UcanHealth.db";
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + UserExerciseLog.UserExerciseLogEntry.TABLE_NAME;

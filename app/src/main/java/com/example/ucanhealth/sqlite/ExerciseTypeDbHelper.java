@@ -15,7 +15,7 @@ public class ExerciseTypeDbHelper extends SQLiteOpenHelper {
                     ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE + " TEXT UNIQUE)";
 
     public static final String DATABASE_NAME = "UcanHealth.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + ExerciseType.ExerciseTypeEntry.TABLE_NAME;
 
