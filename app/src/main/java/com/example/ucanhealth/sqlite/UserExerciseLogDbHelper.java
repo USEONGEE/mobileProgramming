@@ -18,6 +18,7 @@ public class UserExerciseLogDbHelper extends SQLiteOpenHelper {
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_SET_COUNT  + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " TEXT," +
+                    UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME + " INTEGER," +
                     UserExerciseLog.UserExerciseLogEntry.COLUMN_ORDER + " INTEGER)";
 
     public static final String DATABASE_NAME = "UcanHealth.db";

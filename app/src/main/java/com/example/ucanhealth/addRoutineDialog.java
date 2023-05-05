@@ -117,6 +117,7 @@ public class addRoutineDialog extends Dialog {
         values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
         values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_SET_COUNT, 0);
         values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE, today);
+        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 0);
         values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_ORDER, order);
 
         long newRowId = db_write.insert(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME, null, values);
