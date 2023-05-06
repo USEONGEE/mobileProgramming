@@ -12,6 +12,9 @@
         android:theme="@style/Theme.UcanHealth"
         tools:targetApi="31">
         <activity
+            android:name=".exerciseScheduler"
+            android:exported="true" />
+        <activity
             android:name=".TimerActivity"
             android:exported="true" />
         <activity
