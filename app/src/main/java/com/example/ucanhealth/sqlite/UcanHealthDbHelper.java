@@ -38,13 +38,13 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    @Override
+    @Override // 테이블 생성
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES_ExerciseType);
         db.execSQL(SQL_CREATE_ENTRIES_UserExerciseLog);
     }
 
-    @Override
+    @Override // 테이블 업그레이드
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES_ExerciseType);
         db.execSQL(SQL_DELETE_ENTRIES_UserExerciseLog);
