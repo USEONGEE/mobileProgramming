@@ -16,14 +16,14 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
-import com.example.ucanhealth.sqlite.ExerciseType;
-import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
+import com.example.ucanhealth.sqlite.UcanHealth;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 
 public class addExerciseDialog extends Dialog {
 
     Context context;
 
-    private ExerciseTypeDbHelper dbHelper;
+    private UcanHealthDbHelper dbHelper;
     private SQLiteDatabase db_write;
     private Button closeDialogBtn;
     private Button addBtn;
@@ -54,7 +54,7 @@ public class addExerciseDialog extends Dialog {
         // edit text
 
         // db
-        dbHelper = new ExerciseTypeDbHelper(getContext());
+        dbHelper = new UcanHealthDbHelper(getContext());
         db_write = dbHelper.getWritableDatabase();
 
         addBtn = findViewById(R.id.addBtn);
@@ -89,12 +89,12 @@ public class addExerciseDialog extends Dialog {
             }
 
             ContentValues values = new ContentValues();
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY, categoryText);
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE, exercise_typeText);
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE, exerciseText);
-            values.put(ExerciseType.ExerciseTypeEntry.COLUMN_SHOW, 1);
+            values.put(UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY, categoryText);
+            values.put(UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE, exercise_typeText);
+            values.put(UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE, exerciseText);
+            values.put(UcanHealth.ExerciseTypeEntry.COLUMN_SHOW, 1);
 
-            long newRowId = db_write.insert(ExerciseType.ExerciseTypeEntry.TABLE_NAME,null,values);
+            long newRowId = db_write.insert(UcanHealth.ExerciseTypeEntry.TABLE_NAME,null,values);
 
             if(newRowId == -1)
                 Log.i("insert", "fail");

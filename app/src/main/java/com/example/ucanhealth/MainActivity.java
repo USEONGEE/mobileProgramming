@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     Button addRoutineBtn;
     Button startBtn;
     private LinearLayout todayExerciseListContainer;
-    private UserExerciseLogDbHelper userExerciseLogDbHelper;
-    private SQLiteDatabase userExerciseLogDb_read;
+    private UcanHealthDbHelper ucanHealthDbHelper;
+    private SQLiteDatabase ucanHealthDb_read;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
         startBtn = findViewById(R.id.startBtn);
 
-        userExerciseLogDbHelper = new UserExerciseLogDbHelper(this);
-        userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
+        ucanHealthDbHelper = new UcanHealthDbHelper(this);
+        ucanHealthDb_read = ucanHealthDbHelper.getReadableDatabase();
     }
 
     public void InitializeLayout() {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
         }
 
-        Cursor cursor = userExerciseLogDbHelper.getRoutineByDate(userExerciseLogDb_read, getCurrentDate());
+        Cursor cursor = ucanHealthDbHelper.getRoutineByDate(ucanHealthDb_read, getCurrentDate());
 
         // textView 꾸며야함
         while(cursor.moveToNext()) {

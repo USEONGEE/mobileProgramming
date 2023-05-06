@@ -15,18 +15,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.ucanhealth.sqlite.ExerciseType;
-import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
-import com.example.ucanhealth.sqlite.UserExerciseLog;
-import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
+import com.example.ucanhealth.sqlite.UcanHealth;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 
 import java.util.Calendar;
 
 public class modifyRoutineDialog extends Dialog {
 
-    private UserExerciseLogDbHelper userExerciseLogDbHelper;
-    private SQLiteDatabase userExerciseLogDb_write;
-    private SQLiteDatabase userExerciseLogDb_read;
+    private UcanHealthDbHelper ucanHealthDbHelper;
+    private SQLiteDatabase ucanHealthDb_write;
+    private SQLiteDatabase ucanHealthDb_read;
     Button closeBtn;
     Button deleteBtn;
     Button modifyBtn;
@@ -81,9 +79,9 @@ public class modifyRoutineDialog extends Dialog {
         weightEditText = findViewById(R.id.weight);
         weightEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-        userExerciseLogDbHelper = new UserExerciseLogDbHelper(getContext());
-        userExerciseLogDb_write = userExerciseLogDbHelper.getWritableDatabase();
-        userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
+        ucanHealthDbHelper = new UcanHealthDbHelper(getContext());
+        ucanHealthDb_write = ucanHealthDbHelper.getWritableDatabase();
+        ucanHealthDb_read = ucanHealthDbHelper.getReadableDatabase();
     }
 
     private final View.OnClickListener closeDialog = new View.OnClickListener() {
@@ -96,18 +94,17 @@ public class modifyRoutineDialog extends Dialog {
     private final View.OnClickListener deleteExercise = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String selection = UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " LIKE ? AND " +
-                    UserExerciseLog.UserExerciseLogEntry.COLUMN_EXERCISE + " = ?";
+            String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " LIKE ? AND " +
+                    UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = ?";
             String[] selectionArgs = {getCurrentDate(), selectedExercise};
             Log.i("delete",selectedExercise);
 
-            userExerciseLogDb_write.delete(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+            ucanHealthDb_write.delete(UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                     selection,
                     selectionArgs);
 
-            userExerciseLogDbHelper.close();
-            userExerciseLogDb_write.close();
-            userExerciseLogDb_read.close();
+            ucanHealthDb_write.close();
+            ucanHealthDb_read.close();
             dismiss();
         }
     };
@@ -121,38 +118,37 @@ public class modifyRoutineDialog extends Dialog {
             String totalSet = totalSetEditText.getText().toString();
             String weight = weightEditText.getText().toString();
 
-            if(!isNull(reps)) values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt(reps));
-            if(!isNull(totalSet)) values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,Integer.parseInt(totalSet));
-            if(!isNull(weight)) values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
+            if(!isNull(reps)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt(reps));
+            if(!isNull(totalSet)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,Integer.parseInt(totalSet));
+            if(!isNull(weight)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
 
             // 아무것도 입력 안 하면 그냥 종료시키기
             if(isNull(reps) && isNull(totalSet) && isNull(weight)) {
-                userExerciseLogDbHelper.close();
-                userExerciseLogDb_write.close();
-                userExerciseLogDb_read.close();
+                ucanHealthDbHelper.close();
+                ucanHealthDb_write.close();
+                ucanHealthDb_read.close();
                 dismiss();
 
                 return;
             }
 
-            String selection = UserExerciseLog.UserExerciseLogEntry.COLUMN_EXERCISE + " = ? AND " +
-                    UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+            String selection = UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = ? AND " +
+                    UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
             String[] selectionArgs = {
                     selectedExercise,
                     getCurrentDate()
             };
 
-            int count = userExerciseLogDb_write.update(
-                    UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+            int count = ucanHealthDb_write.update(
+                    UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                     values,
                     selection,
                     selectionArgs
             );
             Log.i("update",String.valueOf(count));
 
-            userExerciseLogDbHelper.close();
-            userExerciseLogDb_write.close();
-            userExerciseLogDb_read.close();
+            ucanHealthDb_write.close();
+            ucanHealthDb_read.close();
             dismiss();
         }
     };

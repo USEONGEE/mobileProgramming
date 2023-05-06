@@ -2,8 +2,16 @@ package com.example.ucanhealth.sqlite;
 
 import android.provider.BaseColumns;
 
-public class UserExerciseLog {
-    private UserExerciseLog() {}
+public final class UcanHealth {
+
+    private UcanHealth(){};
+    public static class ExerciseTypeEntry implements BaseColumns {
+        public static final String TABLE_NAME = "ExerciseType";
+        public static final String COLUMN_CATEGORY = "category"; // health
+        public static final String COLUMN_EXERCISE_TYPE = "exercise_type"; // 등, 가슴, 팔, 다리
+        public static final String COLUMN_EXERCISE = "exercise";
+        public static final String COLUMN_SHOW = "show";
+    }
 
     public static class UserExerciseLogEntry implements BaseColumns {
         public static final String TABLE_NAME = "UserExerciseLog";

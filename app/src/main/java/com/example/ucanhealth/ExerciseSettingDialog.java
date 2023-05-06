@@ -18,21 +18,18 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
-import com.example.ucanhealth.sqlite.ExerciseType;
-import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
-import com.example.ucanhealth.sqlite.UserExerciseLog;
-import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
+import com.example.ucanhealth.sqlite.UcanHealth;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class ExerciseSettingDialog extends Dialog {
-    private ExerciseTypeDbHelper exerciseTypeDbHelper;
-    private SQLiteDatabase exerciseTypeDb_read;
-    private UserExerciseLogDbHelper userExerciseLogDbHelper;
-    private SQLiteDatabase userExerciseLogDb_read;
-    private SQLiteDatabase userExerciseLogDb_write;
+
+    private UcanHealthDbHelper ucanHealthDbHelper;
+    private SQLiteDatabase ucanHealthDb_read;
+    private SQLiteDatabase ucanHealthDb_write;
     LinearLayout exerciseListContainer;
     LinearLayout todayExerciseListContainer;
     addExerciseDialog exerciseDialog;
@@ -70,20 +67,10 @@ public class ExerciseSettingDialog extends Dialog {
         deleteAllBtn.setOnClickListener(deleteAllRoutine);
 
         // db connector
-        exerciseTypeDbHelper = new ExerciseTypeDbHelper(getContext());
-        exerciseTypeDb_read = exerciseTypeDbHelper.getReadableDatabase();
-        userExerciseLogDbHelper = new UserExerciseLogDbHelper((getContext()));
-        userExerciseLogDb_read = userExerciseLogDbHelper.getReadableDatabase();
-        userExerciseLogDb_write = userExerciseLogDbHelper.getWritableDatabase();
+        ucanHealthDbHelper = new UcanHealthDbHelper((getContext()));
+        ucanHealthDb_read = ucanHealthDbHelper.getReadableDatabase();
+        ucanHealthDb_write = ucanHealthDbHelper.getWritableDatabase();
 
-        // 66번째 line에서 UserExerciseLog table이 생성이 안 되었으면 생성하기 위한 코드 but 수정해야됨..
-        try {
-            exerciseTypeDbHelper.onCreate(exerciseTypeDb_read);
-            userExerciseLogDbHelper.onCreate(userExerciseLogDb_read);
-        }
-        catch(Exception e) {
-
-        }
 
         // Spinner
         getSpinner();
@@ -104,9 +91,8 @@ public class ExerciseSettingDialog extends Dialog {
     private final View.OnClickListener closeCurrentDialog = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            exerciseTypeDb_read.close();
-            userExerciseLogDb_read.close();
-            userExerciseLogDb_write.close();
+            ucanHealthDb_read.close();
+            ucanHealthDb_write.close();
             dismiss();
         }
     };
@@ -121,11 +107,11 @@ public class ExerciseSettingDialog extends Dialog {
     private final View.OnClickListener deleteAllRoutine = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String selection = UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE + " LIKE ?";
+            String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " LIKE ?";
             String[] selectionArgs = {getCurrentDate()};
             Log.i("delete",getCurrentDate());
 
-            userExerciseLogDb_write.delete(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
+            ucanHealthDb_write.delete(UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                     selection,
                     selectionArgs);
 
@@ -153,14 +139,14 @@ public class ExerciseSettingDialog extends Dialog {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                "DISTINCT " + ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY
+                "DISTINCT " + UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY
         };
 
         String sortOrder =
-                ExerciseType.ExerciseTypeEntry.COLUMN_CATEGORY + " DESC";
+                UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY + " DESC";
 
-        Cursor cursor = exerciseTypeDb_read.query(
-                ExerciseType.ExerciseTypeEntry.TABLE_NAME,   // The table to query
+        Cursor cursor = ucanHealthDb_read.query(
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -243,7 +229,7 @@ public class ExerciseSettingDialog extends Dialog {
 
         }
 
-        Cursor cursor = userExerciseLogDbHelper.getRoutineByDate(userExerciseLogDb_read, getCurrentDate());
+        Cursor cursor = ucanHealthDbHelper.getRoutineByDate(ucanHealthDb_read, getCurrentDate());
 
         while(cursor.moveToNext()) {
             Log.i("makeButton","success");
@@ -274,21 +260,21 @@ public class ExerciseSettingDialog extends Dialog {
     public List<String> readExerciseListFromDb(@NonNull String selectedItem){
         // Query 결과로 받아올 column 정의하기
         String[] projection = {
-                ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE
+                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE
         };
 
         // where절
-        String selection = ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " = ? AND " +
-                ExerciseType.ExerciseTypeEntry.COLUMN_SHOW + " = ?";
+        String selection = UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE + " = ? AND " +
+                UcanHealth.ExerciseTypeEntry.COLUMN_SHOW + " = ?";
         String[] selectionArgs = { selectedItem, "1" };
 
         // 정렬
         String sortOrder =
-                ExerciseType.ExerciseTypeEntry.COLUMN_EXERCISE + " DESC";
+                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE + " DESC";
 
         // Queyr 결과를 담은 cursor 가져오기
-        Cursor cursor = exerciseTypeDb_read.query(
-                ExerciseType.ExerciseTypeEntry.TABLE_NAME,   // The table to query
+        Cursor cursor = ucanHealthDb_read.query(
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
                 selectionArgs,          // The values for the WHERE clause
