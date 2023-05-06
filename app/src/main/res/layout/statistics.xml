@@ -49,60 +49,11 @@
             app:layout_constraintTop_toBottomOf="@+id/cstLyTop"
             app:layout_constraintWidth_percent="0.8">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/stateImage"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:src="@drawable/exercising" />-->
-
-<!--            임시로 값 넣는 부분 만듦-->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/editTextX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="15dp"
-                    android:ems="10"
-                    android:hint="X Value"
-                    android:inputType="number" />
-
-                <EditText
-                    android:id="@+id/editTextY"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/editTextX"
-                    android:layout_marginTop="80dp"
-                    android:ems="10"
-                    android:hint="Y Value"
-                    android:inputType="number" />
-
-                <Button
-                    android:id="@+id/btnInsert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@+id/editTextX"
-                    android:layout_marginEnd="15dp"
-                    android:text="Insert"   />
-
-                <Button
-                    android:id="@+id/btnShow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/btnInsert"
-                    android:layout_alignTop="@+id/editTextY"
-                    android:text="Show"   />
-
-
-            </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/stateImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/exercising" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,8 +67,8 @@
             app:layout_constraintTop_toBottomOf="@+id/cstLyImage"
             app:layout_constraintWidth_percent="0.8">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/mpChart"
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/barChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"/>

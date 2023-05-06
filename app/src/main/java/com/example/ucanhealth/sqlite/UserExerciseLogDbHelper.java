@@ -79,4 +79,16 @@ public class UserExerciseLogDbHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public Cursor getExerciseDataBar(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT total_set_count from UserExerciseLog;", null);
+        return c;
+    }
+
+    public Cursor getExerciseName(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT exercise from UserExerciseLog;", null);
+        return c;
+    }
 }
