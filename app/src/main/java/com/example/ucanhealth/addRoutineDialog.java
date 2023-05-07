@@ -33,6 +33,7 @@ public class addRoutineDialog extends Dialog {
     EditText repEditText;
     EditText totalSetEditText;
     EditText weightEditText;
+    EditText restTimeEditText;
     public addRoutineDialog(@NonNull Context context, String exercise) {
         super(context);
         this.exercise = exercise;
@@ -77,6 +78,9 @@ public class addRoutineDialog extends Dialog {
 
         weightEditText = findViewById(R.id.weight);
         weightEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+        restTimeEditText = findViewById(R.id.restTime);
+        restTimeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
 
@@ -104,6 +108,7 @@ public class addRoutineDialog extends Dialog {
         int totalSet = Integer.parseInt(totalSetEditText.getText().toString()); totalSetEditText.setText("");
         float weight = Float.parseFloat(weightEditText.getText().toString()); weightEditText.setText("");
         String today = getCurrentDate();
+        int restTime = Integer.parseInt(restTimeEditText.getText().toString()); repEditText.setText("");
         int order = getRoutineCount() + 1;
 
         Log.i("insert", today); //
@@ -115,6 +120,7 @@ public class addRoutineDialog extends Dialog {
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 0);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, today);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, restTime);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 0);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, order);
 
