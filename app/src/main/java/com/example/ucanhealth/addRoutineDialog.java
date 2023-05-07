@@ -17,16 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.ucanhealth.sqlite.ExerciseTypeDbHelper;
-import com.example.ucanhealth.sqlite.UserExerciseLog;
-import com.example.ucanhealth.sqlite.UserExerciseLogDbHelper;
+import com.example.ucanhealth.sqlite.UcanHealth;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class addRoutineDialog extends Dialog {
     String exercise;
-    private UserExerciseLogDbHelper dbHelper;
+    private UcanHealthDbHelper dbHelper;
     private SQLiteDatabase db_write;
     private SQLiteDatabase db_read;
     Button addBtn;
@@ -56,7 +54,7 @@ public class addRoutineDialog extends Dialog {
         initView();
 
         //dbHelper = new UserExerciseLogDbHelper(getContext());
-        dbHelper = new UserExerciseLogDbHelper(getContext().getApplicationContext());
+        dbHelper = new UcanHealthDbHelper(getContext().getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
         db_read = dbHelper.getReadableDatabase();
 
@@ -102,24 +100,25 @@ public class addRoutineDialog extends Dialog {
 
     private void addRoutineToDb() {
 
-        int rep = Integer.parseInt(repEditText.getText().toString());
-        int totalSet = Integer.parseInt(totalSetEditText.getText().toString());
-        float weight = Float.parseFloat(totalSetEditText.getText().toString());
+        int rep = Integer.parseInt(repEditText.getText().toString()); repEditText.setText("");
+        int totalSet = Integer.parseInt(totalSetEditText.getText().toString()); totalSetEditText.setText("");
+        float weight = Float.parseFloat(weightEditText.getText().toString()); weightEditText.setText("");
         String today = getCurrentDate();
         int order = getRoutineCount() + 1;
 
         Log.i("insert", today); //
 
         ContentValues values = new ContentValues();
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_EXERCISE,exercise);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_REPS, rep);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_SET_COUNT, 0);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE, today);
-        values.put(UserExerciseLog.UserExerciseLogEntry.COLUMN_ORDER, order);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,exercise);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, rep);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 0);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, today);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 0);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, order);
 
-        long newRowId = db_write.insert(UserExerciseLog.UserExerciseLogEntry.TABLE_NAME, null, values);
+        long newRowId = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
         if(newRowId == -1) {
             Log.i("insert", "fail");
         }
@@ -129,8 +128,8 @@ public class addRoutineDialog extends Dialog {
     }
 
     private int getRoutineCount() {
-        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", UserExerciseLog.UserExerciseLogEntry.TABLE_NAME,
-                UserExerciseLog.UserExerciseLogEntry.COLUMN_DATE,
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
                 getCurrentDate());
         Cursor cursor = db_read.rawQuery(sql, null);
 
