@@ -20,7 +20,7 @@ import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 
 import java.util.Calendar;
 
-public class modifyRoutineDialog extends Dialog {
+public class modifyRoutineDialog extends Dialog {   
 
     private UcanHealthDbHelper ucanHealthDbHelper;
     private SQLiteDatabase ucanHealthDb_write;
