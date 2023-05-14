@@ -9,10 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -33,6 +37,8 @@ public class TimerActivity extends AppCompatActivity {
 
         this.settingSideBar();
         this.ExerciseClicked();
+        this.RestClicked();
+        this.goToNextSet();
     }
 
     /*사이드 바 관련 함수*/
@@ -103,6 +109,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    /*Exercise 버튼 동작 함수*/
     public void ExerciseClicked()
     {
         Button btn_exercise = findViewById(R.id.btn_exercise);
@@ -144,4 +151,74 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*Rest 버튼 동작 함수*/
+    //사용자에게 직접 restTime을 입력 받을 수 있도록 editText로 구성하였습니다.
+    private CountDownTimer countDownTimer = null;   //rest 카운트다운 타이머
+    private boolean isPaused = false;   //일시정지 여부 판단을 위한 변수
+
+    private void RestClicked() {
+        EditText timer_rest = findViewById(R.id.timer_rest);
+        Button btn_rest = findViewById(R.id.btn_rest);
+
+        btn_rest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (countDownTimer != null && isPaused) { // 일시정지된 상태에서 Rest 버튼을 누른 경우
+                    countDownTimer.cancel();
+                    btn_rest.setText(getString(R.string.start));
+                    isPaused = false;
+                } else { // 타이머를 새로 생성해야 하는 경우
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                        countDownTimer = null;
+                    }
+                    // editText에서 시간을 가져와서 타이머 설정
+                    String timeStr = timer_rest.getText().toString();
+                    String[] timeArr = timeStr.split(":");
+                    int minute = Integer.parseInt(timeArr[0]);
+                    int second = Integer.parseInt(timeArr[1]);
+                    long timeInMillis = (minute * 60 + second) * 1000;
+                    countDownTimer = new CountDownTimer(timeInMillis, 1000) {
+                        @Override
+                        public void onTick(long l) {
+                            long minutes = TimeUnit.MILLISECONDS.toMinutes(l);
+                            long seconds = TimeUnit.MILLISECONDS.toSeconds(l) - TimeUnit.MINUTES.toSeconds(minutes);
+                            timer_rest.setText(String.format("%02d:%02d", minutes, seconds));
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            timer_rest.setText("00:00");
+                            btn_rest.setText(getString(R.string.start));
+                            countDownTimer = null;
+                        }
+                    };
+                    countDownTimer.start();
+                    btn_rest.setText(getString(R.string.stop));
+                    isPaused = true;
+                }
+            }
+        });
+    }
+
+    /*다음 세트로 넘어가는 함수*/
+    public void goToNextSet(){
+        Button btn_next = findViewById(R.id.btn_next);  //다음 세트로 넘어가는 버튼
+        TextView currentSet = findViewById(R.id.current_set);   //우상단에 표시된 현재 세트
+        TextView totalSet = findViewById(R.id.total_set);       //우상단에 표시된 전체 세트
+        TextView currentSet2 = findViewById(R.id.current_set_2);//화면 중앙에 표시된 현재 세트
+        TextView totalSet2 = findViewById(R.id.total_set_2);  //화면 중앙에 표시된 전체 세트
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int set_count = Integer.parseInt(currentSet.getText().toString());
+                set_count++;
+                currentSet.setText(String.valueOf(set_count));
+                currentSet2.setText(String.valueOf(set_count));
+            }
+        });
+    }
+
+
 }
