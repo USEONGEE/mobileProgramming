@@ -81,4 +81,10 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public Cursor getExerciseTypeDataBar(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT sum(total_set_count), sum(repetition), exercise_type from ExerciseType, UserExerciseLog where ExerciseType.exercise = UserExerciseLog.exercise group by ExerciseType.exercise_type order by exercise_order desc;", null);
+        return c;
+    }
 }

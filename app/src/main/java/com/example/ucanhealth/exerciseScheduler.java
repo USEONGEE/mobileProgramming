@@ -39,8 +39,6 @@ public class exerciseScheduler extends AppCompatActivity {
 
         dbHelper = new UcanHealthDbHelper(this);
 
-
-
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
             @Override
