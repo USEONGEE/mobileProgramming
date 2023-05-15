@@ -22,6 +22,13 @@ public final class UcanHealth {
         public static final String COLUMN_TOTAL_SET_COUNT = "total_set_count";
         public static final String COLUMN_DATE = "date_";
         public static final String COLUMN_ORDER = "exercise_order";
+        public static final String COLUMN_REST_TIME = "rest_time";
         public static final String COLUMN_TOTAL_EXERCISE_TIME = "total_exercise_time"; // 초 단위까지 계산
+    }
+
+    public static class TotalExerciseTimeEntry implements BaseColumns {
+        public static final String TABLE_NAME = "TotalExerciseTimeEntry";
+        public static final String COLUMN_DATE = "date_";
+        public static final String COLUMN_TOTAL_EXERCISE_TIME = "total_exercise_time";
     }
 }

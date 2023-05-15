@@ -23,16 +23,23 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
                     UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT  + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " TEXT," +
+                    UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " INTEGER)";
+    private static final String SQL_CREATE_ENTRIES_TotalExerciseTime =
+            "CREATE TABLE " + UcanHealth.TotalExerciseTimeEntry.TABLE_NAME + " (" +
+                    UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " TEXT," +
+                    UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME + " INTEGER)";
 
 
     public static final String DATABASE_NAME = "UcanHealth.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     private static final String SQL_DELETE_ENTRIES_ExerciseType =
             "DROP TABLE IF EXISTS " + UcanHealth.ExerciseTypeEntry.TABLE_NAME;
     private static final String SQL_DELETE_ENTRIES_UserExerciseLog =
             "DROP TABLE IF EXISTS " + UcanHealth.UserExerciseLogEntry.TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES_TotalExerciseTime =
+            "DROP TABLE IF EXISTS " + UcanHealth.TotalExerciseTimeEntry.TABLE_NAME;
 
     public UcanHealthDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,15 +49,17 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES_ExerciseType);
         db.execSQL(SQL_CREATE_ENTRIES_UserExerciseLog);
+        db.execSQL(SQL_CREATE_ENTRIES_TotalExerciseTime);
     }
 
     @Override // 테이블 업그레이드
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES_ExerciseType);
         db.execSQL(SQL_DELETE_ENTRIES_UserExerciseLog);
+        db.execSQL(SQL_DELETE_ENTRIES_TotalExerciseTime);
         onCreate(db);
-
     }
+
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
