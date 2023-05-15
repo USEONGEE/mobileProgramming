@@ -4,6 +4,7 @@ import android.provider.BaseColumns;
 
 public final class UcanHealth {
 
+
     private UcanHealth(){};
     public static class ExerciseTypeEntry implements BaseColumns {
         public static final String TABLE_NAME = "ExerciseType";

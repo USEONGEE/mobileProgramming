@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,8 +23,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.ucanhealth.sqlite.UcanHealth;
+import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,15 +38,34 @@ import java.util.concurrent.TimeUnit;
 public class TimerActivity extends AppCompatActivity {
 
     private static final String TAG = "TimerActivity";  //오류 발생시 로그캣 찍어보려고 만들어둔 변수.
+    private UcanHealthDbHelper dbHelper;
+    private SQLiteDatabase db_write;
+    private SQLiteDatabase db_read;
+    TextView exercise;
+    TextView input_weight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        init();
+
+        start();
+
         this.settingSideBar();
         this.ExerciseClicked();
         this.RestClicked();
         this.goToNextSet();
+    }
+
+    public void init() {
+        dbHelper = new UcanHealthDbHelper(this.getApplicationContext());
+        db_write = dbHelper.getWritableDatabase();
+        db_read = dbHelper.getReadableDatabase();
+
+        exercise = findViewById(R.id.exercise);
+        input_weight = findViewById(R.id.input_weight);
     }
 
     /*사이드 바 관련 함수*/
@@ -214,11 +241,80 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int set_count = Integer.parseInt(currentSet.getText().toString());
                 set_count++;
+
                 currentSet.setText(String.valueOf(set_count));
                 currentSet2.setText(String.valueOf(set_count));
             }
         });
     }
 
+    public void start() {
+        String[] projection = {
+                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_REPS,
+                UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME,
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME,
+                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER,
+
+        };
+
+        String sortOrder =
+                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " DESC";
+        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+        String[] selectionArgs = {getCurrentDate()};
+
+        Cursor cursor = db_read.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        List<String> category = new ArrayList<>();
+
+        // 핵심
+        while (cursor.moveToNext()) {
+            String item = cursor.getString(0); // 0번째 인덱스의 데이터 가져오기
+            String weight = cursor.getString(2);
+            exercise.setText(item);
+            input_weight.setText(weight);
+        }
+
+        cursor.close(); // 커서 닫기
+
+    }
+    public String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return String.format("%04d-%02d-%02d", year, month, day);
+    }
+
+    public void add_setCount() {
+        ContentValues values = new ContentValues();
+
+//        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt());
+        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = ? AND " +
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+        String[] selectionArgs = {
+                
+        };
+
+        db_write.update(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+    }
 
 }
