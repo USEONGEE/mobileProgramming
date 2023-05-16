@@ -98,31 +98,31 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
         return c;
     }*/
 
-    public Cursor getRoutineByData(SQLiteDatabase db, String date) {
-        String[] projection = {
-                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_REPS,
-                UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER
-        };
-        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " DESC";
-
-        String selection = String.format("%s = ?",UcanHealth.UserExerciseLogEntry.COLUMN_DATE);
-        String[] selectionArgs = {date};
-        Cursor cursor = db.query(
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
-        );
-
-        return cursor;
-    }
+//    public Cursor getRoutineByData(SQLiteDatabase db, String date) {
+//        String[] projection = {
+//                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_REPS,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
+//                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER
+//        };
+//        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " DESC";
+//
+//        String selection = String.format("%s = ?",UcanHealth.UserExerciseLogEntry.COLUMN_DATE);
+//        String[] selectionArgs = {date};
+//        Cursor cursor = db.query(
+//                UcanHealth.UserExerciseLogEntry.TABLE_NAME,   // The table to query
+//                projection,             // The array of columns to return (pass null to get all)
+//                selection,              // The columns for the WHERE clause
+//                selectionArgs,          // The values for the WHERE clause
+//                null,                   // don't group the rows
+//                null,                   // don't filter by row groups
+//                sortOrder               // The sort order
+//        );
+//
+//        return cursor;
+//    }
 
 }

@@ -40,6 +40,11 @@ public class exerciseScheduler extends AppCompatActivity {
         diaryTextView = findViewById(R.id.diaryTextView); // 달력에서 자신이 고른 날짜를 표시
         exerciseData_View = findViewById(R.id.exerciseData_View); // 운동한 데이터를 db에서 가져온다.
 
+        UcanHealthDbHelper dbHelper = new UcanHealthDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM UserExerciseLog WHERE date = 123;",null);
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
             @Override
