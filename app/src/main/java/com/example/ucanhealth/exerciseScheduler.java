@@ -45,6 +45,7 @@ public class exerciseScheduler extends AppCompatActivity {
         diaryTextView = findViewById(R.id.diaryTextView); // 달력에서 자신이 고른 날짜를 표시
         exerciseData_View = findViewById(R.id.exerciseData_View); // 운동한 데이터를 db에서 가져온다.
 
+
         //데이터 베이스 선언
         dbHelper = new UcanHealthDbHelper(getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
@@ -54,6 +55,12 @@ public class exerciseScheduler extends AppCompatActivity {
         //inialdata();
 
         //Cursor exerciseSD = db.rawQuery("SELECT * FROM UserExerciseLog", null);
+
+        UcanHealthDbHelper dbHelper = new UcanHealthDbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM UserExerciseLog WHERE date = 123;",null);
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
@@ -71,16 +78,10 @@ public class exerciseScheduler extends AppCompatActivity {
 
                 getString();
 
-                //exerciseData_View.setText(sql); // db 불러와야 할 곳
-                
-                //Cursor cursor = userExerciseLogDbhelper.getRoutineByDate(ucanHealthDb_read, getCurrentDate());
-
             }
         });
 
     }
-
-    List<String> listA = new ArrayList<String>();
 
     public void getString() {
 
