@@ -59,7 +59,7 @@ public class exerciseScheduler extends AppCompatActivity {
         UcanHealthDbHelper dbHelper = new UcanHealthDbHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM UserExerciseLog WHERE date = 123;",null);
+        //Cursor cursor = db.rawQuery("SELECT * FROM UserExerciseLog WHERE date = 123;",null);
 
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
@@ -76,19 +76,28 @@ public class exerciseScheduler extends AppCompatActivity {
                 exerciseData_View.setVisibility(View.VISIBLE); // 다이어리뷰
                 diaryTextView.setText(String.format("%d / %d / %d", year, month + 1, dayOfMonth)); // 선택한 날짜 표기
 
-                getString();
+                String date_data;
+
+                if(month_new >= 10)
+                    date_data = year+"-"+month_new+"-"+dayOfMonth;
+                else
+                    date_data = year+"-0"+month_new+"-"+dayOfMonth;
+
+                getString(date_data);
 
             }
         });
 
     }
 
-    public void getString() {
+    public void getString(String date_data) {
+
+        exerciseData_View.setText(""); // 초기화
 
         //Cursor cursor = db_read.rawQuery("SELECT * FROM UserExerciseLog where date_ = ?", new String[]{"2023-05-23"});
         db_read = dbHelper.getReadableDatabase();
 
-        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME, UcanHealth.UserExerciseLogEntry.COLUMN_DATE,"2023-05-23");
+        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME, UcanHealth.UserExerciseLogEntry.COLUMN_DATE,date_data);
 
         Cursor cursor = db_read.rawQuery(sql,null);
         //Cursor cursor = db_read.rawQuery("SELECT * FROM " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + " WHERE id = ?", new String[]{"2023-05-17"});
@@ -120,7 +129,7 @@ public class exerciseScheduler extends AppCompatActivity {
         }
 
         for(int i = 0; i < count; i++){
-            exerciseData_View.setText(exercise[i] + " ," + repetition[i]  + " ," +  weight[i]  + " ," +  set_count[i]  + " ," +  total_set_count[i]  + " ," +  date_[i]  + " ," +  total_exercise_time[i]  + " ," +  exercise_order[i]);
+            exerciseData_View.setText("Type of Exercise: " + exercise[i] + "\nRepetition: " + repetition[i]  + "\nweight: " +  weight[i]  + "\nset_count: " +  set_count[i]  + "\ntotal_set_count: " +  total_set_count[i]  + "\ndate: " +  date_[i]  + "\ntotal_exercise_time: " +  total_exercise_time[i]  + "\nexercise_order: " +  exercise_order[i]);
         }
 
         db_read.close();
@@ -130,28 +139,54 @@ public class exerciseScheduler extends AppCompatActivity {
     public void inialdata(){
 
         ContentValues cv = new ContentValues();
+        long inialData;
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, "neck exercise");
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, 10);
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, 50);
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 5);
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, 5);
-        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-23");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-10");
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 50);
         cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 3);
 
-        long inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME,null, cv);
+        inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, cv);
 
-        if(inialData == -1)
-            Log.i("insert", "fail");
-        else
-            Log.i("insert", "success");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, "neck exercise");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, 10);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, 50);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 5);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, 5);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-11");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 50);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 3);
 
+        inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, cv);
+
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, "neck exercise");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, 10);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, 50);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 5);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, 5);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-12");
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 50);
+        cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 3);
+
+        inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, cv);
+
+        for(int i = 0; i < 4; i++) {
+
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, "neck exercise");
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, 10);
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, 50);
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 5);
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, 5);
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-20");
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 50);
+            cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 3);
+
+            inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, cv);
+        }
     }
-
-    public void println(String data){
-        exerciseData_View.append(data + "\n");
-    }
-
 
     @SuppressLint("WrongConstant")
     public void removeDiary(String readDay)
