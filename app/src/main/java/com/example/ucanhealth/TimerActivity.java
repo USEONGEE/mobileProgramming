@@ -261,7 +261,7 @@ public class TimerActivity extends AppCompatActivity {
         };
 
         String sortOrder =
-                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " DESC";
+                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
         String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
         String[] selectionArgs = {getCurrentDate()};
 
@@ -313,27 +313,35 @@ public class TimerActivity extends AppCompatActivity {
             currentSet.setText(String.valueOf(set_count));
             addSetCountToDb();
 
-            if (set_count == total_set_count) {
-                cursor.moveToNext();
-                setInfoFromDB();
-            }
             if (Integer.valueOf(TextView_order.getText().toString()) == getRoutineCount()) {
-                endExercise();
+//                endExercise();
                 db_read.close();
                 db_write.close();
                 finish();
             }
+
+            if (set_count == total_set_count) {
+                cursor.moveToNext();
+                setInfoFromDB();
+            }
+
         }
     };
 
     public void setInfoFromDB() {
-
         String item = cursor.getString(0); // 0번째 인덱스의 데이터(exercise) 가져오기
         String reps = cursor.getString(1);
         String weight = cursor.getString(2);    //2번째 인덱스의 데이터(weight) 가져오기
         String set_count = cursor.getString(3);
         String total_set_count = cursor.getString(4);
         String order = cursor.getString(7);
+
+        // 조건문 -> 문자열 비교, 정수 비교 ********
+        if (set_count.equals(total_set_count)) {
+            cursor.moveToNext();
+            setInfoFromDB();
+            return;
+        }
 
         TextView_order.setText(order);
         currentSet.setText(set_count);
