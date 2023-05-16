@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,12 @@ public class TimerActivity extends AppCompatActivity {
     Button btn_next;
     TextView totalSet;
     TextView currentSet;
-    TextView currentExercise;
+    TextView TextView_order;
+    TextView TextView_reps;
+    TextView TextView_totalSet;
+    TextView TextView_timer_exercise;
+    Cursor cursor;
+    TextView TextView_total_exercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +57,12 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         init();
-
         ReadDB();
+        btn_next.setOnClickListener(nextSetClickListener);
 
         this.settingSideBar();
         this.ExerciseClicked();
         this.RestClicked();
-        this.goToNextSet();
     }
 
     public void init() {
@@ -67,11 +72,24 @@ public class TimerActivity extends AppCompatActivity {
 
         exercise = findViewById(R.id.exercise);
         input_weight = findViewById(R.id.input_weight);
+
+        btn_next = findViewById(R.id.btn_next);
+        totalSet = findViewById(R.id.totalSet);
+        currentSet = findViewById(R.id.current_set);
+        TextView_order = findViewById(R.id.TextView_order);
+        TextView_reps = findViewById(R.id.TextView_reps);
+        TextView_totalSet = findViewById(R.id.TextView_totalSet);
+        TextView_timer_exercise = findViewById(R.id.timer_exercise);
+        TextView_total_exercise = findViewById(R.id.total_exercise);
+        // activity가 실행되면
+        ReadDB();
+        setInfoFromDB();
+
+        TextView_total_exercise.setText(String.valueOf(getRoutineCount()));
     }
 
     /*사이드 바 관련 함수*/
-    public void settingSideBar()
-    {
+    public void settingSideBar() {
         // toolbar 생성
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,7 +103,7 @@ public class TimerActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-          this,
+                this,
                 drawer,
                 toolbar,
                 R.string.open,
@@ -102,16 +120,15 @@ public class TimerActivity extends AppCompatActivity {
 
                 int curId = item.getItemId();
 
-                switch(curId)
-                {
+                switch (curId) {
                     case R.id.menuitem1:
-                        Toast.makeText(getApplicationContext(),"메뉴아이템 1 선택",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "메뉴아이템 1 선택", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menuitem2:
-                        Toast.makeText(getApplicationContext(),"메뉴아이템 2 선택",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "메뉴아이템 2 선택", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menuitem3:
-                        Toast.makeText(getApplicationContext(),"메뉴아이템 3 선택",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -127,10 +144,9 @@ public class TimerActivity extends AppCompatActivity {
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        if(drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -138,10 +154,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
 
-
     /*Exercise 버튼 동작 함수*/
-    public void ExerciseClicked()
-    {
+    public void ExerciseClicked() {
         Button btn_exercise = findViewById(R.id.btn_exercise);
         final TextView[] timer_exercise = {findViewById(R.id.timer_exercise)};
 
@@ -152,7 +166,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 타이머 객체를 생성, 타이머의 작동 방식을 설정
-                if(timer[0] == null) {
+                if (timer[0] == null) {
                     timer[0] = new Timer();
                     TimerTask task = new TimerTask() {
                         @Override
@@ -232,28 +246,6 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
-    /*다음 세트로 넘어가는 함수*/
-    //다음 세트로 넘어갈 때 DB에 쿼리를 보내서 current_set도 올려야 함
-    public void goToNextSet(){
-        btn_next = findViewById(R.id.btn_next);  //다음 세트로 넘어가는 버튼
-        currentSet = findViewById(R.id.current_set);   //현재 세트
-        totalSet = findViewById(R.id.total_set);       //전체 세트
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int set_count = Integer.parseInt(currentSet.getText().toString());
-                int exercise_count = Integer.parseInt(currentExercise.getText().toString());
-                set_count++;
-                currentSet.setText(String.valueOf(set_count));
-                add_setCount();
-                Toast.makeText(TimerActivity.this,"셋트 1 추가",Toast.LENGTH_SHORT).show();
-                if(set_count == Integer.parseInt(totalSet.getText().toString())){
-                    //현재 셋트와 총 셋트가 같은 경우(마지막 세트가 끝난 경우)
-                    set_count = 1;
-                }
-            }
-        });
-    }
 
     /*운동 시작시 DB에서 데이터를 모두 가져오는 함수*/
     public void ReadDB() {
@@ -265,7 +257,6 @@ public class TimerActivity extends AppCompatActivity {
                 UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
                 UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
                 UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME,
-                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME,
                 UcanHealth.UserExerciseLogEntry.COLUMN_ORDER,
         };
 
@@ -274,7 +265,7 @@ public class TimerActivity extends AppCompatActivity {
         String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
         String[] selectionArgs = {getCurrentDate()};
 
-        Cursor cursor = db_read.query(
+        cursor = db_read.query(
                 UcanHealth.UserExerciseLogEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
@@ -283,20 +274,9 @@ public class TimerActivity extends AppCompatActivity {
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
         );
-
-        List<String> category = new ArrayList<>();
-
-        // 핵심
-        while (cursor.moveToNext()) {
-            String item = cursor.getString(0); // 0번째 인덱스의 데이터(exercise) 가져오기
-            String weight = cursor.getString(2);    //2번째 인덱스의 데이터(weight) 가져오기
-            exercise.setText(item);
-            input_weight.setText(weight);
-        }
-
-        cursor.close(); // 커서 닫기
-
+        cursor.moveToNext();
     }
+
     public String getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -306,14 +286,14 @@ public class TimerActivity extends AppCompatActivity {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
-    public void add_setCount() {
+    public void addSetCountToDb() {
         ContentValues values = new ContentValues();
 
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt(currentSet.getText().toString()));
-        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = ? AND " +
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+
+        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " = ? ";
         String[] selectionArgs = {
-                
+                TextView_order.getText().toString()
         };
 
         db_write.update(
@@ -322,7 +302,74 @@ public class TimerActivity extends AppCompatActivity {
                 selection,
                 selectionArgs
         );
-
     }
 
+    public View.OnClickListener nextSetClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int set_count = Integer.parseInt(currentSet.getText().toString());
+            int total_set_count = Integer.parseInt(TextView_totalSet.getText().toString());
+            set_count++;
+            currentSet.setText(String.valueOf(set_count));
+            addSetCountToDb();
+
+            if (set_count == total_set_count) {
+                cursor.moveToNext();
+                setInfoFromDB();
+            }
+            if (Integer.valueOf(TextView_order.getText().toString()) == getRoutineCount()) {
+                endExercise();
+                db_read.close();
+                db_write.close();
+                finish();
+            }
+        }
+    };
+
+    public void setInfoFromDB() {
+
+        String item = cursor.getString(0); // 0번째 인덱스의 데이터(exercise) 가져오기
+        String reps = cursor.getString(1);
+        String weight = cursor.getString(2);    //2번째 인덱스의 데이터(weight) 가져오기
+        String set_count = cursor.getString(3);
+        String total_set_count = cursor.getString(4);
+        String order = cursor.getString(7);
+
+        TextView_order.setText(order);
+        currentSet.setText(set_count);
+        TextView_reps.setText(reps);
+        exercise.setText(item);
+        input_weight.setText(weight);
+        TextView_totalSet.setText(total_set_count);
+    }
+
+    private int getRoutineCount() {
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
+                getCurrentDate());
+        Cursor cursor = db_read.rawQuery(sql, null);
+
+        cursor.moveToNext();
+
+        int count = cursor.getInt(0);
+        Log.i("count", String.valueOf(count));
+
+        return count;
+    }
+
+    public void endExercise() {
+        String[] totalExerciseTime = TextView_timer_exercise.getText().toString().split(":");
+        int minute = Integer.parseInt(totalExerciseTime[0]);
+        int second = Integer.parseInt(totalExerciseTime[1]);
+
+        ContentValues values = new ContentValues();
+        values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE, getCurrentDate());
+        values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME, minute * 60 + second);
+        long newRowId = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
+        if (newRowId == -1) {
+            Log.i("insert", "end fail");
+        } else {
+            Log.i("insert", "end success");
+        }
+    };
 }
