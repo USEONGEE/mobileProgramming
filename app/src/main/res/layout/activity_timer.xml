@@ -73,17 +73,9 @@
                     android:textSize="20sp"
                     android:layout_margin="5dp" />
 
-                <TextView
-                    android:id= "@+id/nth_exercise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "1"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <!--운동 세트 컨테이너-->
+            <!--총 운동 컨테이너-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id = "@+id/container_2"
                 android:layout_width="wrap_content"
@@ -94,7 +86,7 @@
                 android:background="@drawable/border">
 
                 <TextView
-                    android:id= "@+id/current_set"
+                    android:id= "@+id/current_exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "1"
@@ -110,7 +102,7 @@
                     android:layout_margin="5dp"/>
 
                 <TextView
-                    android:id= "@+id/total_set"
+                    android:id= "@+id/total_exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "N"
@@ -219,10 +211,10 @@
                         app:layout_constraintEnd_toEndOf="parent">
 
                         <TextView
-                            android:id= "@+id/current_set_2"
+                            android:id= "@+id/current_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint = "1"
+                            android:text = "1"
                             android:textSize="20sp"
                             android:layout_margin="5dp"/>
 
@@ -235,7 +227,7 @@
                             android:layout_margin="5dp"/>
 
                         <TextView
-                            android:id= "@+id/total_set_2"
+                            android:id= "@+id/total_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text = "n"
@@ -254,10 +246,10 @@
                     <!-- 다음 세트 버튼-->
                     <Button
                         android:id="@+id/btn_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/purple_200"
-                        android:text="next set" />
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:background="#8C92AC"
+                        android:text="next" />
 
                 </LinearLayout>
 
