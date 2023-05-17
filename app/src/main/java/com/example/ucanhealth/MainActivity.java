@@ -88,13 +88,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
                 switch (menuItem.getItemId())
                 {
-                    case R.id.menuitem1:
+                    case R.id.MainPage:
                         Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.menuitem2:
+                    case R.id.LouinePage:
                         Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.menuitem3:
+                    case R.id.SchdulerPage:
+                        Intent intent = new Intent(getApplicationContext(),exerciseScheduler.class);
+                        startActivity(intent);
                         Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
                         break;
                 }

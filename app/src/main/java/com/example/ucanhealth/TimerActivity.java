@@ -59,13 +59,13 @@ public class TimerActivity extends AppCompatActivity {
 
                 switch(curId)
                 {
-                    case R.id.menuitem1:
+                    case R.id.MainPage:
                         Toast.makeText(getApplicationContext(),"메뉴아이템 1 선택",Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.menuitem2:
+                    case R.id.LouinePage:
                         Toast.makeText(getApplicationContext(),"메뉴아이템 2 선택",Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.menuitem3:
+                    case R.id.SchdulerPage:
                         Toast.makeText(getApplicationContext(),"메뉴아이템 3 선택",Toast.LENGTH_SHORT).show();
                         break;
                 }
