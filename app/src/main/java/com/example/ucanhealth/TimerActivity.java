@@ -274,7 +274,6 @@ public class TimerActivity extends AppCompatActivity {
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
         );
-        cursor.moveToNext();
     }
 
     public String getCurrentDate() {
@@ -286,22 +285,32 @@ public class TimerActivity extends AppCompatActivity {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
-    public void addSetCountToDb() {
+    public void addSetCountToDb(int value) {
         ContentValues values = new ContentValues();
 
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt(currentSet.getText().toString()));
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, value);
 
-        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " = ? ";
+        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " = ? AND " +
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ? ";
         String[] selectionArgs = {
-                TextView_order.getText().toString()
+                TextView_order.getText().toString(),
+                getCurrentDate()
         };
 
-        db_write.update(
+        int result =  db_write.update(
                 UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs
         );
+        Log.i("addSetCountToDb","value is " + String.valueOf(value));
+
+        if (result == 0) {
+            Log.i("addSetCountToDb", "update fail.");
+        }else {
+            Log.i("addSetCountToDb","update success.");
+        }
+
     }
 
     public View.OnClickListener nextSetClickListener = new View.OnClickListener() {
@@ -311,17 +320,9 @@ public class TimerActivity extends AppCompatActivity {
             int total_set_count = Integer.parseInt(TextView_totalSet.getText().toString());
             set_count++;
             currentSet.setText(String.valueOf(set_count));
-            addSetCountToDb();
-
-            if (Integer.valueOf(TextView_order.getText().toString()) == getRoutineCount()) {
-//                endExercise();
-                db_read.close();
-                db_write.close();
-                finish();
-            }
+            addSetCountToDb(set_count);
 
             if (set_count == total_set_count) {
-                cursor.moveToNext();
                 setInfoFromDB();
             }
 
@@ -329,6 +330,12 @@ public class TimerActivity extends AppCompatActivity {
     };
 
     public void setInfoFromDB() {
+        if(!cursor.moveToNext()) {
+//            endExercise();
+            finish();
+            return;
+        }
+
         String item = cursor.getString(0); // 0번째 인덱스의 데이터(exercise) 가져오기
         String reps = cursor.getString(1);
         String weight = cursor.getString(2);    //2번째 인덱스의 데이터(weight) 가져오기
