@@ -5,6 +5,7 @@
     android:layout_height="200dp"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@color/back_color"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView

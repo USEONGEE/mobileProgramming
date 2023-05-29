@@ -12,6 +12,18 @@
         android:theme="@style/Theme.UcanHealth"
         tools:targetApi="31">
         <activity
+            android:name=".ThirdFragment"
+            android:exported="false" />
+        <activity
+            android:name=".SecondFragment"
+            android:exported="false" />
+        <activity
+            android:name=".FirstFragment"
+            android:exported="false" />
+        <activity
+            android:name=".menu_Routine"
+            android:exported="false" />
+        <activity
             android:name=".exerciseScheduler"
             android:exported="true" />
         <activity
