@@ -6,17 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +40,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import android.view.ViewGroup;
@@ -46,26 +50,37 @@ import android.view.LayoutInflater;
 
 public class exerciseScheduler extends AppCompatActivity {
 
+    private ExerciseSettingDialog_using_schduler dialog;
     public String readDay = null;
     public String str = null;
     public String selectedDay; // 캘린더에서 선택된 날짜
     public CalendarView calendarView;
     public TextView diaryTextView; // 운동한 분량을 보여주는 공간
-
+    private LinearLayout todayExerciseListContainer;
     private UcanHealthDbHelper dbHelper;
     private SQLiteDatabase db_write;
     private SQLiteDatabase db_read;
 
+    private ListView todayExerciseListView;
+
     private ListView listview = null;
     private ListAdapter adapter = null;
+    private ArrayAdapter<String> exerciseListAdapter;
+    private HashMap<String, List<String>> exerciseDataMap;
+
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_scheduler);
+
+        todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
+
+        addExampleButton = findViewById(R.id.addExampleBtn);
 
         InitializeLayout();
 
@@ -106,10 +121,43 @@ public class exerciseScheduler extends AppCompatActivity {
             }
         });
 
-//        getButton = findViewById(R.id.getBtn);
+
 //        getButton.setOnClickListener(addRoutineToDB);
-//        addExampleButton = findViewById(R.id.addExampleBtn);
-//        addExampleButton.setOnClickListener(addExample);
+
+
+          addExampleButton = findViewById(R.id.addExampleBtn);
+          addExampleButton.setOnClickListener(openExerciseSettingDialog);
+    }
+
+    private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Dialog();
+        }
+    };
+
+    public void Dialog() {
+        dialog = new ExerciseSettingDialog_using_schduler(exerciseScheduler.this);
+        dialog.setTitle(R.string.add_routine);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                setButtonInRoutineListContainer();
+            }
+        });
+        dialog.show();
+    }
+
+    public void setButtonInRoutineListContainer() {
+        // 현재 container에 있는 리스트 지우기
+
+        for (int i = todayExerciseListContainer.getChildCount() - 1; i >= 0; i--) {
+            View view = todayExerciseListContainer.getChildAt(i);
+            todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
+        }
+
     }
 
     public void getString(String date_data) {
