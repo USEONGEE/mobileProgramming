@@ -35,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.view.ViewGroup;
@@ -56,6 +57,9 @@ public class exerciseScheduler extends AppCompatActivity {
     private ListView listview = null;
     private ListAdapter adapter = null;
 
+    Button getButton; // 오늘로 루틴 추가하는 버튼
+    Button addExampleButton; // 예제 추가하는 버튼
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +76,7 @@ public class exerciseScheduler extends AppCompatActivity {
         // 데이터 베이스 선언
         dbHelper = new UcanHealthDbHelper(getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
+        db_read = dbHelper.getReadableDatabase();
 
         // 임의 값 대입
         // inialdata();
@@ -89,6 +94,7 @@ public class exerciseScheduler extends AppCompatActivity {
                 diaryTextView.setVisibility(View.VISIBLE); // 다이어리뷰
                 listview.setVisibility(View.VISIBLE); // 다이어리뷰
                 diaryTextView.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth)); // 선택한 날짜 표기
+                selectedDay = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
                 String date_data;
 
                 if (month_new >= 10)
@@ -101,6 +107,10 @@ public class exerciseScheduler extends AppCompatActivity {
             }
         });
 
+        getButton = findViewById(R.id.getBtn);
+        getButton.setOnClickListener(addRoutineToDB);
+        addExampleButton = findViewById(R.id.addExampleBtn);
+        addExampleButton.setOnClickListener(addExample);
     }
 
     public void getString(String date_data) {
@@ -113,7 +123,6 @@ public class exerciseScheduler extends AppCompatActivity {
 
         // Cursor cursor = db_read.rawQuery("SELECT * FROM UserExerciseLog where date_ =
         // ?", new String[]{"2023-05-23"});
-        db_read = dbHelper.getReadableDatabase();
 
         String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                 UcanHealth.UserExerciseLogEntry.COLUMN_DATE, date_data);
@@ -193,7 +202,6 @@ public class exerciseScheduler extends AppCompatActivity {
          * }
          */
 
-        db_read.close();
     }
 
     // 임의 값 삽입
@@ -315,6 +323,9 @@ public class exerciseScheduler extends AppCompatActivity {
 
     private final View.OnClickListener addRoutineToDB = new View.OnClickListener() {
         public void onClick(View view) {
+            // 오늘 날짜에 이미 운동 리스트가 있다면 어떻게 할 것인지에 대한 로직이 추가되어야 함
+
+            // 선택된 날짜 데이터를 가져와서 오늘 날짜로 리스트 추가하기
             String[] projection = {
                     UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
                     UcanHealth.UserExerciseLogEntry.COLUMN_REPS,
@@ -323,7 +334,69 @@ public class exerciseScheduler extends AppCompatActivity {
                     UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME,
                     UcanHealth.UserExerciseLogEntry.COLUMN_ORDER
             };
+            String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
+
+            String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+            String[] selectionArgs = { selectedDay };
+
+            Cursor cursor = db_read.query(
+                    UcanHealth.UserExerciseLogEntry.TABLE_NAME, // The table to query
+                    projection, // The array of columns to return (pass null to get all)
+                    selection, // The columns for the WHERE clause
+                    selectionArgs, // The values for the WHERE clause
+                    null, // don't group the rows
+                    null, // don't filter by row groups
+                    sortOrder);
+            String today = getCurrentDate();
+
+            while (cursor.moveToNext()) {
+                ContentValues values = new ContentValues();
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, cursor.getString(0));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, cursor.getString(1));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, cursor.getString(2));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, cursor.getString(3));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, cursor.getString(4));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, cursor.getString(5));
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 1);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, today);
+
+                long i = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
+                if (i == 0) {
+                    Log.i("insert", "fail");
+                } else {
+                    Log.i("insert", "success");
+                }
+            }
         }
     };
 
+    public String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return String.format("%04d-%02d-%02d", year, month, day);
+    }
+
+    View.OnClickListener addExample = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String[] exercise = { "pull up", "pull down", "bench press" };
+            for (int i = 0; i < 3; i++) {
+                ContentValues values = new ContentValues();
+
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, exercise[i]);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, i);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, i);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, i + 3);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, "");
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 0);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 1);
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-29");
+
+                db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
+            }
+        }
+    };
 }
