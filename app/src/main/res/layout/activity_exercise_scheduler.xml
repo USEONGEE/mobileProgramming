@@ -51,9 +51,9 @@
             android:id="@+id/getBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="56dp"
-            android:layout_marginBottom="284dp"
-            android:text="오늘로 가져오기"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="360dp"
+            android:text="가져오기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -61,9 +61,9 @@
             android:id="@+id/addExampleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="204dp"
-            android:layout_marginBottom="284dp"
-            android:text="예제 추가하기"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="408dp"
+            android:text="예제 추가"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -94,6 +94,5 @@
         app:headerLayout="@layout/header">
 
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
