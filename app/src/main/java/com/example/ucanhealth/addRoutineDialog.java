@@ -118,10 +118,9 @@ public class addRoutineDialog extends Dialog {
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, rep);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 0);
+        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 1); // 처음 초기화 값 = 1
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, today);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, restTime);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME, 0);
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, order);
 
         long newRowId = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);

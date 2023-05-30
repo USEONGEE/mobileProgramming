@@ -28,7 +28,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ExerciseSettingDialog dialog;
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout todayExerciseListContainer;
     private UcanHealthDbHelper ucanHealthDbHelper;
     private SQLiteDatabase ucanHealthDb_read;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(startExercise);
         setButtonInRoutineListContainer();
     }
+
     public void init() {
         addRoutineBtn = findViewById(R.id.addButton);
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
@@ -59,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void InitializeLayout() {
-        //toolBar를 통해 App Bar 생성
+        // toolBar를 통해 App Bar 생성
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
 
-        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
+        // App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.menuicon);
 
@@ -76,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 drawer,
                 toolbar,
                 R.string.open,
-                R.string.closed
-        );
+                R.string.closed);
         drawer.addDrawerListener(actionBarDrawerToggle);
         // navigation 객체에 nav_view의 참조 반환
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -85,9 +85,8 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
-                switch (menuItem.getItemId())
-                {
+                Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");
+                switch (menuItem.getItemId()) {
                     case R.id.MainPage:
                         Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
                         break;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.SchdulerPage:
-                        Intent intent = new Intent(getApplicationContext(),exerciseScheduler.class);
+                        Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
                         break;
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setButtonInRoutineListContainer() {
         // 현재 container에 있는 리스트 지우기
-        for (int i = todayExerciseListContainer.getChildCount() - 1;  i >= 0; i--) {
+        for (int i = todayExerciseListContainer.getChildCount() - 1; i >= 0; i--) {
             View view = todayExerciseListContainer.getChildAt(i);
             todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
         }
@@ -147,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = ucanHealthDbHelper.getRoutineByDate(ucanHealthDb_read, getCurrentDate());
 
         // textView 꾸며야함
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             TextView textView = new TextView(this);
             String exercise = cursor.getString(0);
-//            String reps = cursor.getString(1).toString();
-//            String weight = cursor.getString(2).toString();
-//            String totalSet = cursor.getString(4).toString();
+            // String reps = cursor.getString(1).toString();
+            // String weight = cursor.getString(2).toString();
+            // String totalSet = cursor.getString(4).toString();
 
             String text = exercise;
             textView.setText(text);

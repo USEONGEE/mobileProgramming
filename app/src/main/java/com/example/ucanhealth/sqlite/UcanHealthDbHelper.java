@@ -24,11 +24,10 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
                     UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " TEXT," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME + " INTEGER," +
-                    UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_EXERCISE_TIME + " INTEGER," +
                     UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " INTEGER)";
     private static final String SQL_CREATE_ENTRIES_TotalExerciseTime =
             "CREATE TABLE " + UcanHealth.TotalExerciseTimeEntry.TABLE_NAME + " (" +
-                    UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " TEXT," +
+                    UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " TEXT PRIMARY KEY," +
                     UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME + " INTEGER)";
 
 

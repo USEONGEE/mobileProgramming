@@ -16,6 +16,18 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"></uses-library>
 
         <activity
+            android:name=".ThirdFragment"
+            android:exported="false" />
+        <activity
+            android:name=".SecondFragment"
+            android:exported="false" />
+        <activity
+            android:name=".FirstFragment"
+            android:exported="false" />
+        <activity
+            android:name=".menu_Routine"
+            android:exported="false" />
+        <activity
             android:name=".exerciseScheduler"
             android:exported="true">
 

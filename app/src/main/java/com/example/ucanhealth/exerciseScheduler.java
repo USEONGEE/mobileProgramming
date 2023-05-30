@@ -43,11 +43,11 @@ import android.widget.Toast;
 
 public class exerciseScheduler extends AppCompatActivity {
 
-
     public String readDay = null;
     public String str = null;
+    public String selectedDay; // 캘린더에서 선택된 날짜
     public CalendarView calendarView;
-    public TextView diaryTextView; //운동한 분량을 보여주는 공간
+    public TextView diaryTextView; // 운동한 분량을 보여주는 공간
 
     private UcanHealthDbHelper dbHelper;
     private SQLiteDatabase db_write;
@@ -57,8 +57,7 @@ public class exerciseScheduler extends AppCompatActivity {
     private ListAdapter adapter = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_scheduler);
 
@@ -67,41 +66,35 @@ public class exerciseScheduler extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView); // 위의 달력 표시
         diaryTextView = findViewById(R.id.diaryTextView); // 달력에서 자신이 고른 날짜를 표시
 
-        //listview 선언
+        // listview 선언
         listview = (ListView) findViewById(R.id.exercise_listview); // 운동한 데이터를 db에서 가져온다.
 
-
-
-        //데이터 베이스 선언
+        // 데이터 베이스 선언
         dbHelper = new UcanHealthDbHelper(getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
 
-        //임의 값 대입
-        //inialdata();
+        // 임의 값 대입
+        // inialdata();
 
         UcanHealthDbHelper dbHelper = new UcanHealthDbHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
-        {
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
-            {
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 int month_new = month + 1;
 
                 String date = year + "-" + month_new + "-" + dayOfMonth;
 
-
                 diaryTextView.setVisibility(View.VISIBLE); // 다이어리뷰
                 listview.setVisibility(View.VISIBLE); // 다이어리뷰
                 diaryTextView.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth)); // 선택한 날짜 표기
-
                 String date_data;
 
-                if(month_new >= 10)
-                    date_data = year+"-"+month_new+"-"+dayOfMonth;
+                if (month_new >= 10)
+                    date_data = year + "-" + month_new + "-" + dayOfMonth;
                 else
-                    date_data = year+"-0"+month_new+"-"+dayOfMonth;
+                    date_data = year + "-0" + month_new + "-" + dayOfMonth;
 
                 getString(date_data);
 
@@ -114,18 +107,21 @@ public class exerciseScheduler extends AppCompatActivity {
 
         ArrayList<String> datas = new ArrayList<>();
 
-
         String[][] values = {}; // 저장될 string 배열 선언
 
         int count_numbers = 0;
 
-        //Cursor cursor = db_read.rawQuery("SELECT * FROM UserExerciseLog where date_ = ?", new String[]{"2023-05-23"});
+        // Cursor cursor = db_read.rawQuery("SELECT * FROM UserExerciseLog where date_ =
+        // ?", new String[]{"2023-05-23"});
         db_read = dbHelper.getReadableDatabase();
 
-        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME, UcanHealth.UserExerciseLogEntry.COLUMN_DATE,date_data);
+        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE, date_data);
 
-        Cursor cursor = db_read.rawQuery(sql,null);
-        //Cursor cursor = db_read.rawQuery("SELECT * FROM " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + " WHERE id = ?", new String[]{"2023-05-17"});
+        Cursor cursor = db_read.rawQuery(sql, null);
+        // Cursor cursor = db_read.rawQuery("SELECT * FROM " +
+        // UcanHealth.UserExerciseLogEntry.TABLE_NAME + " WHERE id = ?", new
+        // String[]{"2023-05-17"});
 
         int count = cursor.getCount(); // 해당 요일의 데이터 행 갯수
 
@@ -142,7 +138,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
         String values_exercise_cut = new String();
 
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
 
             values_exercise_cut = "Type of Exercise: " + cursor.getString(1);
             values_exercise_cut += "\nRepetition: " + Integer.toString(cursor.getInt(2));
@@ -155,49 +151,53 @@ public class exerciseScheduler extends AppCompatActivity {
 
             datas.add(values_exercise_cut);
 
-
             /*
-            datas.add(cursor.getString(1));
-            datas.add(Integer.toString(cursor.getInt(2)));
-            datas.add(Integer.toString(cursor.getInt(3)));
-            datas.add(Integer.toString(cursor.getInt(4)));
-            datas.add(Integer.toString(cursor.getInt(5)));
-            datas.add(cursor.getString(6));
-            datas.add(Integer.toString(cursor.getInt(7)));
-            datas.add(Integer.toString(cursor.getInt(8)));
-*/
+             * datas.add(cursor.getString(1));
+             * datas.add(Integer.toString(cursor.getInt(2)));
+             * datas.add(Integer.toString(cursor.getInt(3)));
+             * datas.add(Integer.toString(cursor.getInt(4)));
+             * datas.add(Integer.toString(cursor.getInt(5)));
+             * datas.add(cursor.getString(6));
+             * datas.add(Integer.toString(cursor.getInt(7)));
+             * datas.add(Integer.toString(cursor.getInt(8)));
+             */
             /*
-            exercise[i] = cursor.getString(1);
-            repetition[i] = cursor.getInt(2);
-            weight[i] = cursor.getInt(3);
-            set_count[i] = cursor.getInt(4);
-            total_set_count[i] = cursor.getInt(5);
-            date_[i] = cursor.getString(6);
-            total_exercise_time[i] = cursor.getInt(7);
-            exercise_order[i] = cursor.getInt(8);
-            */
+             * exercise[i] = cursor.getString(1);
+             * repetition[i] = cursor.getInt(2);
+             * weight[i] = cursor.getInt(3);
+             * set_count[i] = cursor.getInt(4);
+             * total_set_count[i] = cursor.getInt(5);
+             * date_[i] = cursor.getString(6);
+             * total_exercise_time[i] = cursor.getInt(7);
+             * exercise_order[i] = cursor.getInt(8);
+             */
 
             count_numbers++;
 
             Log.i("cursor_test", "succuse");
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1,datas);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datas);
 
         listview.setAdapter(adapter);
 
         /*
-        for(int i = 0; i < count; i++){
-            //exerciseData_View.setText("Type of Exercise: " + exercise[i] + "\nRepetition: " + repetition[i]  + "\nweight: " +  weight[i]  + "\nset_count: " +  set_count[i]  + "\ntotal_set_count: " +  total_set_count[i]  + "\ndate: " +  date_[i]  + "\ntotal_exercise_time: " +  total_exercise_time[i]  + "\nexercise_order: " +  exercise_order[i]+"\n\ncount_numbers: "+count_numbers);
-
-        }*/
+         * for(int i = 0; i < count; i++){
+         * //exerciseData_View.setText("Type of Exercise: " + exercise[i] +
+         * "\nRepetition: " + repetition[i] + "\nweight: " + weight[i] + "\nset_count: "
+         * + set_count[i] + "\ntotal_set_count: " + total_set_count[i] + "\ndate: " +
+         * date_[i] + "\ntotal_exercise_time: " + total_exercise_time[i] +
+         * "\nexercise_order: " +
+         * exercise_order[i]+"\n\ncount_numbers: "+count_numbers);
+         * 
+         * }
+         */
 
         db_read.close();
     }
 
-    //임의 값 삽입
-    public void inialdata(){
+    // 임의 값 삽입
+    public void inialdata() {
 
         ContentValues cv = new ContentValues();
         long inialData;
@@ -234,7 +234,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
         inialData = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, cv);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
 
             cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, "neck exercise");
             cv.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, 10);
@@ -250,31 +250,27 @@ public class exerciseScheduler extends AppCompatActivity {
     }
 
     @SuppressLint("WrongConstant")
-    public void removeDiary(String readDay)
-    {
+    public void removeDiary(String readDay) {
         FileOutputStream fos;
-        try
-        {
+        try {
             fos = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS);
             String content = "";
             fos.write((content).getBytes());
             fos.close();
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void InitializeLayout() {
-        //toolBar를 통해 App Bar 생성
+        // toolBar를 통해 App Bar 생성
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
 
-        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
+        // App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.menuicon);
 
@@ -285,8 +281,7 @@ public class exerciseScheduler extends AppCompatActivity {
                 drawer,
                 toolbar,
                 R.string.open,
-                R.string.closed
-        );
+                R.string.closed);
         drawer.addDrawerListener(actionBarDrawerToggle);
         // navigation 객체에 nav_view의 참조 반환
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -294,21 +289,20 @@ public class exerciseScheduler extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
-                switch (menuItem.getItemId())
-                {
+                Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");
+                switch (menuItem.getItemId()) {
                     case R.id.MainPage:
-                        Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
+                        Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent1);
                         Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.LouinePage:
-                        Intent intent2 = new Intent(getApplicationContext(),TimerActivity.class);
+                        Intent intent2 = new Intent(getApplicationContext(), TimerActivity.class);
                         startActivity(intent2);
                         Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.SchdulerPage:
-                        Intent intent3 = new Intent(getApplicationContext(),exerciseScheduler.class);
+                        Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent3);
                         Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
                         break;
@@ -319,5 +313,17 @@ public class exerciseScheduler extends AppCompatActivity {
         });
     }
 
-}
+    private final View.OnClickListener addRoutineToDB = new View.OnClickListener() {
+        public void onClick(View view) {
+            String[] projection = {
+                    UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                    UcanHealth.UserExerciseLogEntry.COLUMN_REPS,
+                    UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT,
+                    UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
+                    UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME,
+                    UcanHealth.UserExerciseLogEntry.COLUMN_ORDER
+            };
+        }
+    };
 
+}
