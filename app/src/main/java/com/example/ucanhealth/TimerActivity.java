@@ -332,6 +332,8 @@ public class TimerActivity extends AppCompatActivity {
     public void setInfoFromDB() {
         if(!cursor.moveToNext()) {
 //            endExercise();
+            Log.i("finish", "finish");
+            Toast.makeText(this, "All routine is doen.", Toast. LENGTH_SHORT).show();
             finish();
             return;
         }
