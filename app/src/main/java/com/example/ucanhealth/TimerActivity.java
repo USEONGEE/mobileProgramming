@@ -121,7 +121,7 @@ public class TimerActivity extends AppCompatActivity {
                 int curId = item.getItemId();
 
                 switch (curId) {
-                    case R.id.menuitem1:
+                    case R.id.calender:
                         Toast.makeText(getApplicationContext(), "메뉴아이템 1 선택", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menuitem2:

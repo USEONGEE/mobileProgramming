@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
                 switch (menuItem.getItemId())
                 {
-                    case R.id.menuitem1:
-                        Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
+                    case R.id.calender:
+                        Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
+                        startActivity(intent);
                         break;
                     case R.id.menuitem2:
                         Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
