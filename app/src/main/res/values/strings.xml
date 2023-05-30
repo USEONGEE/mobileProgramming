@@ -4,4 +4,14 @@
     <string name="closed">closed</string>
     <string name="add_routine">루틴 추가하기</string>
     <string name="gym">gym</string>
+    <string name = "exercise">Exercise</string>
+    <string name = "rest">REST</string>
+    <string name = "start">START</string>
+    <string name = "stop">STOP</string>
+    <string name = "weight">Weight:</string>
+    <string name = "number">Number:</string>
+    <string name = "kg">kg</string>
+    <string name = "times">times</string>
+    <string name = "set_label">Set:</string>
+    <string name = "set">set</string>
 </resources>
