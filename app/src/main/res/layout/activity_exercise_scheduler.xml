@@ -19,17 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/closeBtn"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="620dp"
-            android:background="#FFFFFF"
-            android:text="x"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+<!--        <Button-->
+<!--            android:id="@+id/closeBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="620dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:text="x"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="1.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -65,20 +65,22 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="360dp"
+            android:background="#FFFFFF"
             android:text="가져오기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
 
         <Button
             android:id="@+id/addExampleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:layout_marginBottom="408dp"
+            android:layout_marginBottom="416dp"
+            android:background="#FFFFFF"
             android:text="예제 추가"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
         <ListView
             android:id="@+id/exercise_listview"

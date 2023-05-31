@@ -12,10 +12,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -27,11 +27,8 @@ import androidx.annotation.NonNull;
 import android.content.Context;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.database.Cursor;
 
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
@@ -46,7 +43,6 @@ import java.util.List;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
-import android.view.LayoutInflater;
 
 public class exerciseScheduler extends AppCompatActivity {
 
@@ -70,7 +66,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
-    Button closeBtn;
+//    Button closeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +116,49 @@ public class exerciseScheduler extends AppCompatActivity {
             }
         });
 
+        //        getButton.setOnClickListener(addRoutineToDB);
+
+
+        addExampleButton = findViewById(R.id.addExampleBtn);
+        addExampleButton.setOnClickListener(openExerciseSettingDialog);
+    }
+
+    private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Dialog();
+        }
+    };
+
+    public void Dialog() {
+        dialog = new ExerciseSettingDialog_using_schduler(exerciseScheduler.this);
+        dialog.setTitle(R.string.add_routine);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                setButtonInRoutineListContainer();
+            }
+        });
+        dialog.show();
+    }
+
+    public void setButtonInRoutineListContainer() {
+        // 현재 container에 있는 리스트 지우기
+
+        for (int i = todayExerciseListContainer.getChildCount() - 1; i >= 0; i--) {
+            View view = todayExerciseListContainer.getChildAt(i);
+            todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
+        }
+
+
         getButton = findViewById(R.id.getBtn);
         getButton.setOnClickListener(addRoutineToDB);
         addExampleButton = findViewById(R.id.addExampleBtn);
         addExampleButton.setOnClickListener(addExample);
-        closeBtn = findViewById(R.id.closeBtn);
-        closeBtn.setOnClickListener(closeActivity);
+//        closeBtn = findViewById(R.id.closeBtn);
+//        closeBtn.setOnClickListener(closeActivity);
     }
 
     // 5.30에 재민님이 수정
@@ -172,7 +205,7 @@ public class exerciseScheduler extends AppCompatActivity {
             datas.add(data);
         }
 
-        ExerciseListAdapter adapter = new ExerciseListAdapter(this, datas);
+        exerciseScheduler.exerciseListAdapter adapter = new exerciseListAdapter(this, datas);
         listview.setAdapter(adapter);
     }
 
@@ -367,11 +400,11 @@ public class exerciseScheduler extends AppCompatActivity {
         }
     };
 
-    public class ExerciseListAdapter extends BaseAdapter {
+    public class exerciseListAdapter extends BaseAdapter {
         private Context context;
         private ArrayList<String> dataList;
 
-        public ExerciseListAdapter(Context context, ArrayList<String> dataList) {
+        public exerciseListAdapter(Context context, ArrayList<String> dataList) {
             this.context = context;
             this.dataList = dataList;
         }
@@ -405,5 +438,6 @@ public class exerciseScheduler extends AppCompatActivity {
             return convertView;
         }
     }
+
 
 }
