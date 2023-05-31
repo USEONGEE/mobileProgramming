@@ -80,7 +80,7 @@
                 android:id="@+id/restTime"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type rest time"
+                android:hint="Type rest time in seconds"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
