@@ -78,16 +78,16 @@ public class RecommendRoutine extends AppCompatActivity {
                 Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
                 switch (menuItem.getItemId())
                 {
-                    case R.id.calender:
-                        Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
+                    case R.id.MainPage:
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.recommendRoutine:
                         Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
                         startActivity(intent2);
                         break;
-                    case R.id.MainPage:
-                        Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
+                    case R.id.SchdulerPage:
+                        Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent3);
                         break;
                 }
