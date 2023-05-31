@@ -307,15 +307,40 @@
                                 android:text="@string/rest" />
 
                             <!-- rest 타이머 -->
-                            <EditText
-                                android:id="@+id/timer_rest"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="11:11"
-                                android:inputType="time"
-                                android:textSize = "10sp"
-                                android:textAlignment="center"
-                                android:layout_gravity = "center"/>
+                                android:layout_height="match_parent" >
+
+                                <EditText
+                                    android:id="@+id/timer_rest_minute"
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="time"
+                                    android:text="01"
+                                    android:textAlignment="center"
+                                    android:textSize="10sp"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"   />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":"
+                                    android:layout_centerInParent="true"/>
+
+                                <EditText
+                                    android:id="@+id/timer_rest_second"
+                                    android:layout_width="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:inputType="time"
+                                    android:text="30"
+                                    android:textAlignment="center"
+                                    android:textSize="10sp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"   />
+                            </RelativeLayout>
+
+
                         </FrameLayout>
                     </LinearLayout>
 
