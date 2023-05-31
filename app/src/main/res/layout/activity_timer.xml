@@ -287,6 +287,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="0:00"
+                                android:textSize="30sp"
                                 android:textAlignment="center"
                                 android:layout_gravity = "center"/>
                         </FrameLayout>
@@ -318,13 +319,14 @@
                                     android:inputType="time"
                                     android:text="01"
                                     android:textAlignment="center"
-                                    android:textSize="10sp"
+                                    android:textSize="30sp"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"   />
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
+                                    android:textSize="30sp"
                                     android:layout_centerInParent="true"/>
 
                                 <EditText
@@ -335,7 +337,7 @@
                                     android:inputType="time"
                                     android:text="30"
                                     android:textAlignment="center"
-                                    android:textSize="10sp"
+                                    android:textSize="30sp"
                                     android:layout_alignParentRight="true"
                                     android:layout_centerVertical="true"   />
                             </RelativeLayout>

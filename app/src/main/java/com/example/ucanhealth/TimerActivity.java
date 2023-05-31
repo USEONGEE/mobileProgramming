@@ -57,7 +57,6 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         init();
-        ReadDB();
         btn_next.setOnClickListener(nextSetClickListener);
 
         this.settingSideBar();
@@ -327,6 +326,7 @@ public class TimerActivity extends AppCompatActivity {
             addSetCountToDb(set_count);
 
             if (set_count == total_set_count) {
+                Log.i("all set is done","all set is done");
                 setInfoFromDB();
             }
 
@@ -348,13 +348,14 @@ public class TimerActivity extends AppCompatActivity {
         String set_count = cursor.getString(3);
         String total_set_count = cursor.getString(4);
         String order = cursor.getString(7);
+        Log.i("order",String.valueOf(order));
 
-        // 조건문 -> 문자열 비교, 정수 비교 ********
-        if (set_count.equals(total_set_count)) {
-            cursor.moveToNext();
-            setInfoFromDB();
-            return;
-        }
+//        // 조건문 -> 문자열 비교, 정수 비교 ********
+//        if (set_count.equals(total_set_count)) {
+//            cursor.moveToNext();
+//            setInfoFromDB();
+//            return;
+//        }
 
         TextView_order.setText(order);
         currentSet.setText(set_count);
