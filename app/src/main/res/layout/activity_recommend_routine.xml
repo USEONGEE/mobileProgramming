@@ -35,21 +35,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="first" />
+                android:background="@drawable/rounded_button"
+                android:text="first"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/secondBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="second" />
+                android:background="@drawable/rounded_button"
+                android:text="second"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/thirdBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="third" />
+                android:background="@drawable/rounded_button"
+                android:text="third"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <FrameLayout
@@ -66,8 +72,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawerlayout"
-        app:headerLayout="@layout/header">
+        android:visibility="gone"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawerlayout">
 
     </com.google.android.material.navigation.NavigationView>
 
