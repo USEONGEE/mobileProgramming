@@ -81,7 +81,7 @@
             android:layout_marginEnd="106dp"
             android:layout_marginBottom="410dp"
             android:background="@drawable/rounded_button"
-            android:text="예제 추가"
+            android:text="루틴 추가"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
