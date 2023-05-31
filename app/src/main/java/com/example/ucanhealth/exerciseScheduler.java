@@ -62,6 +62,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
+    Button closeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -77,15 +78,10 @@ public class exerciseScheduler extends AppCompatActivity {
         //listview 선언
         listview = (ListView) findViewById(R.id.exercise_listview); // 운동한 데이터를 db에서 가져온다.
 
-
-
         //데이터 베이스 선언
         dbHelper = new UcanHealthDbHelper(getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
         db_read = dbHelper.getReadableDatabase();
-
-        //임의 값 대입
-        //inialdata();
 
         UcanHealthDbHelper dbHelper = new UcanHealthDbHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -120,6 +116,8 @@ public class exerciseScheduler extends AppCompatActivity {
         getButton.setOnClickListener(addRoutineToDB);
         addExampleButton = findViewById(R.id.addExampleBtn);
         addExampleButton.setOnClickListener(addExample);
+        closeBtn = findViewById(R.id.closeBtn);
+        closeBtn.setOnClickListener(closeActivity);
     }
 
     // 5.30에 재민님이 수정
@@ -322,6 +320,15 @@ public class exerciseScheduler extends AppCompatActivity {
                     Log.i("insert","success");
                 }
             }
+        }
+    };
+
+    private final View.OnClickListener closeActivity = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            db_read.close();
+            db_write.close();
+            finish();
         }
     };
 

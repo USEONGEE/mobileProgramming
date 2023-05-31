@@ -335,7 +335,7 @@ public class TimerActivity extends AppCompatActivity {
 
     public void setInfoFromDB() {
         if(!cursor.moveToNext()) {
-//            endExercise();
+            endExercise();
             Log.i("finish", "finish");
             Toast.makeText(this, "All routine is doen.", Toast. LENGTH_SHORT).show();
             finish();
@@ -349,13 +349,6 @@ public class TimerActivity extends AppCompatActivity {
         String total_set_count = cursor.getString(4);
         String order = cursor.getString(7);
         Log.i("order",String.valueOf(order));
-
-//        // 조건문 -> 문자열 비교, 정수 비교 ********
-//        if (set_count.equals(total_set_count)) {
-//            cursor.moveToNext();
-//            setInfoFromDB();
-//            return;
-//        }
 
         TextView_order.setText(order);
         currentSet.setText(set_count);
