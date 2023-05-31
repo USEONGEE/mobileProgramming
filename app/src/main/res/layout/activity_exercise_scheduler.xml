@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/back_color"
     tools:openDrawer="start"
     >
 
@@ -19,18 +20,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/closeBtn"
-            android:layout_width="34dp"
-            android:layout_height="42dp"
-            android:layout_marginBottom="620dp"
-            android:background="#FFFFFF"
-            android:text="home"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+<!--        <Button-->
+<!--            android:id="@+id/closeBtn"-->
+<!--            android:layout_width="78dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginBottom="388dp"-->
+<!--            android:background="@drawable/rounded_button"-->
+<!--            android:text="HOME"-->
+<!--            android:textColor="#ffffff"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.975"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -60,26 +61,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
+
         <Button
             android:id="@+id/getBtn"
             android:layout_width="78dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="360dp"
-            android:background="#FFFFFF"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="410dp"
+            android:background="@drawable/rounded_button"
             android:text="가져오기"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
         <Button
             android:id="@+id/addExampleBtn"
             android:layout_width="78dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="416dp"
-            android:background="#FFFFFF"
+            android:layout_marginEnd="106dp"
+            android:layout_marginBottom="410dp"
+            android:background="@drawable/rounded_button"
             android:text="예제 추가"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

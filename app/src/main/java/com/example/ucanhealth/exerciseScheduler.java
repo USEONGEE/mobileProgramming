@@ -46,7 +46,7 @@ import android.widget.Toast;
 
 public class exerciseScheduler extends AppCompatActivity {
 
-    private ExerciseSettingDialog_using_schduler dialog;
+    private ExerciseSettingDialog dialog;
     public String readDay = null;
     public String str = null;
     public String selectedDay; // 캘린더에서 선택된 날짜
@@ -69,6 +69,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
     Button closeBtn; // 메인 화면으로 바로 갈 수 있는 버튼
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class exerciseScheduler extends AppCompatActivity {
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
 
         addExampleButton = findViewById(R.id.addExampleBtn);
-        closeBtn = findViewById(R.id.closeBtn);
+//        closeBtn = findViewById(R.id.closeBtn);
 
         InitializeLayout();
 
@@ -120,14 +121,14 @@ public class exerciseScheduler extends AppCompatActivity {
             }
         });
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        closeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
@@ -139,7 +140,7 @@ public class exerciseScheduler extends AppCompatActivity {
     };
 
     public void Dialog() {
-        dialog = new ExerciseSettingDialog_using_schduler(exerciseScheduler.this);
+        dialog = new ExerciseSettingDialog(exerciseScheduler.this);
         dialog.setTitle(R.string.add_routine);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(true);
