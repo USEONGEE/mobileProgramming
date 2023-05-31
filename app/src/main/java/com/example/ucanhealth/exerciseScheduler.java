@@ -66,7 +66,7 @@ public class exerciseScheduler extends AppCompatActivity {
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
-//    Button closeBtn;
+    // Button closeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +147,6 @@ public class exerciseScheduler extends AppCompatActivity {
             View view = todayExerciseListContainer.getChildAt(i);
             todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
         }
-
 
         getButton = findViewById(R.id.getBtn);
         getButton.setOnClickListener(addRoutineToDB);
@@ -288,10 +287,9 @@ public class exerciseScheduler extends AppCompatActivity {
                         startActivity(intent1);
                         Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.LouinePage:
-                        Intent intent2 = new Intent(getApplicationContext(), TimerActivity.class);
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
                         startActivity(intent2);
-                        Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.SchdulerPage:
                         Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
@@ -411,6 +409,5 @@ public class exerciseScheduler extends AppCompatActivity {
             return convertView;
         }
     }
-
 
 }

@@ -122,8 +122,9 @@ public class TimerActivity extends AppCompatActivity {
                     case R.id.MainPage:
                         Toast.makeText(getApplicationContext(), "메뉴아이템 1 선택", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.LouinePage:
-                        Toast.makeText(getApplicationContext(), "메뉴아이템 2 선택", Toast.LENGTH_SHORT).show();
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        startActivity(intent2);
                         break;
                     case R.id.SchdulerPage:
                         Toast.makeText(getApplicationContext(), "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show();

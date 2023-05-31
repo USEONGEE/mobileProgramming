@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 
 public class FirstFragment extends Fragment {
-    public FirstFragment(){
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -26,6 +26,9 @@
 
 
         <activity
+            android:name=".RecommendRoutine"
+            android:exported="false" />
+        <activity
             android:name=".ThirdFragment"
             android:exported="false" />
         <activity

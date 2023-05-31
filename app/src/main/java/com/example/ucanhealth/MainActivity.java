@@ -97,8 +97,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.MainPage:
                         Toast.makeText(getApplicationContext(), "SelectedItem 1", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.LouinePage:
-                        Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        startActivity(intent2);
                         break;
                     case R.id.SchdulerPage:
                         Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);

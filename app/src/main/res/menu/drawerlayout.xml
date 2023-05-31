@@ -5,8 +5,8 @@
         android:id="@+id/MainPage"
         android:title="MainPage" />
     <item
-        android:id="@+id/LouinePage"
-        android:title="LouinePage" />
+        android:id="@+id/recommendRoutine"
+        android:title="추천 루틴" />
     <item
         android:id="@+id/SchdulerPage"
         android:title="SchdulerPage" />
