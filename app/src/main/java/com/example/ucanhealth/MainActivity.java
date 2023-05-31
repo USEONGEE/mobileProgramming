@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent);
                         break;
-                    case R.id.menuitem2:
-                        Toast.makeText(getApplicationContext(), "SelectedItem 2", Toast.LENGTH_SHORT).show();
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        startActivity(intent2);
                         break;
                     case R.id.menuitem3:
                         Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();

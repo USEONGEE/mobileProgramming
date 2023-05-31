@@ -123,8 +123,9 @@ public class TimerActivity extends AppCompatActivity {
                     case R.id.calender:
                         Toast.makeText(getApplicationContext(), "메뉴아이템 1 선택", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.menuitem2:
-                        Toast.makeText(getApplicationContext(), "메뉴아이템 2 선택", Toast.LENGTH_SHORT).show();
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        startActivity(intent2);
                         break;
                     case R.id.menuitem3:
                         Toast.makeText(getApplicationContext(), "메뉴아이템 3 선택", Toast.LENGTH_SHORT).show();

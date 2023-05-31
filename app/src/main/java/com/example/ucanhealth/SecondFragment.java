@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 
 
 public class SecondFragment extends Fragment {
-    public SecondFragment(){
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
