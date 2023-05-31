@@ -71,7 +71,6 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         ucanHealthDb_read = ucanHealthDbHelper.getReadableDatabase();
         ucanHealthDb_write = ucanHealthDbHelper.getWritableDatabase();
 
-
         // Spinner
         getSpinner();
 
@@ -86,7 +85,6 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         exerciseListContainer = findViewById(R.id.exerciseListContainer);
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
     }
-
 
     private final View.OnClickListener closeCurrentDialog = new View.OnClickListener() {
         @Override
@@ -108,8 +106,8 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         @Override
         public void onClick(View view) {
             String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " LIKE ?";
-            String[] selectionArgs = {getCurrentDate()};
-            Log.i("delete",getCurrentDate());
+            String[] selectionArgs = { getCurrentDate() };
+            Log.i("delete", getCurrentDate());
 
             ucanHealthDb_write.delete(UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                     selection,
@@ -135,29 +133,28 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         exerciseDialog.show();
     }
 
-    public List<String> readCategoryFromDb(){
+    public List<String> readCategoryFromDb() {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
                 "DISTINCT " + UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY
         };
 
-        String sortOrder =
-                UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY + " DESC";
+        String sortOrder = UcanHealth.ExerciseTypeEntry.COLUMN_CATEGORY + " DESC";
 
         Cursor cursor = ucanHealthDb_read.query(
-                UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                null,              // The columns for the WHERE clause
-                null,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME, // The table to query
+                projection, // The array of columns to return (pass null to get all)
+                null, // The columns for the WHERE clause
+                null, // The values for the WHERE clause
+                null, // don't group the rows
+                null, // don't filter by row groups
+                sortOrder // The sort order
         );
 
         List<String> category = new ArrayList<>();
         category.add("NO SELECT");
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String item = cursor.getString(0); // 0번째 인덱스의 데이터 가져오기
             category.add(item);
         }
@@ -168,7 +165,7 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
     };
 
     public void getSpinner() {
-//        List<String> dataList = readCategoryFromDb();
+        // List<String> dataList = readCategoryFromDb();
         String[] dataList = {
                 "back", "chest", "shoulder", "leg", "arm", "core"
         };
@@ -192,10 +189,9 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         });
     }
 
-
     public void setButtonInExerciseListContainer() {
         // 현재 container에 있는 리스트 지우기
-        for (int i = exerciseListContainer.getChildCount() - 1;  i >= 0; i--) {
+        for (int i = exerciseListContainer.getChildCount() - 1; i >= 0; i--) {
             View view = exerciseListContainer.getChildAt(i);
             exerciseListContainer.removeView(view);
         }
@@ -207,7 +203,7 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         // + routine을 추가하는 다이얼로그에서 이용할 DB를 좀 더 상세하게 생각해보아야 함 (완료)
         List<String> exerciseList = readExerciseListFromDb(currCategory);
 
-        for (int i = 0 ; i < exerciseList.size(); i++) {
+        for (int i = 0; i < exerciseList.size(); i++) {
             String exercise = exerciseList.get(i);
             Button button = new Button(getContext());
             button.setText(exercise);
@@ -223,7 +219,7 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
 
     public void setButtonInRoutineListContainer() {
         // 현재 container에 있는 리스트 지우기
-        for (int i = todayExerciseListContainer.getChildCount() - 1;  i >= 0; i--) {
+        for (int i = todayExerciseListContainer.getChildCount() - 1; i >= 0; i--) {
             View view = todayExerciseListContainer.getChildAt(i);
             todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
 
@@ -231,14 +227,13 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
 
         Cursor cursor = ucanHealthDbHelper.getRoutineByDate(ucanHealthDb_read, getCurrentDate());
 
-        while(cursor.moveToNext()) {
-            Log.i("makeButton","success");
+        while (cursor.moveToNext()) {
+            Log.i("makeButton", "success");
             Button button = new Button(getContext());
             String exercise = cursor.getString(0);
             String reps = cursor.getString(1).toString();
             String weight = cursor.getString(2).toString();
             String totalSet = cursor.getString(4).toString();
-            
             String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
             button.setText(text);
 
@@ -254,10 +249,11 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
 
     /**
      * DB에서 특정 카테고리에 포함된 운동종목 리스트를 반환하는 메소드
+     * 
      * @param selectedItem -> 선택된 카테고리
      * @return exerciseList -> 카테고리에 해당하는 모든 운동종목 리스트
      */
-    public List<String> readExerciseListFromDb(@NonNull String selectedItem){
+    public List<String> readExerciseListFromDb(@NonNull String selectedItem) {
         // Query 결과로 받아올 column 정의하기
         String[] projection = {
                 UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE
@@ -269,22 +265,21 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
         String[] selectionArgs = { selectedItem, "1" };
 
         // 정렬
-        String sortOrder =
-                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE + " DESC";
+        String sortOrder = UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE + " DESC";
 
         // Queyr 결과를 담은 cursor 가져오기
         Cursor cursor = ucanHealthDb_read.query(
-                UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME, // The table to query
+                projection, // The array of columns to return (pass null to get all)
+                selection, // The columns for the WHERE clause
+                selectionArgs, // The values for the WHERE clause
+                null, // don't group the rows
+                null, // don't filter by row groups
+                sortOrder // The sort order
         );
 
         List<String> exerciseList = new ArrayList<>();
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String item = cursor.getString(0); // 0번째 인덱스의 데이터 가져오기
             exerciseList.add(item);
         }
@@ -296,6 +291,7 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
 
     /**
      * exerciseListContainer에 포함된 버튼을 누르면 루틴을 추가하기 위한 다이얼로그를 생성
+     * 
      * @param selectedExercise -> 운동 종목
      * @reuturn null
      */
@@ -315,7 +311,7 @@ public class ExerciseSettingDialog_using_schduler extends Dialog {
     }
 
     public void ModifyRoutineDialog(String selectedRoutine) {
-        modifyRoutineDialog = new modifyRoutineDialog(getContext(),selectedRoutine);
+        modifyRoutineDialog = new modifyRoutineDialog(getContext(), selectedRoutine);
         modifyRoutineDialog.getWindow().setGravity(Gravity.CENTER);
         modifyRoutineDialog.setCancelable(true);
         // 호출한 다이얼로그가 종료되면 실행할 함수

@@ -49,13 +49,13 @@ public class RecommendRoutine extends AppCompatActivity {
     }
 
     public void InitializeLayout() {
-        //toolBar를 통해 App Bar 생성
+        // toolBar를 통해 App Bar 생성
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
 
-        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
+        // App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.menuicon);
 
@@ -66,8 +66,7 @@ public class RecommendRoutine extends AppCompatActivity {
                 drawer,
                 toolbar,
                 R.string.open,
-                R.string.closed
-        );
+                R.string.closed);
         drawer.addDrawerListener(actionBarDrawerToggle);
         // navigation 객체에 nav_view의 참조 반환
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -75,19 +74,19 @@ public class RecommendRoutine extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
-                switch (menuItem.getItemId())
-                {
-                    case R.id.SchdulerPage:
-                        Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
+                Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");
+                switch (menuItem.getItemId()) {
+                    case R.id.MainPage:
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.recommendRoutine:
                         Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
                         startActivity(intent2);
                         break;
-                    case R.id.menuitem3:
-                        Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
+                    case R.id.SchdulerPage:
+                        Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
+                        startActivity(intent3);
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
@@ -97,12 +96,12 @@ public class RecommendRoutine extends AppCompatActivity {
     }
 
     public void onFragmentChanged(int index) {
-        if(index == 1) {
+        if (index == 1) {
             // getSupportFragmentManager()을 사용하면 오류임
             getFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
         } else if (index == 2) {
             getFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
-        }else if(index == 3){
+        } else if (index == 3) {
             getFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
         }
     }
