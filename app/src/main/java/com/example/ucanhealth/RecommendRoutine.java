@@ -78,7 +78,7 @@ public class RecommendRoutine extends AppCompatActivity {
                 Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
                 switch (menuItem.getItemId())
                 {
-                    case R.id.calender:
+                    case R.id.SchdulerPage:
                         Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent);
                         break;

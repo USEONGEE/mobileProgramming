@@ -66,7 +66,8 @@ public class exerciseScheduler extends AppCompatActivity {
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
-    // Button closeBtn;
+
+    Button closeBtn; // 메인 화면으로 바로 갈 수 있는 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class exerciseScheduler extends AppCompatActivity {
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
 
         addExampleButton = findViewById(R.id.addExampleBtn);
+        closeBtn = findViewById(R.id.closeBtn);
 
         InitializeLayout();
 
@@ -117,6 +119,16 @@ public class exerciseScheduler extends AppCompatActivity {
                 getString(date_data);
             }
         });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {

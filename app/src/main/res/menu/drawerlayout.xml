@@ -10,4 +10,7 @@
     <item
         android:id="@+id/SchdulerPage"
         android:title="SchdulerPage" />
+    <item
+        android:id="@+id/menuitem3"
+        android:title="menuitem3" />
 </menu>

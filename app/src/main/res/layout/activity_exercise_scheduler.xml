@@ -19,17 +19,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <Button-->
-<!--            android:id="@+id/closeBtn"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="620dp"-->
-<!--            android:background="#FFFFFF"-->
-<!--            android:text="x"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="1.0"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
+        <Button
+            android:id="@+id/closeBtn"
+            android:layout_width="34dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="620dp"
+            android:background="#FFFFFF"
+            android:text="home"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -61,8 +62,8 @@
 
         <Button
             android:id="@+id/getBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="360dp"
             android:background="#FFFFFF"
@@ -73,8 +74,8 @@
 
         <Button
             android:id="@+id/addExampleBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="416dp"
             android:background="#FFFFFF"
