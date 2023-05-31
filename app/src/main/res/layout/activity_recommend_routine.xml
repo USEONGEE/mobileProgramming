@@ -72,9 +72,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:visibility="gone"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/drawerlayout">
         app:menu="@menu/drawerlayout"
         app:headerLayout="@layout/header">
 
