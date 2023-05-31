@@ -254,7 +254,7 @@ public class exerciseScheduler extends AppCompatActivity {
                 Log.i("clicked",String.valueOf(menuItem.getItemId()) + " selected");
                 switch (menuItem.getItemId())
                 {
-                    case R.id.calender:
+                    case R.id.MainPage:
                         Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent1);
                         break;
@@ -262,8 +262,9 @@ public class exerciseScheduler extends AppCompatActivity {
                         Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
                         startActivity(intent2);
                         break;
-                    case R.id.menuitem3:
-                        Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
+                    case R.id.SchdulerPage:
+                        Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
+                        startActivity(intent3);
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
