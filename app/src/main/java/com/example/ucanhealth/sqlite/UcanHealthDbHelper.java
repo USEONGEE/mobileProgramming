@@ -89,4 +89,24 @@ public class UcanHealthDbHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public Cursor getExerciseTypeDataBar(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT sum(total_set_count), sum(repetition), exercise_type from ExerciseType, UserExerciseLog where ExerciseType.exercise = UserExerciseLog.exercise group by ExerciseType.exercise_type order by exercise_order desc;", null);
+        return c;
+    }
+
+    // 운동 이름
+    public Cursor getExerciseName(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT exercise from ExerciseType where exercise_type = 'back';", null);
+        return c;
+    }
+
+    // 운동별 달성률
+    public Cursor getExerciseDataBar(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT total_set_count, repetition from ExerciseType, UserExerciseLog where ExerciseType.exercise = UserExerciseLog.exercise and ExerciseType.exercise_type = 'back';", null);
+        return c;
+    }
 }
