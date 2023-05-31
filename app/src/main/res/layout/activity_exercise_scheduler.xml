@@ -21,11 +21,12 @@
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_width="34dp"
+            android:layout_height="42dp"
             android:layout_marginBottom="620dp"
             android:background="#FFFFFF"
-            android:text="x"
+            android:text="home"
+            android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -61,21 +62,24 @@
 
         <Button
             android:id="@+id/getBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="56dp"
-            android:layout_marginBottom="284dp"
-            android:text="오늘로 가져오기"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="360dp"
+            android:background="#FFFFFF"
+            android:text="가져오기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
         <Button
             android:id="@+id/addExampleBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="204dp"
-            android:layout_marginBottom="284dp"
-            android:text="예제 추가하기"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="416dp"
+            android:background="#FFFFFF"
+            android:text="예제 추가"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -94,6 +98,24 @@
             app:layout_constraintTop_toBottomOf="@+id/diaryTextView"
             />
 
+        <ScrollView
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="103dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.73">
+
+            <LinearLayout
+                android:id="@+id/todayExerciseListContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -106,6 +128,5 @@
         app:headerLayout="@layout/header">
 
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
