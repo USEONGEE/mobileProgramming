@@ -75,6 +75,8 @@
         android:visibility="gone"
         app:headerLayout="@layout/header"
         app:menu="@menu/drawerlayout">
+        app:menu="@menu/drawerlayout"
+        app:headerLayout="@layout/header">
 
     </com.google.android.material.navigation.NavigationView>
 
