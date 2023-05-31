@@ -110,7 +110,7 @@
             android:id="@+id/closeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="Done 이거 켜지는 거맞음?"
             android:background="@drawable/rounded_button2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/addBtn"

@@ -79,6 +79,9 @@ public class exerciseScheduler extends AppCompatActivity {
 
         InitializeLayout();
 
+        addExampleButton = findViewById(R.id.addExampleBtn);
+        addExampleButton.setOnClickListener(openExerciseSettingDialog);
+
         calendarView = findViewById(R.id.calendarView); // 위의 달력 표시
         diaryTextView = findViewById(R.id.diaryTextView); // 달력에서 자신이 고른 날짜를 표시
 
@@ -112,15 +115,8 @@ public class exerciseScheduler extends AppCompatActivity {
                     date_data = year + "-0" + month_new + "-" + dayOfMonth;
 
                 getString(date_data);
-
             }
         });
-
-        //        getButton.setOnClickListener(addRoutineToDB);
-
-
-        addExampleButton = findViewById(R.id.addExampleBtn);
-        addExampleButton.setOnClickListener(openExerciseSettingDialog);
     }
 
     private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {
@@ -156,9 +152,6 @@ public class exerciseScheduler extends AppCompatActivity {
         getButton = findViewById(R.id.getBtn);
         getButton.setOnClickListener(addRoutineToDB);
         addExampleButton = findViewById(R.id.addExampleBtn);
-        addExampleButton.setOnClickListener(addExample);
-//        closeBtn = findViewById(R.id.closeBtn);
-//        closeBtn.setOnClickListener(closeActivity);
     }
 
     // 5.30에 재민님이 수정
@@ -313,6 +306,7 @@ public class exerciseScheduler extends AppCompatActivity {
     }
 
     private final View.OnClickListener addRoutineToDB = new View.OnClickListener() {
+
         public void onClick(View view) {
             // 오늘 날짜에 이미 운동 리스트가 있다면 어떻게 할 것인지에 대한 로직이 추가되어야 함
 
@@ -378,27 +372,6 @@ public class exerciseScheduler extends AppCompatActivity {
 
         return String.format("%04d-%02d-%02d", year, month, day);
     }
-
-    View.OnClickListener addExample = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String[] exercise = { "pull up", "pull down", "bench press" };
-            for (int i = 0; i < 3; i++) {
-                ContentValues values = new ContentValues();
-
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, exercise[i]);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, i);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, i);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, i + 3);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, "");
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, 0);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 1);
-                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, "2023-05-29");
-
-                db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
-            }
-        }
-    };
 
     public class exerciseListAdapter extends BaseAdapter {
         private Context context;
