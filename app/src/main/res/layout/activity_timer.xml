@@ -21,34 +21,37 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawerlayout"
-        app:headerLayout="@layout/header">
+        android:visibility="visible"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawerlayout">
 
     </com.google.android.material.navigation.NavigationView>
 
     <!--전체 레이아웃-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/button2_color">
 
         <!--이미지-->
         <ImageView
             android:id="@+id/stateImage"
             android:layout_width="200dp"
             android:layout_height="250dp"
+            android:background="@color/button2_color"
             android:src="@drawable/pose"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.2" />
 
         <!--이미지 아래 들어가는 전체 부분-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="#D8D8D8"
+            android:background="@color/button2_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
@@ -58,84 +61,84 @@
 
             <!--exercise n 컨테이너-->
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id = "@+id/container_1"
+                android:id="@+id/container_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/rounded_button2"
                 app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/border">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id= "@+id/exercise"
+                    android:id="@+id/exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "@string/exercise"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:text="@string/exercise"
+                    android:textSize="20sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!--총 운동 컨테이너-->
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id = "@+id/container_2"
+                android:id="@+id/container_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/border"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/border">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id= "@+id/TextView_order"
+                    android:id="@+id/TextView_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "0"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:text="0"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:id= "@+id/slicer"
+                    android:id="@+id/slicer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "/"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:text="/"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:id= "@+id/total_exercise"
+                    android:id="@+id/total_exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "0"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:text="0"
+                    android:textSize="20sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!--weight,number,set가 들어가는 컨테이너-->
             <LinearLayout
-                android:id = "@+id/container_3"
+                android:id="@+id/container_3"
                 android:layout_width="250dp"
                 android:layout_height="220dp"
-                android:orientation= "vertical"
-                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/border"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/border">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <!--Weight를 담는 컨테이너-->
                 <LinearLayout
-                    android:id = "@+id/container_weight"
+                    android:id="@+id/container_weight"
                     android:layout_width="wrap_content"
-                    android:layout_height = "wrap_content">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                    android:id= "@+id/label_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "@string/weight"
-                    android:textSize="20sp"
-                    android:layout_margin = "5dp"/>
+                        android:id="@+id/label_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@string/weight"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/input_weight"
@@ -148,114 +151,115 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id= "@+id/label_kg"
+                        android:id="@+id/label_kg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text = "@string/kg"
-                        android:textSize="20sp"
-                        android:layout_margin = "5dp"/>
+                        android:layout_margin="5dp"
+                        android:text="@string/kg"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <!--Number를 담는 컨테이너-->
                 <LinearLayout
-                    android:id = "@+id/container_number"
+                    android:id="@+id/container_number"
                     android:layout_width="wrap_content"
-                    android:layout_height = "wrap_content">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id= "@+id/label_number"
+                        android:id="@+id/label_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text = "@string/number"
-                        android:textSize="20sp"
-                        android:layout_margin = "5dp"/>
+                        android:layout_margin="5dp"
+                        android:text="@string/number"
+                        android:textSize="20sp" />
 
                     <TextView
-                        android:id = "@+id/TextView_reps"
+                        android:id="@+id/TextView_reps"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems = "4"
+                        android:layout_margin="5dp"
                         android:background="#00ffffff"
-                        android:layout_margin = "5dp"/>
+                        android:ems="4" />
 
                     <TextView
-                        android:id= "@+id/label_times"
+                        android:id="@+id/label_times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text = "@string/times"
-                        android:textSize="20sp"
-                        android:layout_margin = "5dp"/>
+                        android:layout_margin="5dp"
+                        android:text="@string/times"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <!-- Set를 담는 컨테이너-->
                 <LinearLayout
-                    android:id = "@+id/container_set"
+                    android:id="@+id/container_set"
                     android:layout_width="wrap_content"
-                    android:layout_height = "wrap_content">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id= "@+id/label_set"
+                        android:id="@+id/label_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text = "@string/set_label"
-                        android:textSize="20sp"
-                        android:layout_margin = "5dp"/>
+                        android:layout_margin="5dp"
+                        android:text="@string/set_label"
+                        android:textSize="20sp" />
 
                     <LinearLayout
-                        android:id = "@+id/container_1_n"
+                        android:id="@+id/container_1_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent">
 
                         <TextView
-                            android:id= "@+id/current_set"
+                            android:id="@+id/current_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text = "1"
-                            android:textSize="20sp"
-                            android:layout_margin="5dp"/>
+                            android:layout_margin="5dp"
+                            android:text="1"
+                            android:textSize="20sp" />
 
                         <TextView
-                            android:id= "@+id/slicer_2"
+                            android:id="@+id/slicer_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text = "/"
-                            android:textSize="20sp"
-                            android:layout_margin="5dp"/>
+                            android:layout_margin="5dp"
+                            android:text="/"
+                            android:textSize="20sp" />
 
                         <TextView
-                            android:id= "@+id/TextView_totalSet"
+                            android:id="@+id/TextView_totalSet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text = ""
-                            android:textSize="20sp"
-                            android:layout_margin="5dp"/>
+                            android:layout_margin="5dp"
+                            android:text=""
+                            android:textSize="20sp" />
                     </LinearLayout>
 
                     <TextView
-                        android:id= "@+id/set_2"
+                        android:id="@+id/set_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text = "@string/set"
-                        android:textSize="20sp"
-                        android:layout_margin = "5dp"/>
+                        android:layout_margin="5dp"
+                        android:text="@string/set"
+                        android:textSize="20sp" />
 
                     <!-- 다음 세트 버튼-->
                     <Button
                         android:id="@+id/btn_next"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
-                        android:background="#8C92AC"
-                        android:text="next" />
+                        android:background="@drawable/rounded_button"
+                        android:text="next"
+                        android:textColor="#ffffff" />
 
                 </LinearLayout>
 
                 <!--타이머 컨테이너-->
                 <LinearLayout
-                    android:id = "@+id/container_timer"
+                    android:id="@+id/container_timer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -269,8 +273,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation = "vertical"
-                            android:background= "@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="vertical">
 
                             <!-- Add your layout here -->
 
@@ -278,68 +282,69 @@
                                 android:id="@+id/label_exercise"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/exercise"
-                                android:gravity = "center_horizontal" />
+                                android:gravity="center_horizontal"
+                                android:text="@string/exercise" />
 
                             <!-- exercise 타이머 -->
                             <TextView
                                 android:id="@+id/timer_exercise"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="0:00"
-                                android:textSize="30sp"
                                 android:textAlignment="center"
-                                android:layout_gravity = "center"/>
+                                android:textSize="30sp" />
                         </FrameLayout>
 
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation = "vertical"
-                            android:background= "@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id = "@+id/label_rest"
+                                android:id="@+id/label_rest"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textAlignment="center"
-                                android:layout_gravity = "center"
-                                android:text="@string/rest" />
+                                android:layout_gravity="center"
+                                android:text="@string/rest"
+                                android:textAlignment="center" />
 
                             <!-- rest 타이머 -->
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" >
+                                android:layout_height="match_parent">
 
                                 <EditText
                                     android:id="@+id/timer_rest_minute"
                                     android:layout_width="65dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
                                     android:inputType="time"
                                     android:text="01"
                                     android:textAlignment="center"
-                                    android:textSize="30sp"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_centerVertical="true"   />
+                                    android:textSize="30sp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:text=":"
-                                    android:textSize="30sp"
-                                    android:layout_centerInParent="true"/>
+                                    android:textSize="30sp" />
 
                                 <EditText
                                     android:id="@+id/timer_rest_second"
                                     android:layout_width="65dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
                                     android:layout_gravity="center"
                                     android:inputType="time"
                                     android:text="30"
                                     android:textAlignment="center"
-                                    android:textSize="30sp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"   />
+                                    android:textSize="30sp" />
                             </RelativeLayout>
 
 
@@ -356,30 +361,34 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background= "@drawable/border">
+                            android:background="@drawable/border">
 
                             <!-- exercise 버튼 -->
                             <Button
-                                android:id = "@+id/btn_exercise"
+                                android:id="@+id/btn_exercise"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textSize = "10sp"
-                                android:text="@string/start" />
+                                android:background="@drawable/rounded_button"
+                                android:text="@string/start"
+                                android:textColor="#ffffff"
+                                android:textSize="10sp" />
                         </FrameLayout>
 
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background= "@drawable/border">
+                            android:background="@drawable/border">
 
                             <!-- rest 버튼 -->
                             <Button
-                                android:id = "@+id/btn_rest"
+                                android:id="@+id/btn_rest"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textSize = "10sp"
-                                android:text="@string/start" />
+                                android:background="@drawable/rounded_button"
+                                android:text="@string/start"
+                                android:textColor="#ffffff"
+                                android:textSize="10sp" />
                         </FrameLayout>
                     </LinearLayout>
                 </LinearLayout>
