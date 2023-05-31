@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId())
                 {
                     case R.id.MainPage:
-                        Intent intent = new Intent(getApplicationContext(), exerciseScheduler.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.recommendRoutine:
