@@ -50,6 +50,8 @@ public class TimerActivity extends AppCompatActivity {
     TextView TextView_timer_exercise;
     Cursor cursor;
     TextView TextView_total_exercise;
+    EditText timer_rest_minute;
+    EditText timer_rest_second;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +82,14 @@ public class TimerActivity extends AppCompatActivity {
         TextView_totalSet = findViewById(R.id.TextView_totalSet);
         TextView_timer_exercise = findViewById(R.id.timer_exercise);
         TextView_total_exercise = findViewById(R.id.total_exercise);
+        timer_rest_second = findViewById(R.id.timer_rest_second);
+        timer_rest_minute = findViewById(R.id.timer_rest_minute);
         // activity가 실행되면
         ReadDB();
         setInfoFromDB();
 
         TextView_total_exercise.setText(String.valueOf(getRoutineCount()));
+
     }
 
     /* 사이드 바 관련 함수 */
@@ -176,7 +181,7 @@ public class TimerActivity extends AppCompatActivity {
                                     // 카운트를 출력
                                     int minutes = count[0] / 60;
                                     int seconds = count[0] % 60;
-                                    timer_exercise[0].setText(String.format("%d:%02d", minutes, seconds));
+                                    timer_exercise[0].setText(String.format("%02d:%02d", minutes, seconds));
                                 }
                             });
                         }
@@ -343,9 +348,12 @@ public class TimerActivity extends AppCompatActivity {
         String weight = cursor.getString(2); // 2번째 인덱스의 데이터(weight) 가져오기
         String set_count = cursor.getString(3);
         String total_set_count = cursor.getString(4);
+        int restTime = Integer.parseInt(cursor.getString(6));
         String order = cursor.getString(7);
         Log.i("order", String.valueOf(order));
 
+        timer_rest_second.setText(String.format("%02d", restTime % 60));
+        timer_rest_minute.setText(String.format("%02d", (int) restTime / 60));
         TextView_order.setText(order);
         currentSet.setText(set_count);
         TextView_reps.setText(reps);
@@ -377,11 +385,31 @@ public class TimerActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE, getCurrentDate());
         values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME, minute * 60 + second);
-        long newRowId = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
+        long newRowId = db_write.insert(UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, null, values);
         if (newRowId == -1) {
             Log.i("insert", "end fail");
         } else {
             Log.i("insert", "end success");
         }
     };
+
+    public boolean isEnd() {
+        String[] projection = {
+                UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE
+        };
+        String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ?";
+        String[] selectionArgs = { getCurrentDate() };
+
+        Cursor cursor = db_read.query(
+                UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, // The table to query
+                projection, // The array of columns to return (pass null to get all)
+                selection, // The columns for the WHERE clause
+                selectionArgs, // The values for the WHERE clause
+                null, // don't group the rows
+                null, // don't filter by row groups
+                null // The sort order
+        );
+
+        return cursor.moveToNext();
+    }
 }
