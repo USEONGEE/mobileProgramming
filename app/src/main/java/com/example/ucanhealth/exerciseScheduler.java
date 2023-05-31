@@ -12,7 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,10 +68,9 @@ public class exerciseScheduler extends AppCompatActivity {
     private ArrayAdapter<String> exerciseListAdapter;
     private HashMap<String, List<String>> exerciseDataMap;
 
-
     Button getButton; // 오늘로 루틴 추가하는 버튼
     Button addExampleButton; // 예제 추가하는 버튼
-
+    Button closeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,45 +120,15 @@ public class exerciseScheduler extends AppCompatActivity {
             }
         });
 
-
-//        getButton.setOnClickListener(addRoutineToDB);
-
-
-          addExampleButton = findViewById(R.id.addExampleBtn);
-          addExampleButton.setOnClickListener(openExerciseSettingDialog);
+        getButton = findViewById(R.id.getBtn);
+        getButton.setOnClickListener(addRoutineToDB);
+        addExampleButton = findViewById(R.id.addExampleBtn);
+        addExampleButton.setOnClickListener(addExample);
+        closeBtn = findViewById(R.id.closeBtn);
+        closeBtn.setOnClickListener(closeActivity);
     }
 
-    private View.OnClickListener openExerciseSettingDialog = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Dialog();
-        }
-    };
-
-    public void Dialog() {
-        dialog = new ExerciseSettingDialog_using_schduler(exerciseScheduler.this);
-        dialog.setTitle(R.string.add_routine);
-        dialog.getWindow().setGravity(Gravity.CENTER);
-        dialog.setCancelable(true);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                setButtonInRoutineListContainer();
-            }
-        });
-        dialog.show();
-    }
-
-    public void setButtonInRoutineListContainer() {
-        // 현재 container에 있는 리스트 지우기
-
-        for (int i = todayExerciseListContainer.getChildCount() - 1; i >= 0; i--) {
-            View view = todayExerciseListContainer.getChildAt(i);
-            todayExerciseListContainer.removeView(view); // 레이아웃에서 TextView 제거
-        }
-
-    }
-
+    // 5.30에 재민님이 수정
     public void getString(String date_data) {
         ArrayList<String> datas = new ArrayList<>();
 
@@ -173,7 +142,7 @@ public class exerciseScheduler extends AppCompatActivity {
         };
 
         String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
-        String[] selectionArgs = {date_data};
+        String[] selectionArgs = { date_data };
 
         Cursor cursor = db_read.query(
                 UcanHealth.UserExerciseLogEntry.TABLE_NAME, // 테이블 이름
@@ -182,15 +151,16 @@ public class exerciseScheduler extends AppCompatActivity {
                 selectionArgs, // WHERE 절의 값
                 null,
                 null,
-                null
-        );
+                null);
 
         // 가져온 데이터를 `datas` 리스트에 추가
         while (cursor.moveToNext()) {
-            String exercise = cursor.getString(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE));
+            String exercise = cursor
+                    .getString(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE));
             int reps = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_REPS));
             int weight = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT));
-            int set = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT));
+            int set = cursor
+                    .getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT));
             // 필요한 다른 열들도 가져오세요
 
             String data = "운동 종류: " + exercise + "\n"
@@ -206,6 +176,44 @@ public class exerciseScheduler extends AppCompatActivity {
         listview.setAdapter(adapter);
     }
 
+    public class ExerciseListAdapter extends BaseAdapter {
+        private Context context;
+        private ArrayList<String> dataList;
+
+        public ExerciseListAdapter(Context context, ArrayList<String> dataList) {
+            this.context = context;
+            this.dataList = dataList;
+        }
+
+        @Override
+        public int getCount() {
+            return dataList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return dataList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            }
+
+            TextView textView = convertView.findViewById(android.R.id.text1);
+            String item = dataList.get(position);
+            textView.setText(item);
+
+            return convertView;
+        }
+    }
 
     @SuppressLint("WrongConstant")
     public void removeDiary(String readDay) {
@@ -317,6 +325,15 @@ public class exerciseScheduler extends AppCompatActivity {
                     Log.i("insert", "success");
                 }
             }
+        }
+    };
+
+    private final View.OnClickListener closeActivity = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            db_read.close();
+            db_write.close();
+            finish();
         }
     };
 

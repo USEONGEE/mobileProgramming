@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setButtonInRoutineListContainer();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setButtonInRoutineListContainer();
+    }
+
     public void init() {
         addRoutineBtn = findViewById(R.id.addButton);
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);

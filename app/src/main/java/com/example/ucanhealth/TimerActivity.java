@@ -57,7 +57,6 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         init();
-        ReadDB();
         btn_next.setOnClickListener(nextSetClickListener);
 
         this.settingSideBar();
@@ -200,7 +199,8 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isPaused = false; // 일시정지 여부 판단을 위한 변수
 
     private void RestClicked() {
-        EditText timer_rest = findViewById(R.id.timer_rest);
+        EditText timer_rest_minute = findViewById(R.id.timer_rest_minute);
+        EditText timer_rest_second = findViewById(R.id.timer_rest_second);
         Button btn_rest = findViewById(R.id.btn_rest);
 
         btn_rest.setOnClickListener(new View.OnClickListener() {
@@ -216,22 +216,25 @@ public class TimerActivity extends AppCompatActivity {
                         countDownTimer = null;
                     }
                     // editText에서 시간을 가져와서 타이머 설정
-                    String timeStr = timer_rest.getText().toString();
-                    String[] timeArr = timeStr.split(":");
-                    int minute = Integer.parseInt(timeArr[0]);
-                    int second = Integer.parseInt(timeArr[1]);
+
+                    int minute = Integer.parseInt(timer_rest_minute.getText().toString());
+                    int second = Integer.parseInt(timer_rest_second.getText().toString());
+
                     long timeInMillis = (minute * 60 + second) * 1000;
                     countDownTimer = new CountDownTimer(timeInMillis, 1000) {
                         @Override
                         public void onTick(long l) {
                             long minutes = TimeUnit.MILLISECONDS.toMinutes(l);
                             long seconds = TimeUnit.MILLISECONDS.toSeconds(l) - TimeUnit.MINUTES.toSeconds(minutes);
-                            timer_rest.setText(String.format("%02d:%02d", minutes, seconds));
+                            timer_rest_minute.setText(String.format("%02d", minutes));
+                            timer_rest_second.setText(String.format("%02d", seconds));
                         }
 
                         @Override
                         public void onFinish() {
-                            timer_rest.setText("00:00");
+                            timer_rest_minute.setText(String.valueOf("01"));
+                            timer_rest_second.setText(String.valueOf("30"));
+
                             btn_rest.setText(getString(R.string.start));
                             countDownTimer = null;
                         }
@@ -318,6 +321,7 @@ public class TimerActivity extends AppCompatActivity {
             addSetCountToDb(set_count);
 
             if (set_count == total_set_count) {
+                Log.i("all set is done", "all set is done");
                 setInfoFromDB();
             }
 
@@ -326,7 +330,7 @@ public class TimerActivity extends AppCompatActivity {
 
     public void setInfoFromDB() {
         if (!cursor.moveToNext()) {
-            // endExercise();
+            endExercise();
             Log.i("finish", "finish");
             Toast.makeText(this, "All routine is doen.", Toast.LENGTH_SHORT).show();
             finish();
@@ -339,13 +343,7 @@ public class TimerActivity extends AppCompatActivity {
         String set_count = cursor.getString(3);
         String total_set_count = cursor.getString(4);
         String order = cursor.getString(7);
-
-        // 조건문 -> 문자열 비교, 정수 비교 ********
-        if (set_count.equals(total_set_count)) {
-            cursor.moveToNext();
-            setInfoFromDB();
-            return;
-        }
+        Log.i("order", String.valueOf(order));
 
         TextView_order.setText(order);
         currentSet.setText(set_count);
