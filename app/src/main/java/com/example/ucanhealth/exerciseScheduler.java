@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -121,90 +122,91 @@ public class exerciseScheduler extends AppCompatActivity {
         addExampleButton.setOnClickListener(addExample);
     }
 
+    // 5.30에 재민님이 수정
     public void getString(String date_data) {
-
         ArrayList<String> datas = new ArrayList<>();
 
+        // 데이터베이스에서 데이터를 가져오는 로직
+        String[] projection = {
+                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE, // 운동 이름
+                UcanHealth.UserExerciseLogEntry.COLUMN_REPS, // 반복 횟수
+                UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, // 무게
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT, // 총 횟수
+                // 필요한 다른 열 추가시 추가 생성
+        };
 
-        String[][] values = {}; // 저장될 string 배열 선언
+        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
+        String[] selectionArgs = {date_data};
 
-        int count_numbers = 0;
+        Cursor cursor = db_read.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME, // 테이블 이름
+                projection, // 가져올 열들
+                selection, // WHERE 절
+                selectionArgs, // WHERE 절의 값
+                null,
+                null,
+                null
+        );
 
-        //Cursor cursor = db_read.rawQuery("SELECT * FROM UserExerciseLog where date_ = ?", new String[]{"2023-05-23"});
+        // 가져온 데이터를 `datas` 리스트에 추가
+        while (cursor.moveToNext()) {
+            String exercise = cursor.getString(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE));
+            int reps = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_REPS));
+            int weight = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT));
+            int set = cursor.getInt(cursor.getColumnIndexOrThrow(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT));
+            // 필요한 다른 열들도 가져오세요
 
-        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME, UcanHealth.UserExerciseLogEntry.COLUMN_DATE,date_data);
+            String data = "운동 종류: " + exercise + "\n"
+                    + "반복: " + reps + "회\n"
+                    + "세트: " + set + "세트\n"
+                    + "무게: " + weight + "KG\n";
+            // 필요한 다른 데이터 추가시 수정
 
-        Cursor cursor = db_read.rawQuery(sql,null);
-        //Cursor cursor = db_read.rawQuery("SELECT * FROM " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + " WHERE id = ?", new String[]{"2023-05-17"});
-
-        int count = cursor.getCount(); // 해당 요일의 데이터 행 갯수
-
-        String exercise[] = new String[500];
-        int repetition[] = new int[500];
-        int weight[] = new int[500];
-        int set_count[] = new int[500];
-        int total_set_count[] = new int[500];
-        String date_[] = new String[500];
-        int total_exercise_time[] = new int[500];
-        int exercise_order[] = new int[500];
-
-        cursor.moveToFirst();
-
-        String values_exercise_cut = new String();
-
-        for(int i = 0; i < count; i++){
-
-            values_exercise_cut = "Type of Exercise: " + cursor.getString(1);
-            values_exercise_cut += "\nRepetition: " + Integer.toString(cursor.getInt(2));
-            values_exercise_cut += "\nweight: " + Integer.toString(cursor.getInt(3));
-            values_exercise_cut += "\nset_count" + Integer.toString(cursor.getInt(4));
-            values_exercise_cut += "\ntotal_set_count" + Integer.toString(cursor.getInt(5));
-            values_exercise_cut += "\ndate" + cursor.getString(6);
-            values_exercise_cut += "\ntotal_exercise_time" + Integer.toString(cursor.getInt(7));
-            values_exercise_cut += "\nexercise_order" + Integer.toString(cursor.getInt(8));
-
-            datas.add(values_exercise_cut);
-
-
-            /*
-            datas.add(cursor.getString(1));
-            datas.add(Integer.toString(cursor.getInt(2)));
-            datas.add(Integer.toString(cursor.getInt(3)));
-            datas.add(Integer.toString(cursor.getInt(4)));
-            datas.add(Integer.toString(cursor.getInt(5)));
-            datas.add(cursor.getString(6));
-            datas.add(Integer.toString(cursor.getInt(7)));
-            datas.add(Integer.toString(cursor.getInt(8)));
-*/
-            /*
-            exercise[i] = cursor.getString(1);
-            repetition[i] = cursor.getInt(2);
-            weight[i] = cursor.getInt(3);
-            set_count[i] = cursor.getInt(4);
-            total_set_count[i] = cursor.getInt(5);
-            date_[i] = cursor.getString(6);
-            total_exercise_time[i] = cursor.getInt(7);
-            exercise_order[i] = cursor.getInt(8);
-            */
-
-            count_numbers++;
-
-            Log.i("cursor_test", "succuse");
+            datas.add(data);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1,datas);
-
+        ExerciseListAdapter adapter = new ExerciseListAdapter(this, datas);
         listview.setAdapter(adapter);
-
-        /*
-        for(int i = 0; i < count; i++){
-            //exerciseData_View.setText("Type of Exercise: " + exercise[i] + "\nRepetition: " + repetition[i]  + "\nweight: " +  weight[i]  + "\nset_count: " +  set_count[i]  + "\ntotal_set_count: " +  total_set_count[i]  + "\ndate: " +  date_[i]  + "\ntotal_exercise_time: " +  total_exercise_time[i]  + "\nexercise_order: " +  exercise_order[i]+"\n\ncount_numbers: "+count_numbers);
-
-        }*/
-
     }
 
+    public class ExerciseListAdapter extends BaseAdapter {
+        private Context context;
+        private ArrayList<String> dataList;
+
+        public ExerciseListAdapter(Context context, ArrayList<String> dataList) {
+            this.context = context;
+            this.dataList = dataList;
+        }
+
+        @Override
+        public int getCount() {
+            return dataList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return dataList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            }
+
+            TextView textView = convertView.findViewById(android.R.id.text1);
+            String item = dataList.get(position);
+            textView.setText(item);
+
+            return convertView;
+        }
+    }
 
     @SuppressLint("WrongConstant")
     public void removeDiary(String readDay)
