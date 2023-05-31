@@ -262,7 +262,7 @@ public class exerciseScheduler extends AppCompatActivity {
                         Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
                         startActivity(intent2);
                         break;
-                    case R.id.menuitem3:
+                    case R.id.main:
                         Toast.makeText(getApplicationContext(), "SelectedItem 3", Toast.LENGTH_SHORT).show();
                         break;
                 }
