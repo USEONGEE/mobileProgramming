@@ -6,15 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,14 +40,15 @@ import java.util.concurrent.TimeUnit;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private static final String TAG = "TimerActivity"; // 오류 발생시 로그캣 찍어보려고 만들어둔 변수.
+    private static final String TAG = "TimerActivity";  //오류 발생시 로그캣 찍어보려고 만들어둔 변수.
     private UcanHealthDbHelper dbHelper;
     private SQLiteDatabase db_write;
     private SQLiteDatabase db_read;
     TextView exercise;
     TextView input_weight;
     Button btn_next;
-    TextView totalSet;
+    Button goPrevious;
+    Button goNext;
     TextView currentSet;
     TextView TextView_order;
     TextView TextView_reps;
@@ -53,6 +59,13 @@ public class TimerActivity extends AppCompatActivity {
     EditText timer_rest_minute;
     EditText timer_rest_second;
 
+    int numOfExercise;
+    int indexCurrentExercise;
+    EndExerciseDialog endExerciseDialog;
+
+    // 운동 목록을 보여주는 ArrayList
+    ArrayList<Exercise> exerciseArrayList;
+    ArrayList<Integer> notClearExerciseIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +73,8 @@ public class TimerActivity extends AppCompatActivity {
 
         init();
         btn_next.setOnClickListener(nextSetClickListener);
+        goPrevious.setOnClickListener(goPreviousExercise);
+        goNext.setOnClickListener(goNextExercise);
 
         this.settingSideBar();
         this.ExerciseClicked();
@@ -67,15 +82,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void init() {
+
         dbHelper = new UcanHealthDbHelper(this.getApplicationContext());
         db_write = dbHelper.getWritableDatabase();
         db_read = dbHelper.getReadableDatabase();
 
         exercise = findViewById(R.id.exercise);
         input_weight = findViewById(R.id.input_weight);
-
         btn_next = findViewById(R.id.btn_next);
-        totalSet = findViewById(R.id.totalSet);
         currentSet = findViewById(R.id.current_set);
         TextView_order = findViewById(R.id.TextView_order);
         TextView_reps = findViewById(R.id.TextView_reps);
@@ -84,15 +98,52 @@ public class TimerActivity extends AppCompatActivity {
         TextView_total_exercise = findViewById(R.id.total_exercise);
         timer_rest_second = findViewById(R.id.timer_rest_second);
         timer_rest_minute = findViewById(R.id.timer_rest_minute);
-        // activity가 실행되면
-        ReadDB();
-        setInfoFromDB();
+        goPrevious = findViewById(R.id.goPreviousBtn);
+        goNext = findViewById(R.id.goNextBtn);
 
-        TextView_total_exercise.setText(String.valueOf(getRoutineCount()));
+        ReadDB();
+        // 운동 리스트
+        exerciseArrayList = new ArrayList<>();
+        // 끝나지 않은 운동 인덱스 리스트
+        notClearExerciseIndex = new ArrayList<>();
+        // 총 루틴 수를 가져옴
+        numOfExercise = getRoutineCount() - 1;
+        // exerciseArrayList에 db에서 읽어온 데이터 저장
+        setInfoFromDB();
+        Log.i("numOfexerciseArrayList",String.valueOf(exerciseArrayList.size()));
+        // 수행이 끝나지 않은 운동의 index를 저장
+        getNotClearExerciseIndex();
+        getPreviousExerciseTime();
+        // 이미 끝난 운동인지 여부 확인
+        if (isEnd()) {
+            endTimerActivity();
+        }
+        indexCurrentExercise = notClearExerciseIndex.get(0);
+        setUI();
 
     }
 
-    /* 사이드 바 관련 함수 */
+    public class Exercise {
+        String item;
+        int reps;
+        float weight;
+        int set_count;
+        int total_set_count;
+        int rest_time;
+        int order;
+
+        // set_count를 늘리는 함수
+        public void addSetCount() {
+            set_count++;
+        }
+
+        // 현재 운동이 끝났는지 확인하는 함수
+        public boolean isDone(){
+            return set_count == total_set_count;
+        }
+    }
+
+    /*사이드 바 관련 함수*/
     public void settingSideBar() {
         // toolbar 생성
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -111,12 +162,13 @@ public class TimerActivity extends AppCompatActivity {
                 drawer,
                 toolbar,
                 R.string.open,
-                R.string.closed);
+                R.string.closed
+        );
 
-        // 사이드 바 클릭 리스너
+        //사이드 바 클릭 리스너
         drawer.addDrawerListener(actionBarDrawerToggle);
 
-        // 사이드 바 아이템 클릭 이벤트 설정
+        //사이드 바 아이템 클릭 이벤트 설정
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -159,13 +211,14 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    /* Exercise 버튼 동작 함수 */
+
+    /*Exercise 버튼 동작 함수*/
     public void ExerciseClicked() {
         Button btn_exercise = findViewById(R.id.btn_exercise);
-        final TextView[] timer_exercise = { findViewById(R.id.timer_exercise) };
+        final TextView[] timer_exercise = {findViewById(R.id.timer_exercise)};
 
-        final int[] count = { 0 };
-        final Timer[] timer = { null };
+        final int[] count = {0};
+        final Timer[] timer = {null};
 
         btn_exercise.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,10 +254,10 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
-    /* Rest 버튼 동작 함수 */
-    // 사용자에게 직접 restTime을 입력 받을 수 있도록 editText로 구성하였습니다.
-    private CountDownTimer countDownTimer = null; // rest 카운트다운 타이머
-    private boolean isPaused = false; // 일시정지 여부 판단을 위한 변수
+    /*Rest 버튼 동작 함수*/
+    //사용자에게 직접 restTime을 입력 받을 수 있도록 editText로 구성하였습니다.
+    private CountDownTimer countDownTimer = null;   //rest 카운트다운 타이머
+    private boolean isPaused = false;   //일시정지 여부 판단을 위한 변수
 
     private void RestClicked() {
         EditText timer_rest_minute = findViewById(R.id.timer_rest_minute);
@@ -234,14 +287,13 @@ public class TimerActivity extends AppCompatActivity {
                         public void onTick(long l) {
                             long minutes = TimeUnit.MILLISECONDS.toMinutes(l);
                             long seconds = TimeUnit.MILLISECONDS.toSeconds(l) - TimeUnit.MINUTES.toSeconds(minutes);
-                            timer_rest_minute.setText(String.format("%02d", minutes));
-                            timer_rest_second.setText(String.format("%02d", seconds));
+                            timer_rest_minute.setText(String.format("%02d",minutes));
+                            timer_rest_second.setText(String.format("%02d",seconds));
                         }
 
                         @Override
                         public void onFinish() {
-                            timer_rest_minute.setText(String.valueOf("01"));
-                            timer_rest_second.setText(String.valueOf("30"));
+                            endRest();
 
                             btn_rest.setText(getString(R.string.start));
                             countDownTimer = null;
@@ -255,7 +307,8 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
-    /* 운동 시작시 DB에서 데이터를 모두 가져오는 함수 */
+
+    /*운동 시작시 DB에서 데이터를 모두 가져오는 함수*/
     public void ReadDB() {
         String[] projection = {
                 UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
@@ -268,18 +321,19 @@ public class TimerActivity extends AppCompatActivity {
                 UcanHealth.UserExerciseLogEntry.COLUMN_ORDER,
         };
 
-        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
+        String sortOrder =
+                UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
         String selection = UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
-        String[] selectionArgs = { getCurrentDate() };
+        String[] selectionArgs = {getCurrentDate()};
 
         cursor = db_read.query(
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME, // The table to query
-                projection, // The array of columns to return (pass null to get all)
-                selection, // The columns for the WHERE clause
-                selectionArgs, // The values for the WHERE clause
-                null, // don't group the rows
-                null, // don't filter by row groups
-                sortOrder // The sort order
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
         );
     }
 
@@ -292,81 +346,50 @@ public class TimerActivity extends AppCompatActivity {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
-    public void addSetCountToDb(int value) {
-        ContentValues values = new ContentValues();
-
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, value);
-
-        String selection = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " = ? AND " +
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ? ";
-        String[] selectionArgs = {
-                TextView_order.getText().toString(),
-                getCurrentDate()
-        };
-
-        int result = db_write.update(
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-        Log.i("addSetCountToDb", "value is " + String.valueOf(value));
-
-        if (result == 0) {
-            Log.i("addSetCountToDb", "update fail.");
-        } else {
-            Log.i("addSetCountToDb", "update success.");
-        }
-
+    // 현재 운동 정보를 UI에 보여주는 함수
+    // 특정 운동이 끝나거나, 화면 전환 시에 호출됨.
+    // exerciseArrayList.get(indexCurrentExercise).
+    public void setUI() {
+        exercise.setText(exerciseArrayList.get(indexCurrentExercise).item);
+        input_weight.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).weight));
+        currentSet.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).set_count));
+        TextView_order.setText(String.valueOf(indexCurrentExercise + 1));
+        TextView_reps.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).reps));
+        TextView_total_exercise.setText(String.valueOf(numOfExercise + 1));
+        TextView_totalSet.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).total_set_count));
+        timer_rest_second.setText(String.format("%02d",(int) exerciseArrayList.get(indexCurrentExercise).rest_time % 60));
+        timer_rest_minute.setText(String.format("%02d",(int) exerciseArrayList.get(indexCurrentExercise).rest_time / 60));
     }
-
-    public View.OnClickListener nextSetClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int set_count = Integer.parseInt(currentSet.getText().toString());
-            int total_set_count = Integer.parseInt(TextView_totalSet.getText().toString());
-            set_count++;
-            currentSet.setText(String.valueOf(set_count));
-            addSetCountToDb(set_count);
-
-            if (set_count == total_set_count) {
-                Log.i("all set is done", "all set is done");
-                setInfoFromDB();
-            }
-
-        }
-    };
 
     public void setInfoFromDB() {
-        if (!cursor.moveToNext()) {
-            endExercise();
-            Log.i("finish", "finish");
-            Toast.makeText(this, "All routine is doen.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
+        while(cursor.moveToNext()) {
+            Exercise object = new Exercise();
+            object.item = cursor.getString(0);
+            object.reps = Integer.parseInt(cursor.getString(1));
+            object.weight = Float.valueOf(cursor.getString(2));
+            object.set_count = Integer.parseInt(cursor.getString(3));
+            object.total_set_count = Integer.parseInt(cursor.getString(4));
+            object.rest_time = Integer.parseInt(cursor.getString(6));
+            object.order = Integer.parseInt(cursor.getString(7));
+
+            exerciseArrayList.add(object);
+            Log.i("TimerActivity : setInfoFromDb","setINfoFromDb is called");
         }
-
-        String item = cursor.getString(0); // 0번째 인덱스의 데이터(exercise) 가져오기
-        String reps = cursor.getString(1);
-        String weight = cursor.getString(2); // 2번째 인덱스의 데이터(weight) 가져오기
-        String set_count = cursor.getString(3);
-        String total_set_count = cursor.getString(4);
-        int restTime = Integer.parseInt(cursor.getString(6));
-        String order = cursor.getString(7);
-        Log.i("order", String.valueOf(order));
-
-        timer_rest_second.setText(String.format("%02d", restTime % 60));
-        timer_rest_minute.setText(String.format("%02d", (int) restTime / 60));
-        TextView_order.setText(order);
-        currentSet.setText(set_count);
-        TextView_reps.setText(reps);
-        exercise.setText(item);
-        input_weight.setText(weight);
-        TextView_totalSet.setText(total_set_count);
     }
 
+    // 완료되지 않은 운동의 index를 가져와서 보여줌
+    public void getNotClearExerciseIndex() {
+        Log.i("numOfExercise",String.valueOf(numOfExercise));
+        for(int i =0;i<=numOfExercise; i++) {
+            if(!exerciseArrayList.get(i).isDone()) {
+                notClearExerciseIndex.add((Integer) i);
+            }
+        }
+    }
+
+    // 총 운동 수를 가져옴
     private int getRoutineCount() {
-        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'",
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME,
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                 UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
                 getCurrentDate());
         Cursor cursor = db_read.rawQuery(sql, null);
@@ -379,39 +402,194 @@ public class TimerActivity extends AppCompatActivity {
         return count;
     }
 
-    public void endExercise() {
+    // 모든 운동이 종료되었는지를 확인하는 함수
+    public boolean isEnd() {
+        if(indexCurrentExercise > numOfExercise) {
+            return true;
+        }
+        return notClearExerciseIndex.isEmpty();
+    }
+
+    // isEnd()가 true라면은 실행되는 함순
+    public void endTimerActivity() {
+        // 오늘 수행한 운동량을 db에 저장
         String[] totalExerciseTime = TextView_timer_exercise.getText().toString().split(":");
         int minute = Integer.parseInt(totalExerciseTime[0]);
         int second = Integer.parseInt(totalExerciseTime[1]);
+        if(minute + second != 0) { // 수행한 시간이 0이라면 기록 안 함
+            ContentValues values = new ContentValues();
+            values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE, getCurrentDate());
+            values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME, minute * 60 + second);
+            try {
+                long newRowId = db_write.insert(UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, null, values);
+                if (newRowId == -1) {
+                    Log.i("insert", "end fail");
+                } else {
+                    Log.i("insert", "end success");
+                }
+            } catch(Exception e) {
+                String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ? ";
+                String[] selectionArgs = {
+                        getCurrentDate()
+                };
+                db_write.update(
+                        UcanHealth.TotalExerciseTimeEntry.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+            }
+        }
 
-        ContentValues values = new ContentValues();
-        values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE, getCurrentDate());
-        values.put(UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME, minute * 60 + second);
-        long newRowId = db_write.insert(UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, null, values);
-        if (newRowId == -1) {
-            Log.i("insert", "end fail");
-        } else {
-            Log.i("insert", "end success");
+        db_read.close();
+        db_write.close();
+        Toast.makeText(getApplicationContext(),"all routine is done. ",Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    // next버튼을 누르거나 쉬는 시간이 종료되었을 때 실행되는 함수.
+    public void endRest() {
+        int value = Integer.parseInt((String)currentSet.getText());
+        value++;
+        // 먼저 UI에서 세트를 하나 높혀줌
+        currentSet.setText(String.valueOf(value));
+        // 그리고 object도 늘려줌
+        exerciseArrayList.get(indexCurrentExercise).addSetCount();
+
+        // 현재 세트가 끝났는지 확인함.
+        if(exerciseArrayList.get(indexCurrentExercise).isDone()) {
+            notClearExerciseIndex.remove((Integer)indexCurrentExercise);
+            if(isEnd()) {
+                endTimerActivity();
+            }
+            else{
+                indexCurrentExercise = notClearExerciseIndex.get(0);
+                setUI();
+            }
+        }
+        // if 안 끝났다 -> 아무일도 없음
+        // else 끝났다면??
+        // 1. notClearExerciseIndex에서 맨 앞에꺼 지움
+        // 2. isEnd()로 운동이 전부 끝났는지 확인함
+        // 2-1. 끝났다면 -> endTiemrActivity
+        // 2-2. 안끝났다면 -> notClearExerciseIndex 맨 앞에꺼를 indexCurrentExercise로 넣어줌 -> ui 보여주기
+    }
+
+    // 이전에 운동했던 운동 기록이 있다면 가져옴.
+    public void getPreviousExerciseTime() {
+        String[] projection = {
+                UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME
+        };
+
+        String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ? ";
+        String[] selectionArgs = {
+                getCurrentDate()
+        };
+        Cursor cursor  = db_read.query(
+                UcanHealth.TotalExerciseTimeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if(!cursor.moveToNext()) return;
+        int totalExerciseTime = Integer.parseInt(cursor.getString(0));
+        int minute = (int) totalExerciseTime / 60;
+        int second = totalExerciseTime % 60;
+        TextView_timer_exercise.setText(minute + ":" + second);
+
+    }
+
+    public View.OnClickListener nextSetClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(exerciseArrayList.get(indexCurrentExercise).isDone()) {
+                Toast.makeText(getApplicationContext(),"current set is doen.",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            endRest();
         }
     };
 
-    public boolean isEnd() {
-        String[] projection = {
-                UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE
+    public View.OnClickListener goPreviousExercise = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(indexCurrentExercise == 0) {
+                return;
+            }
+            indexCurrentExercise--;
+            setUI();
+        }
+    };
+    public View.OnClickListener goNextExercise = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(indexCurrentExercise == numOfExercise ) {
+                Log.i("TimerActivity : goNextExercise","indexCurrentExercise == numOfExercise");
+                Dialog();
+            }else {
+                indexCurrentExercise++;
+                setUI();
+            }
+        }
+    };
+
+    public void Dialog() {
+        endExerciseDialog = new EndExerciseDialog(TimerActivity.this);
+        endExerciseDialog.getWindow().setGravity(Gravity.CENTER);
+        endExerciseDialog.setCancelable(true);
+        endExerciseDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+            }
+        });
+        endExerciseDialog.show();
+    }
+
+    // 운동이 종료가 안되었음에도 불구하고 종료를 할 건지 묻는 다이얼로그
+    public class EndExerciseDialog extends Dialog {
+        Button closeBtn;
+        Button endBtn;
+        public EndExerciseDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.end_exercise);
+
+            init();
+
+            closeBtn.setOnClickListener(closeDialog);
+            endBtn.setOnClickListener(endDialog);
+        }
+
+        private void init() {
+            WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
+            lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            lpWindow.dimAmount = 0.8f;
+            getWindow().setAttributes(lpWindow);
+
+            closeBtn = findViewById(R.id.closeBtn);
+            endBtn = findViewById(R.id.endBtn);
+        }
+
+        private final View.OnClickListener closeDialog = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
         };
-        String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ?";
-        String[] selectionArgs = { getCurrentDate() };
 
-        Cursor cursor = db_read.query(
-                UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, // The table to query
-                projection, // The array of columns to return (pass null to get all)
-                selection, // The columns for the WHERE clause
-                selectionArgs, // The values for the WHERE clause
-                null, // don't group the rows
-                null, // don't filter by row groups
-                null // The sort order
-        );
-
-        return cursor.moveToNext();
+        private final View.OnClickListener endDialog = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endTimerActivity();
+                dismiss();
+            }
+        };
     }
 }
