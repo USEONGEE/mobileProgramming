@@ -88,6 +88,10 @@ public class RecommendRoutine extends AppCompatActivity {
                         Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
                         startActivity(intent3);
                         break;
+                    case R.id.statistic:
+                        Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
+                        startActivity(intent4);
+                        break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
                 return false;

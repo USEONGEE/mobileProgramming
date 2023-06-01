@@ -3,11 +3,15 @@
 
     <item
         android:id="@+id/MainPage"
-        android:title="MainPage" />
+        android:title="메인 페이지" />
     <item
         android:id="@+id/recommendRoutine"
         android:title="추천 루틴" />
     <item
         android:id="@+id/SchdulerPage"
-        android:title="SchdulerPage" />
+        android:title="캘린더" />
+    <item
+        android:id="@+id/statistic"
+        android:title="운동 통계" />
+
 </menu>
