@@ -75,10 +75,6 @@ public class TimerActivity extends AppCompatActivity {
         btn_next.setOnClickListener(nextSetClickListener);
         goPrevious.setOnClickListener(goPreviousExercise);
         goNext.setOnClickListener(goNextExercise);
-
-        this.settingSideBar();
-        this.ExerciseClicked();
-        this.RestClicked();
     }
 
     public void init() {
@@ -115,12 +111,18 @@ public class TimerActivity extends AppCompatActivity {
         getNotClearExerciseIndex();
         getPreviousExerciseTime();
         // 이미 끝난 운동인지 여부 확인
-        if (isEnd()) {
-            endTimerActivity();
+        
+        if(notClearExerciseIndex.isEmpty()){
+            indexCurrentExercise = 0;
+        }else{
+            indexCurrentExercise = notClearExerciseIndex.get(0);
         }
-        indexCurrentExercise = notClearExerciseIndex.get(0);
+
         setUI();
 
+        this.settingSideBar();
+        this.ExerciseClicked();
+        this.RestClicked();
     }
 
     public class Exercise {
@@ -139,7 +141,7 @@ public class TimerActivity extends AppCompatActivity {
 
         // 현재 운동이 끝났는지 확인하는 함수
         public boolean isDone(){
-            return set_count == total_set_count;
+            return set_count >= total_set_count;
         }
     }
 
@@ -221,12 +223,15 @@ public class TimerActivity extends AppCompatActivity {
         Button btn_exercise = findViewById(R.id.btn_exercise);
         final TextView[] timer_exercise = {findViewById(R.id.timer_exercise)};
 
-        final int[] count = {0};
+        final int[] count = {getPreviousExerciseTime()};
         final Timer[] timer = {null};
 
         btn_exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 모든 운동이 종료되었으면 클릭 거부
+                if(isEnd()) return;
+
                 // 타이머 객체를 생성, 타이머의 작동 방식을 설정
                 if (timer[0] == null) {
                     timer[0] = new Timer();
@@ -271,6 +276,9 @@ public class TimerActivity extends AppCompatActivity {
         btn_rest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 현재 운동이 종료되었으면 클릭 불가능
+                if(exerciseArrayList.get(indexCurrentExercise).isDone()) return;
+
                 if (countDownTimer != null && isPaused) { // 일시정지된 상태에서 Rest 버튼을 누른 경우
                     countDownTimer.cancel();
                     btn_rest.setText(getString(R.string.start));
@@ -384,6 +392,8 @@ public class TimerActivity extends AppCompatActivity {
     // 완료되지 않은 운동의 index를 가져와서 보여줌
     public void getNotClearExerciseIndex() {
         Log.i("numOfExercise",String.valueOf(numOfExercise));
+        // 전부다 수행됐다면 종료
+        if(numOfExercise == 0) return;
         for(int i =0;i<=numOfExercise; i++) {
             if(!exerciseArrayList.get(i).isDone()) {
                 notClearExerciseIndex.add((Integer) i);
@@ -411,6 +421,7 @@ public class TimerActivity extends AppCompatActivity {
         if(indexCurrentExercise > numOfExercise) {
             return true;
         }
+        Log.i("TimerActivity : isEnd",String.valueOf(notClearExerciseIndex.isEmpty()));
         return notClearExerciseIndex.isEmpty();
     }
 
@@ -428,20 +439,55 @@ public class TimerActivity extends AppCompatActivity {
                 long newRowId = db_write.insert(UcanHealth.TotalExerciseTimeEntry.TABLE_NAME, null, values);
                 if (newRowId == -1) {
                     Log.i("insert", "end fail");
+                    String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ? ";
+                    String[] selectionArgs = {
+                            getCurrentDate()
+                    };
+                    long id = db_write.update(
+                            UcanHealth.TotalExerciseTimeEntry.TABLE_NAME,
+                            values,
+                            selection,
+                            selectionArgs
+                    );
+                    if(id == 0 ){
+                        Log.i("TimerActivity : update total exercise time","fail");
+                    }else{
+                        Log.i("TimerActivity : update total exercise time","success");
+                    }
                 } else {
                     Log.i("insert", "end success");
                 }
             } catch(Exception e) {
-                String selection = UcanHealth.TotalExerciseTimeEntry.COLUMN_DATE + " = ? ";
+
+            }
+        }
+        for(Exercise object : exerciseArrayList) {
+            try {
+                ContentValues values = new ContentValues();
+                values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, object.set_count);
+
+                String selection = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " = ? AND " +
+                        UcanHealth.UserExerciseLogEntry.COLUMN_DATE + " = ?";
                 String[] selectionArgs = {
+                        String.valueOf(object.order),
                         getCurrentDate()
                 };
-                db_write.update(
-                        UcanHealth.TotalExerciseTimeEntry.TABLE_NAME,
+
+                long id = db_write.update(
+                        UcanHealth.UserExerciseLogEntry.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                if(id == 0) {
+                    Log.i("TimerActivity : update set count","fail");
+                }else{
+                    Log.i("TimerActivity : update set count","success");
+                }
+
+            } catch(Exception e) {
+                e.printStackTrace();
+                Log.i("TimerActivity : update set count","exception");
             }
         }
 
@@ -470,17 +516,14 @@ public class TimerActivity extends AppCompatActivity {
                 indexCurrentExercise = notClearExerciseIndex.get(0);
                 setUI();
             }
+        }else{
+            timer_rest_second.setText(String.format("%02d",(int) exerciseArrayList.get(indexCurrentExercise).rest_time % 60));
+            timer_rest_minute.setText(String.format("%02d",(int) exerciseArrayList.get(indexCurrentExercise).rest_time / 60));
         }
-        // if 안 끝났다 -> 아무일도 없음
-        // else 끝났다면??
-        // 1. notClearExerciseIndex에서 맨 앞에꺼 지움
-        // 2. isEnd()로 운동이 전부 끝났는지 확인함
-        // 2-1. 끝났다면 -> endTiemrActivity
-        // 2-2. 안끝났다면 -> notClearExerciseIndex 맨 앞에꺼를 indexCurrentExercise로 넣어줌 -> ui 보여주기
     }
 
     // 이전에 운동했던 운동 기록이 있다면 가져옴.
-    public void getPreviousExerciseTime() {
+    public int getPreviousExerciseTime() {
         String[] projection = {
                 UcanHealth.TotalExerciseTimeEntry.COLUMN_TOTAL_EXERCISE_TIME
         };
@@ -498,11 +541,13 @@ public class TimerActivity extends AppCompatActivity {
                 null,
                 null
         );
-        if(!cursor.moveToNext()) return;
+        if(!cursor.moveToNext()) return 0;
         int totalExerciseTime = Integer.parseInt(cursor.getString(0));
         int minute = (int) totalExerciseTime / 60;
         int second = totalExerciseTime % 60;
-        TextView_timer_exercise.setText(minute + ":" + second);
+        TextView_timer_exercise.setText(String.format("%02d:%02d",minute,second));
+
+        return totalExerciseTime;
 
     }
 
@@ -532,7 +577,11 @@ public class TimerActivity extends AppCompatActivity {
         public void onClick(View view) {
             if(indexCurrentExercise == numOfExercise ) {
                 Log.i("TimerActivity : goNextExercise","indexCurrentExercise == numOfExercise");
-                Dialog();
+                if(isEnd()) {
+                    endTimerActivity();
+                }else {
+                    Dialog();
+                }
             }else {
                 indexCurrentExercise++;
                 setUI();
