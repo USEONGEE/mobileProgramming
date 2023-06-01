@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/back_color"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="ADD ROUTINE"
+            android:text="운동 추가"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_kor"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp"
@@ -47,8 +50,10 @@
 
             <TextView
                 android:id="@+id/exercise"
-                android:text="Exercise Type"
+                android:text="운동"
                 android:textSize="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/font_kor"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 />
@@ -57,7 +62,9 @@
                 android:id="@+id/rep"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type Rep "
+                android:hint="반복 횟수"
+                android:backgroundTint = "@color/button1_color"
+                android:fontFamily="@font/font_kor"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
 
@@ -65,7 +72,9 @@
                 android:id="@+id/totalSet"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type totalSet"
+                android:hint="총 횟수"
+                android:backgroundTint = "@color/button1_color"
+                android:fontFamily="@font/font_kor"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
 
@@ -73,43 +82,48 @@
                 android:id="@+id/weight"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type weight "
+                android:hint="중량"
+                android:backgroundTint = "@color/button1_color"
+                android:fontFamily="@font/font_kor"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
             <EditText
                 android:id="@+id/restTime"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type rest time in seconds"
+                android:hint="휴식 시간"
+                android:backgroundTint = "@color/button1_color"
+                android:fontFamily="@font/font_kor"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="close"
             android:background="@drawable/rounded_button2"
+            android:text="close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.187"
+            app:layout_constraintHorizontal_bias="0.062"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintVertical_bias="0.448" />
 
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:text="ADD"
-            android:background="@drawable/rounded_button2"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.843"
+            app:layout_constraintHorizontal_bias="0.991"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintVertical_bias="0.448" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

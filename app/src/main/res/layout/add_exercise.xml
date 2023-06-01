@@ -22,10 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="ADD EXERCISE"
+            android:text="운동 목록"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_kor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +50,8 @@
             <TextView
                 android:id="@+id/category"
                 android:text="Health"
+                android:textColor="@color/black"
+                android:fontFamily="@font/multicore"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 />
@@ -62,16 +66,19 @@
                 android:id="@+id/exercise"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/multicore"
+                android:textSize="15dp"
                 android:hint="Type exercise "
                 android:layout_marginTop="20dp" />
+
         </LinearLayout>
 
         <Button
-            android:id="@+id/clsoeBtn"
-            android:layout_width="wrap_content"
+            android:id="@+id/closeBtn"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button2"
-            android:text="Done"
+            android:text="close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.062"
@@ -81,16 +88,18 @@
 
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="add"
-            android:background="@drawable/rounded_button2"
+            android:background="@drawable/rounded_button"
+            android:text="ADD"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.933"
+            app:layout_constraintHorizontal_bias="0.991"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.959" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.448" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

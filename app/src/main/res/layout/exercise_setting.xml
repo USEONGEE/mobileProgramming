@@ -23,7 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="Contents"
+            android:text="목록"
+            android:fontFamily="@font/font_kor"
+            android:textColor="@color/black"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp"
@@ -52,16 +54,21 @@
                 <TextView
                     android:layout_width="152dp"
                     android:layout_height="wrap_content"
-                    android:text="오늘 운동 목록" />
+                    android:text="오늘 운동 목록"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/font_kor"
+                    android:textColor="@color/black"
+                    />
 
                 <Button
                     android:id="@+id/deleteAllBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginLeft="60dp"
+                    android:background="@drawable/rounded_button"
+                    android:textColor="@color/white"
                     android:text="delete all"
-                    android:background="@drawable/rounded_button2"
-                    android:textSize="10dp"
-                    android:layout_marginLeft="50dp"/>
+                    android:textSize="10dp" />
             </LinearLayout>
 
             <ScrollView
@@ -84,7 +91,11 @@
                 <TextView
                     android:layout_width="152dp"
                     android:layout_height="wrap_content"
-                    android:text="운동 목록" />
+                    android:text="운동 목록"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/font_kor"
+                    android:textColor="@color/black"
+                    />
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
@@ -108,29 +119,30 @@
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="Done"
             android:background="@drawable/rounded_button2"
+            android:text="close"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/addBtn"
-            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.062"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.709" />
+            app:layout_constraintVertical_bias="0.448" />
 
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="add"
-            android:background="@drawable/rounded_button2"
+            android:background="@drawable/rounded_button"
+            android:text="ADD"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.937"
+            app:layout_constraintHorizontal_bias="0.991"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.971" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.448" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

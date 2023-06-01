@@ -10,4 +10,5 @@
     <color name="back_color">#DEEBF7</color>
     <color name="button1_color">#161475</color>
     <color name="button2_color">#99ccff</color>
+    <color name="sig_color">#304A6E</color>
 </resources>
