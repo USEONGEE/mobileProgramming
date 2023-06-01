@@ -63,6 +63,15 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+                <Button
+                    android:id="@+id/goPreviousBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이전"
+                    android:textSize="19sp"
+                    android:textColor="@color/black"
+                    android:background="#00000000"
+                    android:fontFamily="@font/multicore"/>
 
                 <TextView
                     android:id="@+id/exercise"
@@ -74,6 +83,15 @@
                     android:textColor="@color/black"
                     android:fontFamily="@font/multicore"
                     />
+                <Button
+                    android:id="@+id/goNextBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이후"
+                    android:textSize="19sp"
+                    android:textColor="@color/black"
+                    android:background="#00000000"
+                    android:fontFamily="@font/multicore"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
