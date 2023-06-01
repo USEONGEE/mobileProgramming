@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
             android:fontFamily="@font/recofont"
-            android:text="오늘의 운동!"
+            android:text="오늘의 운동"
             android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

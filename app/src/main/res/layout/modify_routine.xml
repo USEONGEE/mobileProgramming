@@ -22,10 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="MODIFY ROUTINE"
+            android:text="수정하기"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp"
+            android:fontFamily="@font/font_kor"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +49,10 @@
 
             <TextView
                 android:id="@+id/exercise"
-                android:text="Exercise Type"
+                android:text="운동종류"
                 android:textSize="20dp"
+                android:fontFamily="@font/font_kor"
+                android:textColor="@color/black"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 />
@@ -57,7 +61,9 @@
                 android:id="@+id/rep"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type Rep "
+                android:hint="반복 횟수 "
+                android:fontFamily="@font/font_kor"
+                android:backgroundTint = "@color/button1_color"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
 
@@ -65,7 +71,9 @@
                 android:id="@+id/totalSet"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type totalSet"
+                android:fontFamily="@font/font_kor"
+                android:backgroundTint = "@color/button1_color"
+                android:hint="총 횟수"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
 
@@ -73,17 +81,27 @@
                 android:id="@+id/weight"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Type weight "
+                android:hint="중량"
+                android:fontFamily="@font/font_kor"
+                android:backgroundTint = "@color/button1_color"
                 android:inputType="number"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/x_button"
+            tools:layout_editor_absoluteX="293dp"
+            tools:layout_editor_absoluteY="6dp" />
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="close"
             android:background="@drawable/rounded_button2"
+            android:text="Delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.062"
@@ -93,29 +111,17 @@
 
         <Button
             android:id="@+id/modifyBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="modify"
-            android:background="@drawable/rounded_button2"
+            android:background="@drawable/rounded_button"
+            android:text="MODIFY"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.959" />
-
-        <Button
-            android:id="@+id/deleteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DELETE"
-            android:background="@drawable/rounded_button2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.937"
+            app:layout_constraintHorizontal_bias="0.991"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:layout_constraintVertical_bias="0.448" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
