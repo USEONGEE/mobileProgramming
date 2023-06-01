@@ -48,7 +48,7 @@ public class addExerciseDialog extends Dialog {
 
         setContentView(R.layout.add_exercise);
 
-        closeDialogBtn = findViewById(R.id.clsoeBtn);
+        closeDialogBtn = findViewById(R.id.closeBtn);
         closeDialogBtn.setOnClickListener(closeDialog);
 
         // edit text
