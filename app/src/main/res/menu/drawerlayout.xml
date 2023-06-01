@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/MainPage"
+        android:title="MainPage" />
+    <item
+        android:id="@+id/recommendRoutine"
+        android:title="추천 루틴" />
+    <item
+        android:id="@+id/SchdulerPage"
+        android:title="SchdulerPage" />
+</menu>
