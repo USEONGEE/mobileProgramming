@@ -80,6 +80,11 @@ public class Statistics extends AppCompatActivity {
 
         // 클릭한 운동 부위의 운동별 달성률
         barChart.setOnChartValueSelectedListener(onClickBarChart);
+        getWeekDate();
+        getClickedExerciseDetail("back");
+
+
+
     }
     
     private void init() {
@@ -826,57 +831,36 @@ public class Statistics extends AppCompatActivity {
     private Cursor getClickedExerciseDetail(String body) {
         userExerciseLogDbHelper = new UcanHealthDbHelper(this);
         SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
+        ArrayList<String> date = getWeekDate();
 
         String[] projection = {
-                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." +UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
                 UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE
         };
 
         String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
 
-        String selection = String.format("%s  = ? %s >= ? AND %s <= ? ",UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE);
-        String prevDate = "";
-        String nextDate = "";
-
-        Calendar calendar = Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        switch (dayOfWeek) {
-            case 1 : // 월요일
-                prevDate = "date('now')"; nextDate = "date('now', '+6 days')";
-                break;
-            case 2:
-                prevDate = "date('now', '-1 days')"; nextDate = "date('now', '+5 days')";
-                break;
-            case 3:
-                prevDate = "date('now', '-2 days')"; nextDate = "date('now', '+4 days')";
-                break;
-            case 4:
-                prevDate = "date('now', '-3 days')"; nextDate = "date('now', '+3 days')";
-                break;
-            case 5:
-                prevDate = "date('now', '-4 days')"; nextDate = "date('now', '+2 days')";
-                break;
-            case 6:
-                prevDate = "date('now', '-5 days')"; nextDate = "date('now', '+1 days')";
-                break;
-            case 7: // 일요일
-                prevDate = "date('now', '-6 days')"; nextDate = "date('now')";
-                break;
-        }
+        String selection = String.format("%s = ? AND %s = %s AND %s IN(?, ?, ?, ?, ?, ?, ?)",
+                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE,
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "."+ UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME+ "."+ UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE );
 
         String[] selectionArgs = {
                 body,
-                prevDate,
-                nextDate
+                date.get(0),
+                date.get(1),
+                date.get(2),
+                date.get(3),
+                date.get(4),
+                date.get(5),
+                date.get(6)
         };
 
         Cursor cursor = db.query(
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME + " INNER JOIN " + UcanHealth.ExerciseTypeEntry.TABLE_NAME +
-                " ON " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." + UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = " +
-                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "." + UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,   // The table to query
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + ", " + UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
                 selectionArgs,          // The values for the WHERE clause
@@ -884,8 +868,13 @@ public class Statistics extends AppCompatActivity {
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
         );
-        userExerciseLogDbHelper.close();
-        db.close();
+        Log.i("Statistics : cursor_length",String.valueOf(cursor.getCount()));
+        while(cursor.moveToNext()) {
+            Log.i("Statistics : exercise", cursor.getString(0));
+            Log.i("Statistics : doing set", cursor.getString(1));
+            Log.i("Statistics : total set", cursor.getString(2));
+            Log.i("Statistics : date",cursor.getString(3));
+        }
 
         return cursor;
     }
@@ -898,4 +887,120 @@ public class Statistics extends AppCompatActivity {
         Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
         return String.format("%04d-%02d-%02d", year, month, day);
     }
+
+    public ArrayList<String> getWeekDate() {
+        Calendar calendar = Calendar.getInstance();
+        ArrayList<String> result = new ArrayList();
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        int count = 0;
+        dayOfWeek = -dayOfWeek;
+        while(count <= 7){
+            Date date = new Date(year,month,day + dayOfWeek);
+            result.add(date.getDate());
+            Log.i("dayOfWeek",String.valueOf(dayOfWeek));
+            Log.i("getDate()",date.getDate());
+
+            dayOfWeek++; count++;
+        }
+
+        return result;
+    }
+    class Date{
+        private int year;
+        private int month;
+        private int day;
+
+        Date(int year, int month, int day) {
+            this.year = year; this.month = month; this.day = day;
+            converting();
+        }
+
+        void dayIsMinus(){
+            // 8 -> 7월 은 31일임
+            // 1월 -> 12월은 연도가 넘어감
+            // 3 -> 2 월은 28일임
+            if(month == 5 ||month == 7 ||month == 10 ||month == 12 ){
+                month--;
+                day = 30 + day;
+            }
+            else if(month == 3) {
+                month--;
+                day = 28 + day;
+            }
+            else if(month == 8){
+                month--;
+                day = 31 + day;
+            }
+            else if(month == 1) {
+                month = 12;
+                year--;
+                day = 31 + day;
+            }
+            else {
+                month--;
+                day = 31 + day;
+            }
+        }
+
+        boolean isMinus(){
+            return day <= 0;
+        }
+
+        boolean isOver() {
+            if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+                if(day > 31) return true;
+                else return false;
+            }
+            else if (month == 2){
+                if(day > 28) return true;
+                else return false;
+            }
+            else{
+                if(day > 30) return true;
+                else return false;
+            }
+        }
+
+        void dayIsOver() {
+            if(month == 12) {
+                month = 1;
+                year++;
+                day = day - 31;
+            }
+            else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10){
+                month++;
+                day = day - 31;
+            }
+            else if(month == 2) {
+                month++;
+                day = day - 28;
+            }
+            else{
+                month++;
+                day = day - 30;
+            }
+        }
+
+        void converting(){
+            if(isMinus()) {
+                Log.i("converting","day is minus");
+                dayIsMinus();
+                Log.i("after converting",String.valueOf(day));
+            };
+            if(isOver()) {
+                Log.i("converting","day is over");
+                dayIsOver();
+            }
+        }
+
+        String getDate() {
+            return String.format("%04d-%02d-%02d", year, month, day);
+        }
+    }
+
 }
