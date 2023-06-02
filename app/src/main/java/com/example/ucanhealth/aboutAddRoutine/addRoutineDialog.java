@@ -110,8 +110,8 @@ public class addRoutineDialog extends Dialog {
         String reps = repEditText.getText().toString();
         String totalSet = totalSetEditText.getText().toString();
         String weight = weightEditText.getText().toString();
-//        String today = getCurrentDate();
-        String today = "2023-05-23";
+        String today = getCurrentDate();
+//        String today = "2023-05-23";
         String restTime = restTimeEditText.getText().toString();
         String order = String.valueOf(getRoutineCount() + 1);
 
