@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -212,6 +214,7 @@ public class ExerciseSettingDialog extends Dialog {
             String exercise = exerciseList.get(i);
             Button button = new Button(getContext());
             button.setText(exercise);
+            button.setTypeface(null, Typeface.BOLD);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -242,7 +245,9 @@ public class ExerciseSettingDialog extends Dialog {
             
             String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
             button.setText(text);
-
+//            button.setBackgroundColor(Color.TRANSPARENT);
+            button.setTypeface(null, Typeface.BOLD);
+            button.setTextColor(Color.rgb(0, 0, 0));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
