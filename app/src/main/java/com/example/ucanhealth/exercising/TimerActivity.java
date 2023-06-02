@@ -621,8 +621,12 @@ public class TimerActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.end_exercise);
+            WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
+            lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            lpWindow.dimAmount = 0.8f;
+            getWindow().setAttributes(lpWindow);
 
+            setContentView(R.layout.end_exercise);
             init();
 
             closeBtn.setOnClickListener(closeDialog);
@@ -630,11 +634,6 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         private void init() {
-            WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
-            lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-            lpWindow.dimAmount = 0.8f;
-            getWindow().setAttributes(lpWindow);
-
             closeBtn = findViewById(R.id.closeBtn);
             endBtn = findViewById(R.id.endBtn);
         }
