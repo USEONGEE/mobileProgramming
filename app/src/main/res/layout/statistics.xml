@@ -44,16 +44,66 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cstLyTop"
             app:layout_constraintWidth_percent="0.8">
 
-            <ImageView
-                android:id="@+id/stateImage"
+            <ImageButton
+                android:id="@+id/backButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/exercising" />
+                android:background="@android:color/transparent"
+                android:src="@drawable/back">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/chestButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/chest">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/shoulderButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/shoulder">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/legButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/leg">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/armButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/arm">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/coreButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/core">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/bodyButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/body">
+            </ImageButton>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -62,7 +112,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintHeight_percent="0.55"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cstLyImage"
             app:layout_constraintWidth_percent="0.8">
@@ -71,7 +121,8 @@
                 android:id="@+id/barChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"/>
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="8dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
