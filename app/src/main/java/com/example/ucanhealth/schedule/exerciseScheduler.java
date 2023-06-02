@@ -288,6 +288,7 @@ public class exerciseScheduler extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // navigation 객체에 이벤트 리스너 달기
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");
