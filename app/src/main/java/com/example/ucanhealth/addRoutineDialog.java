@@ -104,6 +104,7 @@ public class addRoutineDialog extends Dialog {
 
     private void addRoutineToDb() {
 
+
         int rep = Integer.parseInt(repEditText.getText().toString()); repEditText.setText("");
         int totalSet = Integer.parseInt(totalSetEditText.getText().toString()); totalSetEditText.setText("");
         float weight = Float.parseFloat(weightEditText.getText().toString()); weightEditText.setText("");
@@ -153,5 +154,9 @@ public class addRoutineDialog extends Dialog {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         return String.format("%04d-%02d-%02d", year, month, day);
+    }
+
+    public boolean isNull(String s) {
+        return s.equals("");
     }
 }
