@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.schedule;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -32,6 +32,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.ucanhealth.MainActivity;
+import com.example.ucanhealth.R;
+import com.example.ucanhealth.statistic.Statistics;
+import com.example.ucanhealth.aboutAddRoutine.ExerciseSettingDialog;
+import com.example.ucanhealth.recommend.RecommendRoutine;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.google.android.material.navigation.NavigationView;
@@ -283,6 +288,7 @@ public class exerciseScheduler extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // navigation 객체에 이벤트 리스너 달기
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");

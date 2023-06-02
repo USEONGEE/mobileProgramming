@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.aboutAddRoutine;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
+import com.example.ucanhealth.R;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 

@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.aboutAddRoutine;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.ucanhealth.R;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 

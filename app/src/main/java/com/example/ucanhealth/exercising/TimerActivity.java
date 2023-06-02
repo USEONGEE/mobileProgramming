@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.exercising;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,13 +27,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.ucanhealth.MainActivity;
+import com.example.ucanhealth.R;
+import com.example.ucanhealth.recommend.RecommendRoutine;
+import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
+import com.example.ucanhealth.statistic.Statistics;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -104,19 +108,22 @@ public class TimerActivity extends AppCompatActivity {
         notClearExerciseIndex = new ArrayList<>();
         // 총 루틴 수를 가져옴
         numOfExercise = getRoutineCount() - 1;
-        // exerciseArrayList에 db에서 읽어온 데이터 저장
+        // db에서 읽어온 데이터로 운동 정보 생성 -> 이미 종료된 운동일 시 종료
         setInfoFromDB();
-        Log.i("numOfexerciseArrayList",String.valueOf(exerciseArrayList.size()));
-        // 수행이 끝나지 않은 운동의 index를 저장
+        // 모든 set를 수행하지 않은 운동 종목의 index를 가져와서 list에 저장
         getNotClearExerciseIndex();
+        // 이전에 수행했던 전체 운동 시간을 가져와서 textView에 반영
         getPreviousExerciseTime();
-        // 이미 끝난 운동인지 여부 확인
-        
+
+        // 모든 운동 수행 여부에 따라서 현재 index를 다르게 보여줌
         if(notClearExerciseIndex.isEmpty()){
             indexCurrentExercise = 0;
         }else{
             indexCurrentExercise = notClearExerciseIndex.get(0);
         }
+        
+        setUI();
+
         this.settingSideBar();
         this.ExerciseClicked();
         this.RestClicked();
@@ -389,7 +396,6 @@ public class TimerActivity extends AppCompatActivity {
             finish();
             return;
         }
-        else setUI();
     }
 
     // 완료되지 않은 운동의 index를 가져와서 보여줌

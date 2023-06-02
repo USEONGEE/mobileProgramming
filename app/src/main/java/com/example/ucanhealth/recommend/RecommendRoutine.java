@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.recommend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +14,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.ucanhealth.MainActivity;
+import com.example.ucanhealth.R;
+import com.example.ucanhealth.statistic.Statistics;
+import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.google.android.material.navigation.NavigationView;
 
 public class RecommendRoutine extends AppCompatActivity {
