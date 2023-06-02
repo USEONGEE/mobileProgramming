@@ -84,9 +84,13 @@ public class Statistics extends AppCompatActivity {
 
         // 클릭한 운동 부위의 운동별 달성률
         barChart.setOnChartValueSelectedListener(onClickBarChart);
-        getWeekDate();
 
         initExerciseLog("back");
+
+        ArrayList<String> example = getWeekDate();
+        for(String s : example) {
+            Log.i("Statistics : date",s);
+        }
 
     }
 
@@ -696,8 +700,8 @@ public class Statistics extends AppCompatActivity {
 
         int count = 0;
         dayOfWeek = -dayOfWeek;
-        while(count <= 7){
-            Date date = new Date(year,month,day + dayOfWeek);
+        while(count < 7){
+            Date date = new Date(year,month,day + dayOfWeek + 1);
             result.add(date.getDate());
             Log.i("dayOfWeek",String.valueOf(dayOfWeek));
             Log.i("getDate()",date.getDate());
