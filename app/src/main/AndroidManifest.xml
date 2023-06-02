@@ -34,7 +34,7 @@
             android:name=".menu_Routine"
             android:exported="false" />
         <activity
-            android:name=".aboutAddRoutine.schedule.exerciseScheduler"
+            android:name=".schedule.exerciseScheduler"
             android:exported="true">
         </activity>
 

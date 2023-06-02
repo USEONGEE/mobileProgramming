@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.example.ucanhealth.aboutAddRoutine.ExerciseSettingDialog;
 import com.example.ucanhealth.exercising.TimerActivity;
 import com.example.ucanhealth.recommend.RecommendRoutine;
-import com.example.ucanhealth.aboutAddRoutine.schedule.exerciseScheduler;
+import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.example.ucanhealth.statistic.Statistics;
 import com.google.android.material.navigation.NavigationView;

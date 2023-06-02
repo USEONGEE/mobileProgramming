@@ -18,7 +18,7 @@ import android.widget.Button;
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
 import com.example.ucanhealth.statistic.Statistics;
-import com.example.ucanhealth.aboutAddRoutine.schedule.exerciseScheduler;
+import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.google.android.material.navigation.NavigationView;
 
 public class RecommendRoutine extends AppCompatActivity {

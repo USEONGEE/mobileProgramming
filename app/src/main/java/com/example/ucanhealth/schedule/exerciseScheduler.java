@@ -1,4 +1,4 @@
-package com.example.ucanhealth.aboutAddRoutine.schedule;
+package com.example.ucanhealth.schedule;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
