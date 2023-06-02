@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.overload.ProgressiveOverload;
 import com.example.ucanhealth.statistic.Statistics;
 import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.google.android.material.navigation.NavigationView;
@@ -93,6 +94,10 @@ public class RecommendRoutine extends AppCompatActivity {
                     case R.id.statistic:
                         Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
                         startActivity(intent4);
+                        break;
+                    case R.id.overload:
+                        Intent intent5 = new Intent(getApplicationContext(), ProgressiveOverload.class);
+                        startActivity(intent5);
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);

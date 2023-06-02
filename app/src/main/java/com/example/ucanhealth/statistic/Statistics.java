@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.overload.ProgressiveOverload;
 import com.example.ucanhealth.recommend.RecommendRoutine;
 import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
@@ -239,6 +240,10 @@ public class Statistics extends AppCompatActivity {
                     case R.id.statistic:
                         Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
                         startActivity(intent4);
+                        break;
+                    case R.id.overload:
+                        Intent intent5 = new Intent(getApplicationContext(), ProgressiveOverload.class);
+                        startActivity(intent5);
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);

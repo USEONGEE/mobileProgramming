@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.overload.ProgressiveOverload;
 import com.example.ucanhealth.recommend.menu_Routine;
 import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
@@ -197,6 +198,10 @@ public class TimerActivity extends AppCompatActivity {
                     case R.id.statistic:
                         Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
                         startActivity(intent4);
+                        break;
+                    case R.id.overload:
+                        Intent intent5 = new Intent(getApplicationContext(), ProgressiveOverload.class);
+                        startActivity(intent5);
                         break;
                 }
 

@@ -34,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.overload.ProgressiveOverload;
 import com.example.ucanhealth.recommend.menu_Routine;
 import com.example.ucanhealth.statistic.Statistics;
 import com.example.ucanhealth.aboutAddRoutine.ExerciseSettingDialog;
@@ -309,6 +310,10 @@ public class exerciseScheduler extends AppCompatActivity {
                     case R.id.statistic:
                         Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
                         startActivity(intent4);
+                        break;
+                    case R.id.overload:
+                        Intent intent5 = new Intent(getApplicationContext(), ProgressiveOverload.class);
+                        startActivity(intent5);
                         break;
                 }
                 drawer.closeDrawer(GravityCompat.START);
