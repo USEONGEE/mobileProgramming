@@ -30,6 +30,7 @@ public class modifyRoutineDialog extends Dialog {
     Button modifyBtn;
     String selectedExercise;
     TextView exerciseType;
+    EditText restTimeEditText;
     EditText repEditText;
     EditText totalSetEditText;
     EditText weightEditText;
@@ -79,6 +80,9 @@ public class modifyRoutineDialog extends Dialog {
         weightEditText = findViewById(R.id.weight);
         weightEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
+        restTimeEditText = findViewById(R.id.restTimeBtn);
+        restTimeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
         ucanHealthDbHelper = new UcanHealthDbHelper(getContext());
         ucanHealthDb_write = ucanHealthDbHelper.getWritableDatabase();
         ucanHealthDb_read = ucanHealthDbHelper.getReadableDatabase();
@@ -117,13 +121,15 @@ public class modifyRoutineDialog extends Dialog {
             String reps = repEditText.getText().toString();
             String totalSet = totalSetEditText.getText().toString();
             String weight = weightEditText.getText().toString();
+            String restTime = restTimeEditText.getText().toString();
 
             if(!isNull(reps)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, Integer.parseInt(reps));
             if(!isNull(totalSet)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,Integer.parseInt(totalSet));
             if(!isNull(weight)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
+            if(!isNull(restTime)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME,restTime);
 
             // 아무것도 입력 안 하면 그냥 종료시키기
-            if(isNull(reps) && isNull(totalSet) && isNull(weight)) {
+            if(isNull(reps) && isNull(totalSet) && isNull(weight) && isNull(restTime)) {
                 ucanHealthDbHelper.close();
                 ucanHealthDb_write.close();
                 ucanHealthDb_read.close();
