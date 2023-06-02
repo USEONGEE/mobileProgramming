@@ -27,6 +27,7 @@ import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
 import com.example.ucanhealth.recommend.RecommendRoutine;
 import com.example.ucanhealth.schedule.exerciseScheduler;
+import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -42,6 +43,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Statistics extends AppCompatActivity {
@@ -818,4 +820,82 @@ public class Statistics extends AppCompatActivity {
             }
         }
     };
+
+    // 신체 부위를 인자로 받아서 해당하는 운동기록을 반환
+    // 테스트 중
+    private Cursor getClickedExerciseDetail(String body) {
+        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
+        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
+
+        String[] projection = {
+                UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT
+        };
+
+        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
+
+        String selection = String.format("%s  = ? %s >= ? AND %s <= ? ",UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE);
+        String prevDate = "";
+        String nextDate = "";
+
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (dayOfWeek) {
+            case 1 : // 월요일
+                prevDate = "date('now')"; nextDate = "date('now', '+6 days')";
+                break;
+            case 2:
+                prevDate = "date('now', '-1 days')"; nextDate = "date('now', '+5 days')";
+                break;
+            case 3:
+                prevDate = "date('now', '-2 days')"; nextDate = "date('now', '+4 days')";
+                break;
+            case 4:
+                prevDate = "date('now', '-3 days')"; nextDate = "date('now', '+3 days')";
+                break;
+            case 5:
+                prevDate = "date('now', '-4 days')"; nextDate = "date('now', '+2 days')";
+                break;
+            case 6:
+                prevDate = "date('now', '-5 days')"; nextDate = "date('now', '+1 days')";
+                break;
+            case 7: // 일요일
+                prevDate = "date('now', '-6 days')"; nextDate = "date('now')";
+                break;
+        }
+
+        String[] selectionArgs = {
+                body,
+                prevDate,
+                nextDate
+        };
+
+        Cursor cursor = db.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + " INNER JOIN " + UcanHealth.ExerciseTypeEntry.TABLE_NAME +
+                " ON " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." + UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE + " = " +
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "." + UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+        userExerciseLogDbHelper.close();
+        db.close();
+
+        return cursor;
+    }
+
+    public String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
+        return String.format("%04d-%02d-%02d", year, month, day);
+    }
 }
