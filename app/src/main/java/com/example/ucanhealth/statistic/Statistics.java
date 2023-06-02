@@ -701,7 +701,7 @@ public class Statistics extends AppCompatActivity {
         int count = 0;
         dayOfWeek = -dayOfWeek;
         while(count < 7){
-            Date date = new Date(year,month,day + dayOfWeek + 1);
+            Date date = new Date(year,month,day + dayOfWeek + 2);
             result.add(date.getDate());
             Log.i("dayOfWeek",String.valueOf(dayOfWeek));
             Log.i("getDate()",date.getDate());
