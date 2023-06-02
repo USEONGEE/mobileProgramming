@@ -14,7 +14,7 @@
         android:theme="@style/Theme.UcanHealth"
         tools:targetApi="31">
         <activity
-            android:name=".ProgressiveOverload"
+            android:name=".overload.ProgressiveOverload"
             android:exported="false" />
         <activity
             android:name=".statistic.Statistics"
