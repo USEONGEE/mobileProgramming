@@ -1,20 +1,32 @@
 package com.example.ucanhealth.statistic;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.recommend.RecommendRoutine;
+import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,6 +39,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +55,7 @@ public class Statistics extends AppCompatActivity {
     private ImageButton legButton;
     private ImageButton armButton;
     private ImageButton coreButton;
+    private ImageButton bodyButton;
     private float backAlpha = 0.0f;
     private float chestAlpha  = 0.0f;
     private float shoulderAlpha = 0.0f;
@@ -54,7 +68,20 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
 
-        ImageButton bodyButton = findViewById(R.id.bodyButton);
+        InitializeLayout();
+
+        // View 초기화 및 부위별 이미지, 색 초기화
+        init();
+
+        // body 버튼을 누른 경우에는 다시 운동부위 차트를 보여줌
+        bodyButton.setOnClickListener(onClickBodyButton);
+
+        // 클릭한 운동 부위의 운동별 달성률
+        barChart.setOnChartValueSelectedListener(onClickBarChart);
+    }
+    
+    private void init() {
+        bodyButton = findViewById(R.id.bodyButton);
         backButton = findViewById(R.id.backButton);
         backButton.setAlpha(backAlpha * 1.0f);
         chestButton = findViewById(R.id.chestButton);
@@ -145,275 +172,67 @@ public class Statistics extends AppCompatActivity {
                 coreButton.setAlpha(coreAlpha * 1.0f);
             }
         }
+    }
 
-        // body 버튼을 누른 경우에는 다시 운동부위 차트를 보여줌
-        bodyButton.setOnClickListener(new View.OnClickListener() {
+    public void InitializeLayout() {
+        // toolBar를 통해 App Bar 생성
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        // App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Icon 추가
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.menuicon);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.open,
+                R.string.closed);
+        drawer.addDrawerListener(actionBarDrawerToggle);
+        // navigation 객체에 nav_view의 참조 반환
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // navigation 객체에 이벤트 리스너 달기
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                BarDataSet barDataSet = new BarDataSet(getExerciseTypeDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int)value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseType()));
-
-                // 운동 부위에 따라 다른 색상으로 차트를 표시
-                int[] colors = new int[barCount];
-
-                for(int i = 0; i < barCount; i++) {
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
-                        colors[i] = Color.rgb(255, 77, 106);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
-                        colors[i] = Color.rgb(151, 226, 0);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
-                        colors[i] = Color.rgb(250, 127, 65);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
-                        colors[i] = Color.rgb(0, 152, 255);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
-                        colors[i] = Color.rgb(255, 189, 46);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
-                        colors[i] = Color.rgb(50, 240, 177);
-                    }
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Log.i("clicked", String.valueOf(menuItem.getItemId()) + " selected");
+                switch (menuItem.getItemId()) {
+                    case R.id.MainPage:
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.recommendRoutine:
+                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.SchdulerPage:
+                        Intent intent3 = new Intent(getApplicationContext(), exerciseScheduler.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.statistic:
+                        Intent intent4 = new Intent(getApplicationContext(), Statistics.class);
+                        startActivity(intent4);
+                        break;
                 }
-                barDataSet.setColors(colors);
-
-                barChart.invalidate();
-
-                // 달성률에 따른 운동부위 이미지 투명도 조절
-                for(int i = 0; i < barCount; i++) {
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
-                        backAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        backButton.setAlpha(backAlpha * 1.0f);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
-                        chestAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        chestButton.setAlpha(chestAlpha * 1.0f);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
-                        shoulderAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        shoulderButton.setAlpha(shoulderAlpha * 1.0f);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
-                        legAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        legButton.setAlpha(legAlpha * 1.0f);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
-                        armAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        armButton.setAlpha(armAlpha * 1.0f);
-                    }
-                    if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
-                        coreAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                        coreButton.setAlpha(coreAlpha * 1.0f);
-                    }
-                }
+                drawer.closeDrawer(GravityCompat.START);
+                return false;
             }
         });
+    }
 
-        // 클릭한 운동 부위의 운동별 달성률
-        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                String selectedLabel = xAxis.getValueFormatter().getFormattedValue(e.getX()); // 선택된 x값에 해당하는 라벨 가져오기
-
-                // 등운동 차트를 눌렀을 때
-                if (selectedLabel.equals("back")) {
-                    DeleteImage();
-                    backButton.setAlpha(backAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getBackExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#FF4D6A"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getBackExerciseName()));
-                    barChart.invalidate();
-                }
-
-                // 가슴운동 차트를 눌렀을 때
-                if (selectedLabel.equals("chest")) {
-                    DeleteImage();
-                    chestButton.setAlpha(chestAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getChestExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#97E200"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getChestExerciseName()));
-                    barChart.invalidate();
-                }
-
-                // 어깨운동 차트를 눌렀을 때
-                if (selectedLabel.equals("shoulder")) {
-                    DeleteImage();
-                    shoulderButton.setAlpha(shoulderAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getShoulderExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#FA7F41"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getShoulderExerciseName()));
-                    barChart.invalidate();
-                }
-
-                // 다리운동 차트를 눌렀을 때
-                if (selectedLabel.equals("leg")) {
-                    DeleteImage();
-                    legButton.setAlpha(legAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getLegExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#0098FF"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getLegExerciseName()));
-                    barChart.invalidate();
-                }
-
-                // 팔운동 차트를 눌렀을 때
-                if (selectedLabel.equals("arm")) {
-                    DeleteImage();
-                    armButton.setAlpha(armAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getArmExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#FFBD2E"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getArmExerciseName()));
-                    barChart.invalidate();
-                }
-
-                // 코어운동 차트를 눌렀을 때
-                if (selectedLabel.equals("core")) {
-                    DeleteImage();
-                    coreButton.setAlpha(coreAlpha * 1.0f);
-
-                    BarDataSet barDataSet = new BarDataSet(getCoreExerciseDataValues(), "data");
-                    barDataSet.setDrawValues(true);
-
-                    BarData barData = new BarData(barDataSet);
-                    barDataSet.setValueFormatter(new ValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value) {
-                            return (String.valueOf((int) value)) + "%";
-                        }
-                    });
-
-                    int barCount = barDataSet.getEntryCount();
-                    float barWidth = barCount * 0.08f;
-                    barData.setBarWidth(barWidth);
-                    barData.setValueTextSize(15);
-
-                    barDataSet.setColor(Color.parseColor("#32F0B1"));
-
-                    barChart.setData(barData);
-                    setChart();
-                    xAxis.setValueFormatter(new IndexAxisValueFormatter(getCoreExerciseName()));
-                    barChart.invalidate();
-                }
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void DeleteImage() {
@@ -732,4 +551,271 @@ public class Statistics extends AppCompatActivity {
 
         return dataVals;
     }
+
+    private final OnChartValueSelectedListener onClickBarChart = new OnChartValueSelectedListener() {
+        @Override
+        public void onValueSelected(Entry e, Highlight h) {
+            String selectedLabel = xAxis.getValueFormatter().getFormattedValue(e.getX()); // 선택된 x값에 해당하는 라벨 가져오기
+
+            // 등운동 차트를 눌렀을 때
+            if (selectedLabel.equals("back")) {
+                DeleteImage();
+                backButton.setAlpha(backAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getBackExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FF4D6A"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getBackExerciseName()));
+                barChart.invalidate();
+            }
+
+            // 가슴운동 차트를 눌렀을 때
+            if (selectedLabel.equals("chest")) {
+                DeleteImage();
+                chestButton.setAlpha(chestAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getChestExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#97E200"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getChestExerciseName()));
+                barChart.invalidate();
+            }
+
+            // 어깨운동 차트를 눌렀을 때
+            if (selectedLabel.equals("shoulder")) {
+                DeleteImage();
+                shoulderButton.setAlpha(shoulderAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getShoulderExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FA7F41"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getShoulderExerciseName()));
+                barChart.invalidate();
+            }
+
+            // 다리운동 차트를 눌렀을 때
+            if (selectedLabel.equals("leg")) {
+                DeleteImage();
+                legButton.setAlpha(legAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getLegExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#0098FF"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getLegExerciseName()));
+                barChart.invalidate();
+            }
+
+            // 팔운동 차트를 눌렀을 때
+            if (selectedLabel.equals("arm")) {
+                DeleteImage();
+                armButton.setAlpha(armAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getArmExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FFBD2E"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getArmExerciseName()));
+                barChart.invalidate();
+            }
+
+            // 코어운동 차트를 눌렀을 때
+            if (selectedLabel.equals("core")) {
+                DeleteImage();
+                coreButton.setAlpha(coreAlpha * 1.0f);
+
+                BarDataSet barDataSet = new BarDataSet(getCoreExerciseDataValues(), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#32F0B1"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getCoreExerciseName()));
+                barChart.invalidate();
+            }
+        }
+
+        @Override
+        public void onNothingSelected() {
+
+        }
+    };
+    
+    private final View.OnClickListener onClickBodyButton =new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BarDataSet barDataSet = new BarDataSet(getExerciseTypeDataValues(), "data");
+            barDataSet.setDrawValues(true);
+
+
+            BarData barData = new BarData(barDataSet);
+            barDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return (String.valueOf((int)value)) + "%";
+                }
+            });
+
+            int barCount = barDataSet.getEntryCount();
+            float barWidth = barCount * 0.08f;
+            barData.setBarWidth(barWidth);
+            barData.setValueTextSize(15);
+
+            barChart.setData(barData);
+            setChart();
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseType()));
+
+            // 운동 부위에 따라 다른 색상으로 차트를 표시
+            int[] colors = new int[barCount];
+
+            for(int i = 0; i < barCount; i++) {
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
+                    colors[i] = Color.rgb(255, 77, 106);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
+                    colors[i] = Color.rgb(151, 226, 0);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
+                    colors[i] = Color.rgb(250, 127, 65);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
+                    colors[i] = Color.rgb(0, 152, 255);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
+                    colors[i] = Color.rgb(255, 189, 46);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
+                    colors[i] = Color.rgb(50, 240, 177);
+                }
+            }
+            barDataSet.setColors(colors);
+
+            barChart.invalidate();
+
+            // 달성률에 따른 운동부위 이미지 투명도 조절
+            for(int i = 0; i < barCount; i++) {
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
+                    backAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    backButton.setAlpha(backAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
+                    chestAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    chestButton.setAlpha(chestAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
+                    shoulderAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    shoulderButton.setAlpha(shoulderAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
+                    legAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    legButton.setAlpha(legAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
+                    armAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    armButton.setAlpha(armAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
+                    coreAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    coreButton.setAlpha(coreAlpha * 1.0f);
+                }
+            }
+        }
+    };
 }
