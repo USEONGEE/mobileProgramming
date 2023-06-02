@@ -827,7 +827,6 @@ public class Statistics extends AppCompatActivity {
     };
 
     // 신체 부위를 인자로 받아서 해당하는 운동기록을 반환
-    // 테스트 중
     private Cursor getClickedExerciseDetail(String body) {
         userExerciseLogDbHelper = new UcanHealthDbHelper(this);
         SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
@@ -879,15 +878,6 @@ public class Statistics extends AppCompatActivity {
         return cursor;
     }
 
-    public String getCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        Log.i("stirng", String.format("%04d-%02d-%02d", year, month, day));
-        return String.format("%04d-%02d-%02d", year, month, day);
-    }
-
     public ArrayList<String> getWeekDate() {
         Calendar calendar = Calendar.getInstance();
         ArrayList<String> result = new ArrayList();
@@ -910,6 +900,7 @@ public class Statistics extends AppCompatActivity {
 
         return result;
     }
+
     class Date{
         private int year;
         private int month;
