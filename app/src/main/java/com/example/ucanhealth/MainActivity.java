@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             String text = exercise;
             textView.setText(text);
             textView.setTextSize(20);
-//            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
+            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
 
             todayExerciseListContainer.addView(textView);
         }

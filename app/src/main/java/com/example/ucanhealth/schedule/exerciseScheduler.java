@@ -34,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
+import com.example.ucanhealth.menu_Routine;
 import com.example.ucanhealth.statistic.Statistics;
 import com.example.ucanhealth.aboutAddRoutine.ExerciseSettingDialog;
 import com.example.ucanhealth.recommend.RecommendRoutine;
