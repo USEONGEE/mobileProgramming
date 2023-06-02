@@ -49,6 +49,7 @@ import java.util.List;
 public class Statistics extends AppCompatActivity {
 
     private UcanHealthDbHelper userExerciseLogDbHelper;
+    private SQLiteDatabase db;
     private BarChart barChart;
     private XAxis xAxis;
     private ImageButton backButton;
@@ -70,6 +71,9 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
 
+        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
+        db = userExerciseLogDbHelper.getWritableDatabase();
+
         InitializeLayout();
 
         // View 초기화 및 부위별 이미지, 색 초기화
@@ -86,7 +90,15 @@ public class Statistics extends AppCompatActivity {
 
 
     }
-    
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+        userExerciseLogDbHelper.close();
+    }
+
+
     private void init() {
         bodyButton = findViewById(R.id.bodyButton);
         backButton = findViewById(R.id.backButton);
@@ -281,8 +293,6 @@ public class Statistics extends AppCompatActivity {
 
     // 운동 부위
     private ArrayList<String> getExerciseType(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseType = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getExerciseTypeDataBar();
@@ -292,16 +302,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseType;
     }
 
     // 운동 부위별 달성률
     private ArrayList<BarEntry> getExerciseTypeDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getExerciseTypeDataBar();
@@ -314,15 +319,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 등운동 이름
     private ArrayList<String> getBackExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getBackExerciseName();
@@ -332,16 +333,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 등운동별 달성률
     private ArrayList<BarEntry> getBackExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getBackExerciseDataBar();
@@ -354,15 +350,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 가슴운동 이름
     private ArrayList<String> getChestExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getChestExerciseName();
@@ -372,16 +364,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 가슴운동별 달성률
     private ArrayList<BarEntry> getChestExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getChestExerciseDataBar();
@@ -394,15 +381,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 어깨운동 이름
     private ArrayList<String> getShoulderExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getShoulderExerciseName();
@@ -412,16 +395,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 어깨운동별 달성률
     private ArrayList<BarEntry> getShoulderExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getShoulderExerciseDataBar();
@@ -434,15 +412,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 다리운동 이름
     private ArrayList<String> getLegExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getLegExerciseName();
@@ -452,16 +426,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 다리운동별 달성률
     private ArrayList<BarEntry> getLegExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getLegExerciseDataBar();
@@ -474,15 +443,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 팔운동 이름
     private ArrayList<String> getArmExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getArmExerciseName();
@@ -492,16 +457,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 팔운동별 달성률
     private ArrayList<BarEntry> getArmExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getArmExerciseDataBar();
@@ -514,15 +474,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
     // 코어운동 이름
     private ArrayList<String> getCoreExerciseName(){
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> ExerciseName = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getCoreExerciseName();
@@ -532,16 +488,11 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return ExerciseName;
     }
 
     // 코어운동별 달성률
     private ArrayList<BarEntry> getCoreExerciseDataValues(){
-
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
         Cursor cursor = userExerciseLogDbHelper.getCoreExerciseDataBar();
@@ -554,8 +505,6 @@ public class Statistics extends AppCompatActivity {
         }
 
         cursor.close();
-        db.close();
-
         return dataVals;
     }
 
@@ -744,7 +693,7 @@ public class Statistics extends AppCompatActivity {
 
         }
     };
-    
+
     private final View.OnClickListener onClickBodyButton =new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -828,8 +777,6 @@ public class Statistics extends AppCompatActivity {
 
     // 신체 부위를 인자로 받아서 해당하는 운동기록을 반환
     private Cursor getClickedExerciseDetail(String body) {
-        userExerciseLogDbHelper = new UcanHealthDbHelper(this);
-        SQLiteDatabase db = userExerciseLogDbHelper.getWritableDatabase();
         ArrayList<String> date = getWeekDate();
 
         String[] projection = {
