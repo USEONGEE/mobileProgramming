@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,7 +21,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -164,18 +168,46 @@ public class MainActivity extends AppCompatActivity {
 
         // textView 꾸며야함
         while (cursor.moveToNext()) {
-            TextView textView = new TextView(this);
             String exercise = cursor.getString(0);
-            // String reps = cursor.getString(1).toString();
-            // String weight = cursor.getString(2).toString();
-            // String totalSet = cursor.getString(4).toString();
+            String setCount = cursor.getString(4);
+            String total_set = cursor.getString(5);
+
+            TextView textView = new TextView(this);
+            ImageButton imgBtn = new ImageButton(this);
+            imgBtn.setBackgroundColor(Color.TRANSPARENT);
+
+
+            if (setCount.equals(total_set)) {
+                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.check_done);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 100, 100, true);
+                imgBtn.setImageBitmap(resizedBitmap);
+            }
+            else {
+                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.check);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 100, 100, true);
+                imgBtn.setImageBitmap(resizedBitmap);
+            }
 
             String text = exercise;
             textView.setText(text);
             textView.setTextSize(20);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setTextColor(Color.rgb(0, 0, 0));
-            todayExerciseListContainer.addView(textView);
+
+            // LinearLayout.LayoutParams를 사용하여 TextView의 레이아웃 매개변수 설정
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            layoutParams.gravity = Gravity.CENTER_VERTICAL; // 상하 중앙으로 정렬
+            textView.setLayoutParams(layoutParams);
+
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            layout.addView(imgBtn);
+            layout.addView(textView);
+            todayExerciseListContainer.addView(layout);
         }
     }
 
