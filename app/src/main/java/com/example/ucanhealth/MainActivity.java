@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -172,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
             String text = exercise;
             textView.setText(text);
             textView.setTextSize(20);
-            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
-
+            textView.setTypeface(null, Typeface.BOLD);
+            textView.setTextColor(Color.rgb(0, 0, 0));
             todayExerciseListContainer.addView(textView);
         }
     }
