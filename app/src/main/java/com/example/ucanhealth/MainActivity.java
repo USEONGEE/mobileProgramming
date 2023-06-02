@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
         // textView 꾸며야함
         while (cursor.moveToNext()) {
             String exercise = cursor.getString(0);
-            String setCount = cursor.getString(4);
-            String total_set = cursor.getString(5);
+            String setCount = cursor.getString(3);
+            String total_set = cursor.getString(4);
 
             TextView textView = new TextView(this);
             ImageButton imgBtn = new ImageButton(this);
