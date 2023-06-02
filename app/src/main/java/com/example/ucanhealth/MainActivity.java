@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             String text = exercise;
             textView.setText(text);
             textView.setTextSize(20);
-            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
+//            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.main_routine_background));
 
             todayExerciseListContainer.addView(textView);
         }

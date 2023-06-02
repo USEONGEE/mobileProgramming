@@ -55,24 +55,35 @@
             app:layout_constraintTop_toBottomOf="@+id/stateImage"
             app:layout_constraintVertical_bias="0.111" />
 
-        <ScrollView
-            android:layout_width="306dp"
-            android:layout_height="151dp"
-            android:layout_marginTop="103dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="350dp"
+            android:layout_height="170dp"
+            android:layout_marginEnd="36dp"
             android:background="@drawable/rounded_button_trans"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.73">
+            app:layout_constraintVertical_bias="0.803">
 
-            <LinearLayout
-                android:id="@+id/todayExerciseListContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
-        </ScrollView>
+            <ScrollView
+                android:layout_width="306dp"
+                android:layout_height="151dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/todayExerciseListContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/startBtn"
