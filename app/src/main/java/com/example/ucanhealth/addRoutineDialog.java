@@ -3,10 +3,12 @@ package com.example.ucanhealth;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -34,6 +36,7 @@ public class addRoutineDialog extends Dialog {
     EditText totalSetEditText;
     EditText weightEditText;
     EditText restTimeEditText;
+    ErrorDialog dialog;
     public addRoutineDialog(@NonNull Context context, String exercise) {
         super(context);
         this.exercise = exercise;
@@ -103,26 +106,48 @@ public class addRoutineDialog extends Dialog {
     };
 
     private void addRoutineToDb() {
-
-
-        int rep = Integer.parseInt(repEditText.getText().toString()); repEditText.setText("");
-        int totalSet = Integer.parseInt(totalSetEditText.getText().toString()); totalSetEditText.setText("");
-        float weight = Float.parseFloat(weightEditText.getText().toString()); weightEditText.setText("");
+        String reps = repEditText.getText().toString();
+        String totalSet = totalSetEditText.getText().toString();
+        String weight = weightEditText.getText().toString();
         String today = getCurrentDate();
-        int restTime = Integer.parseInt(restTimeEditText.getText().toString()); repEditText.setText("");
-        int order = getRoutineCount() + 1;
-
-        Log.i("insert", today); //
+        String restTime = restTimeEditText.getText().toString();
+        String order = String.valueOf(getRoutineCount() + 1);
 
         ContentValues values = new ContentValues();
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,exercise);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, rep);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
+        if(!isNull(exercise)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,exercise);
+        else {
+            invalidInput("INVALID EXERCISE NAME");
+            return;
+        }
+
+        if(!isNull(reps)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REPS, reps);
+        else {
+            invalidInput("INVALID RPES");
+            return;
+        }
+
+        if(!isNull(weight)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_WEIGHT, weight);
+        else {
+            invalidInput("INVALID WEIGHT");
+            return;
+        }
+
+        if(!isNull(totalSet)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,totalSet);
+        else {
+            invalidInput("INVALID TOTAL SET");
+            return;
+        }
+
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT, 1); // 처음 초기화 ZSS = 1
         values.put(UcanHealth.UserExerciseLogEntry.COLUMN_DATE, today);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, restTime);
-        values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, order);
+
+        if(!isNull(restTime)) values.put(UcanHealth.UserExerciseLogEntry.COLUMN_REST_TIME, restTime);
+        else {
+            invalidInput("INVALID REST TIME");
+            return;
+        }
+
+       values.put(UcanHealth.UserExerciseLogEntry.COLUMN_ORDER, order);
 
         long newRowId = db_write.insert(UcanHealth.UserExerciseLogEntry.TABLE_NAME, null, values);
         if(newRowId == -1) {
@@ -158,5 +183,24 @@ public class addRoutineDialog extends Dialog {
 
     public boolean isNull(String s) {
         return s.equals("");
+    }
+
+    /*
+    * 올바르지 못한 입력값을 입력했을 때 에러 메세지 다이얼로그를 띄운 후 종료
+    * */
+    public void invalidInput(String errorMsg) {
+        dialog = new ErrorDialog(getContext(),errorMsg);
+        dialog.setTitle(R.string.add_routine);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                db_write.close();
+                db_read.close();
+                dismiss();
+            }
+        });
+        dialog.show();
     }
 }

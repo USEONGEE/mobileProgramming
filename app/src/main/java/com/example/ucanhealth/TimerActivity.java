@@ -117,9 +117,6 @@ public class TimerActivity extends AppCompatActivity {
         }else{
             indexCurrentExercise = notClearExerciseIndex.get(0);
         }
-
-        setUI();
-
         this.settingSideBar();
         this.ExerciseClicked();
         this.RestClicked();
@@ -387,6 +384,12 @@ public class TimerActivity extends AppCompatActivity {
             exerciseArrayList.add(object);
             Log.i("TimerActivity : setInfoFromDb","setINfoFromDb is called");
         }
+        if(exerciseArrayList.isEmpty()) {
+            Toast.makeText(getApplication(), "NO ROUTINE!",Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        else setUI();
     }
 
     // 완료되지 않은 운동의 index를 가져와서 보여줌
