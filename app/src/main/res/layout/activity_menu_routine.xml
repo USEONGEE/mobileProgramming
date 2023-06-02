@@ -5,7 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/button1_color"
-    tools:context=".menu_Routine">
+    android:fitsSystemWindows="true"
+    android:id="@+id/drawer_layout"
+    tools:openDrawer="start" >
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/appbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -21,6 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
@@ -28,6 +41,7 @@
         android:layout_marginBottom="2dp"
         android:background="@color/white"
         android:orientation="vertical"
+        tools:context=".menu_Routine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +51,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="411dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <Button
@@ -46,10 +61,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/rounded_button_trans"
+                android:fontFamily="@font/font_kor"
                 android:text="초급자"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:fontFamily="@font/font_kor"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="57dp" />
 
@@ -60,10 +75,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/rounded_button_trans"
+                android:fontFamily="@font/font_kor"
                 android:text="중급자"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                android:fontFamily="@font/font_kor"
                 tools:layout_editor_absoluteX="155dp"
                 tools:layout_editor_absoluteY="57dp" />
 
@@ -74,14 +89,17 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/rounded_button_trans"
+                android:fontFamily="@font/font_kor"
                 android:text="상급자"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                android:fontFamily="@font/font_kor"
                 tools:layout_editor_absoluteX="296dp"
                 tools:layout_editor_absoluteY="57dp" />
 
         </LinearLayout>
     </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

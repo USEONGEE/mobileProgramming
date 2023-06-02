@@ -180,7 +180,7 @@ public class TimerActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.recommendRoutine:
-                        Intent intent2 = new Intent(getApplicationContext(), RecommendRoutine.class);
+                        Intent intent2 = new Intent(getApplicationContext(), menu_Routine.class);
                         startActivity(intent2);
                         break;
                     case R.id.SchdulerPage:
