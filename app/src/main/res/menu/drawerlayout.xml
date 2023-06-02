@@ -13,5 +13,8 @@
     <item
         android:id="@+id/statistic"
         android:title="운동 통계" />
+    <item
+        android:id="@+id/overload"
+        android:title="점진적 과부하" />
 
 </menu>
