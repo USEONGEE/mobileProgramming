@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.exercising;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,13 +27,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.ucanhealth.MainActivity;
+import com.example.ucanhealth.R;
+import com.example.ucanhealth.recommend.RecommendRoutine;
+import com.example.ucanhealth.aboutAddRoutine.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
+import com.example.ucanhealth.statistic.Statistics;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;

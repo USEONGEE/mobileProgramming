@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -21,9 +20,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.ucanhealth.aboutAddRoutine.ExerciseSettingDialog;
+import com.example.ucanhealth.exercising.TimerActivity;
+import com.example.ucanhealth.recommend.RecommendRoutine;
+import com.example.ucanhealth.aboutAddRoutine.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
+import com.example.ucanhealth.statistic.Statistics;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;

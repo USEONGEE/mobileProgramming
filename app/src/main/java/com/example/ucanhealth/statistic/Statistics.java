@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.statistic;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ucanhealth.R;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;

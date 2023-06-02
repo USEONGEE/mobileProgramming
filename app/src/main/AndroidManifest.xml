@@ -16,30 +16,30 @@
         android:theme="@style/Theme.UcanHealth"
         tools:targetApi="31" >
         <activity
-            android:name=".Statistics"
+            android:name=".statistic.Statistics"
             android:exported="false" />
         <activity
-            android:name=".RecommendRoutine"
+            android:name=".recommend.RecommendRoutine"
             android:exported="false" />
         <activity
-            android:name=".ThirdFragment"
+            android:name=".recommend.ThirdFragment"
             android:exported="false" />
         <activity
-            android:name=".SecondFragment"
+            android:name=".recommend.SecondFragment"
             android:exported="false" />
         <activity
-            android:name=".FirstFragment"
+            android:name=".recommend.FirstFragment"
             android:exported="false" />
         <activity
             android:name=".menu_Routine"
             android:exported="false" />
         <activity
-            android:name=".exerciseScheduler"
+            android:name=".aboutAddRoutine.schedule.exerciseScheduler"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".TimerActivity"
+            android:name=".exercising.TimerActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
