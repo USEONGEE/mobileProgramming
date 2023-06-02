@@ -298,7 +298,7 @@ public class Statistics extends AppCompatActivity {
     private ArrayList<String> getExerciseType(){
         ArrayList<String> ExerciseType = new ArrayList<>();
 
-        Cursor cursor = userExerciseLogDbHelper.getExerciseTypeDataBar();
+        Cursor cursor = getExerciseTypeDataBar();
         for (int i=0; i<cursor.getCount(); i++){
             cursor.moveToNext();
             ExerciseType.add(cursor.getString(2));
@@ -312,7 +312,7 @@ public class Statistics extends AppCompatActivity {
     private ArrayList<BarEntry> getExerciseTypeDataValues(){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
 
-        Cursor cursor = userExerciseLogDbHelper.getExerciseTypeDataBar();
+        Cursor cursor = getExerciseTypeDataBar();
         for (int i=0; i<cursor.getCount(); i++){
             cursor.moveToNext();
             int repetition = cursor.getInt(1);
@@ -1076,6 +1076,45 @@ public class Statistics extends AppCompatActivity {
 
         cursor.close();
         return dataVals;
+    }
+
+    public Cursor getExerciseTypeDataBar() {
+        ArrayList<String> date = getWeekDate();
+
+        String[] projection = {
+                "sum(total_set_count)",
+                "sum(set_count)",
+                "exercise_type"
+        };
+
+        String selection = String.format("%s = %s AND %s IN(?, ?, ?, ?, ?, ?, ?)",
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "."+ UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME+ "."+ UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE );
+
+        String[] selectionArgs = {
+                date.get(0),
+                date.get(1),
+                date.get(2),
+                date.get(3),
+                date.get(4),
+                date.get(5),
+                date.get(6)
+        };
+
+        String group = UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE;
+
+        Cursor cursor = db.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + ", " + UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                group,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+
+        return cursor;
     }
 
 }

@@ -27,6 +27,7 @@ public class ProgressiveOverload extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progressive_overload);
 
+        init();
         ///
         setLastWeekPieChart();
 
@@ -47,7 +48,7 @@ public class ProgressiveOverload extends AppCompatActivity {
         while(cursor.moveToNext()) {
             int sum_total = Integer.parseInt(cursor.getString(0));
             int sum_setCount = Integer.parseInt(cursor.getString(1));
-            visitors.add(new PieEntry(sum_setCount / sum_total * 100,cursor.getString(3)));
+            visitors.add(new PieEntry(sum_setCount / sum_total * 100,cursor.getString(2)));
         }
 //        visitors.add(new PieEntry(508,"2016"));
 ////        visitors.add(new PieEntry(600,"2017"));
