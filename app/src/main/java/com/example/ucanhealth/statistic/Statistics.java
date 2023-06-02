@@ -85,9 +85,8 @@ public class Statistics extends AppCompatActivity {
         // 클릭한 운동 부위의 운동별 달성률
         barChart.setOnChartValueSelectedListener(onClickBarChart);
         getWeekDate();
-        getClickedExerciseDetail("back");
 
-
+        initExerciseLog("back");
 
     }
 
@@ -322,6 +321,573 @@ public class Statistics extends AppCompatActivity {
         return dataVals;
     }
 
+
+
+    // 바 차트를 클릭했을 때 호출되는 이벤트 리스너
+    private final OnChartValueSelectedListener onClickBarChart = new OnChartValueSelectedListener() {
+        @Override
+        public void onValueSelected(Entry e, Highlight h) {
+            // 클릭한 차트가 신체 어떤 부위인지를 가져오는 부분
+            String selectedLabel = xAxis.getValueFormatter().getFormattedValue(e.getX()); // 선택된 x값에 해당하는 라벨 가져오기
+
+            // 등운동 차트를 눌렀을 때
+            if (selectedLabel.equals("back")) {
+                DeleteImage();
+                backButton.setAlpha(backAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("back");
+                arrayList = getClickedExerciseDetail("back", arrayList);
+
+
+                // 등운동 수행 비율을 가져옴
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FF4D6A"));
+
+                barChart.setData(barData);
+                setChart();
+                // x축 설정함
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+
+            // 가슴운동 차트를 눌렀을 때
+            if (selectedLabel.equals("chest")) {
+                DeleteImage();
+                chestButton.setAlpha(chestAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("chest");
+                arrayList = getClickedExerciseDetail("chest", arrayList);
+
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#97E200"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+
+            // 어깨운동 차트를 눌렀을 때
+            if (selectedLabel.equals("shoulder")) {
+                Log.i("Statistics : 막대그래프 클릭","어깨를 클릭함");
+                DeleteImage();
+                shoulderButton.setAlpha(shoulderAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("shoulder");
+                arrayList = getClickedExerciseDetail("shoulder", arrayList);
+
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FA7F41"));
+
+                barChart.setData(barData);
+                setChart();
+                // x축에 어깨 운동 종류를 보여줌.
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+
+            // 다리운동 차트를 눌렀을 때
+            if (selectedLabel.equals("leg")) {
+                DeleteImage();
+                legButton.setAlpha(legAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("leg");
+                arrayList = getClickedExerciseDetail("leg", arrayList);
+
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#0098FF"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+
+            // 팔운동 차트를 눌렀을 때
+            if (selectedLabel.equals("arm")) {
+                DeleteImage();
+                armButton.setAlpha(armAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("arm");
+                arrayList = getClickedExerciseDetail("arm", arrayList);
+
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#FFBD2E"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+
+            // 코어운동 차트를 눌렀을 때
+            if (selectedLabel.equals("core")) {
+                DeleteImage();
+                coreButton.setAlpha(coreAlpha * 1.0f);
+
+                ArrayList<ExerciseLog> arrayList = initExerciseLog("core");
+                arrayList = getClickedExerciseDetail("core", arrayList);
+
+                BarDataSet barDataSet = new BarDataSet(getExerciseDataValues(arrayList), "data");
+                barDataSet.setDrawValues(true);
+
+                BarData barData = new BarData(barDataSet);
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return (String.valueOf((int) value)) + "%";
+                    }
+                });
+
+                int barCount = barDataSet.getEntryCount();
+                float barWidth = barCount * 0.08f;
+                barData.setBarWidth(barWidth);
+                barData.setValueTextSize(15);
+
+                barDataSet.setColor(Color.parseColor("#32F0B1"));
+
+                barChart.setData(barData);
+                setChart();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseName(arrayList)));
+                barChart.invalidate();
+            }
+        }
+
+        @Override
+        public void onNothingSelected() {
+
+        }
+    };
+
+    // 몸 버튼을 클릭했을 때의 이벤트 리스너
+    private final View.OnClickListener onClickBodyButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BarDataSet barDataSet = new BarDataSet(getExerciseTypeDataValues(), "data");
+            barDataSet.setDrawValues(true);
+
+
+            BarData barData = new BarData(barDataSet);
+            barDataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return (String.valueOf((int)value)) + "%";
+                }
+            });
+
+            int barCount = barDataSet.getEntryCount();
+            float barWidth = barCount * 0.08f;
+            barData.setBarWidth(barWidth);
+            barData.setValueTextSize(15);
+
+            barChart.setData(barData);
+            setChart();
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseType()));
+
+            // 운동 부위에 따라 다른 색상으로 차트를 표시
+            int[] colors = new int[barCount];
+
+            for(int i = 0; i < barCount; i++) {
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
+                    colors[i] = Color.rgb(255, 77, 106);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
+                    colors[i] = Color.rgb(151, 226, 0);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
+                    colors[i] = Color.rgb(250, 127, 65);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
+                    colors[i] = Color.rgb(0, 152, 255);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
+                    colors[i] = Color.rgb(255, 189, 46);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
+                    colors[i] = Color.rgb(50, 240, 177);
+                }
+            }
+            barDataSet.setColors(colors);
+
+            barChart.invalidate();
+
+            // 달성률에 따른 운동부위 이미지 투명도 조절
+            for(int i = 0; i < barCount; i++) {
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
+                    backAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    backButton.setAlpha(backAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
+                    chestAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    chestButton.setAlpha(chestAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
+                    shoulderAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    shoulderButton.setAlpha(shoulderAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
+                    legAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    legButton.setAlpha(legAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
+                    armAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    armButton.setAlpha(armAlpha * 1.0f);
+                }
+                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
+                    coreAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
+                    coreButton.setAlpha(coreAlpha * 1.0f);
+                }
+            }
+        }
+    };
+
+    // 신체 부위와 운동 종류가 담긴 ArrayList를 인자로 받음
+    // 운동 기록(totalset, set_count)이 기입된 ArrayList를 반환
+    private ArrayList<ExerciseLog> getClickedExerciseDetail(String body, ArrayList<ExerciseLog> arrayList) {
+        ArrayList<String> date = getWeekDate();
+
+        String[] projection = {
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." +UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE
+        };
+
+        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
+
+        String selection = String.format("%s = ? AND %s = %s AND %s IN(?, ?, ?, ?, ?, ?, ?)",
+                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE,
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "."+ UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME+ "."+ UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE );
+
+        String[] selectionArgs = {
+                body,
+                date.get(0),
+                date.get(1),
+                date.get(2),
+                date.get(3),
+                date.get(4),
+                date.get(5),
+                date.get(6)
+        };
+
+        Cursor cursor = db.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + ", " + UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+        Log.i("Statistics : cursor_length",String.valueOf(cursor.getCount()));
+        
+        
+        while(cursor.moveToNext()) {
+            for (ExerciseLog object : arrayList) {
+                if (object.exerciseName.equals(cursor.getString(0))) {
+                    object.set_count += Integer.parseInt(cursor.getString(1));
+                    object.total_count += Integer.parseInt(cursor.getString(2));
+                    Log.i("Statistics : exercise", cursor.getString(0));
+                    Log.i("Statistics : doing set", cursor.getString(1));
+                    Log.i("Statistics : total set", cursor.getString(2));
+                    Log.i("Statistics : date", cursor.getString(3));
+                    break;
+                }
+            }
+        }
+
+        // 평균값 계산하기
+        for(ExerciseLog object : arrayList) {
+            object.calculateAvg();
+        }
+
+        cursor.close();
+
+        return arrayList;
+    }
+
+    // 한 주의 날짜를 반환하는 함수
+    // 반환 : ArrayLIst<String> -> 한 주의 날짜가 ArrayList로 담겨있음.
+    public ArrayList<String> getWeekDate() {
+        Calendar calendar = Calendar.getInstance();
+        ArrayList<String> result = new ArrayList();
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        int count = 0;
+        dayOfWeek = -dayOfWeek;
+        while(count <= 7){
+            Date date = new Date(year,month,day + dayOfWeek);
+            result.add(date.getDate());
+            Log.i("dayOfWeek",String.valueOf(dayOfWeek));
+            Log.i("getDate()",date.getDate());
+
+            dayOfWeek++; count++;
+        }
+
+        return result;
+    }
+
+    // 7일을 각각 저장하는 class
+    class Date{
+        private int year;
+        private int month;
+        private int day;
+
+        Date(int year, int month, int day) {
+            this.year = year; this.month = month; this.day = day;
+            converting();
+        }
+
+        void dayIsMinus(){
+            // 8 -> 7월 은 31일임
+            // 1월 -> 12월은 연도가 넘어감
+            // 3 -> 2 월은 28일임
+            if(month == 5 ||month == 7 ||month == 10 ||month == 12 ){
+                month--;
+                day = 30 + day;
+            }
+            else if(month == 3) {
+                month--;
+                day = 28 + day;
+            }
+            else if(month == 8){
+                month--;
+                day = 31 + day;
+            }
+            else if(month == 1) {
+                month = 12;
+                year--;
+                day = 31 + day;
+            }
+            else {
+                month--;
+                day = 31 + day;
+            }
+        }
+
+        boolean isMinus(){
+            return day <= 0;
+        }
+
+        boolean isOver() {
+            if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+                if(day > 31) return true;
+                else return false;
+            }
+            else if (month == 2){
+                if(day > 28) return true;
+                else return false;
+            }
+            else{
+                if(day > 30) return true;
+                else return false;
+            }
+        }
+
+        void dayIsOver() {
+            if(month == 12) {
+                month = 1;
+                year++;
+                day = day - 31;
+            }
+            else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10){
+                month++;
+                day = day - 31;
+            }
+            else if(month == 2) {
+                month++;
+                day = day - 28;
+            }
+            else{
+                month++;
+                day = day - 30;
+            }
+        }
+
+        void converting(){
+            if(isMinus()) {
+                Log.i("converting","day is minus");
+                dayIsMinus();
+                Log.i("after converting",String.valueOf(day));
+            };
+            if(isOver()) {
+                Log.i("converting","day is over");
+                dayIsOver();
+            }
+        }
+
+        String getDate() {
+            return String.format("%04d-%02d-%02d", year, month, day);
+        }
+    }
+
+    // DB에서 가져온 1주일 운동 기록을 저장하는 class
+    class ExerciseLog {
+        int set_count;
+        int total_count;
+        float avg;
+        String exerciseName;
+
+        ExerciseLog(String exerciseName) {
+            this.exerciseName = exerciseName;
+            this.set_count = 0;
+            this.total_count = 0;
+        }
+
+        void calculateAvg() {
+            this.avg = (float)this.set_count / this.total_count;
+        }
+    }
+
+    // DB에서 신체 특정 부위에서 어떤 운동을 했는 지에 대한 정보를 가져와서 ExerciseLog object 생성
+    // 인자 : String -> 신체부위
+    // 반환 : ArrayList<ExerciseLog> -> ExerciseLog object array
+    public ArrayList<ExerciseLog> initExerciseLog(String body) {
+        ArrayList<String> date = getWeekDate();
+
+        String[] projection = {
+                "DISTINCT " + UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." +UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE
+        };
+
+        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
+
+        String selection = String.format("%s = ? AND %s = %s AND %s IN(?, ?, ?, ?, ?, ?, ?)",
+                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE,
+                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "."+ UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME+ "."+ UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
+                UcanHealth.UserExerciseLogEntry.COLUMN_DATE );
+
+        String[] selectionArgs = {
+                body,
+                date.get(0),
+                date.get(1),
+                date.get(2),
+                date.get(3),
+                date.get(4),
+                date.get(5),
+                date.get(6)
+        };
+
+        Cursor cursor = db.query(
+                UcanHealth.UserExerciseLogEntry.TABLE_NAME + ", " + UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        ArrayList<ExerciseLog> exerciseLogsArrayList = new ArrayList<>();
+
+        while(cursor.moveToNext()) {
+            Log.i("Statistics : exercise", cursor.getString(0));
+            exerciseLogsArrayList.add(new ExerciseLog(cursor.getString(0)));
+        }
+        cursor.close();
+
+        return exerciseLogsArrayList;
+    }
+
+    // barchart에 넣을 데이터를 반환하는 함수
+    public ArrayList<BarEntry> getExerciseDataValues(ArrayList<ExerciseLog> arrayList) {
+        ArrayList<BarEntry> dataVals = new ArrayList<>();
+
+        for(int i = 0; i < arrayList.size(); i++) dataVals.add(new BarEntry(i, arrayList.get(i).avg * 100) );
+
+        return dataVals;
+    }
+
+    // barchart에 축에 쓰일 데이터를 반환하는 함수
+    private ArrayList<String> getExerciseName(ArrayList<ExerciseLog> arrayList) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for(ExerciseLog exerciseLog : arrayList) result.add(exerciseLog.exerciseName);
+
+        return result;
+    }
+
     // 등운동 이름
     private ArrayList<String> getBackExerciseName(){
         ArrayList<String> ExerciseName = new ArrayList<>();
@@ -506,439 +1072,6 @@ public class Statistics extends AppCompatActivity {
 
         cursor.close();
         return dataVals;
-    }
-
-    private final OnChartValueSelectedListener onClickBarChart = new OnChartValueSelectedListener() {
-        @Override
-        public void onValueSelected(Entry e, Highlight h) {
-            String selectedLabel = xAxis.getValueFormatter().getFormattedValue(e.getX()); // 선택된 x값에 해당하는 라벨 가져오기
-
-            // 등운동 차트를 눌렀을 때
-            if (selectedLabel.equals("back")) {
-                DeleteImage();
-                backButton.setAlpha(backAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getBackExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#FF4D6A"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getBackExerciseName()));
-                barChart.invalidate();
-            }
-
-            // 가슴운동 차트를 눌렀을 때
-            if (selectedLabel.equals("chest")) {
-                DeleteImage();
-                chestButton.setAlpha(chestAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getChestExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#97E200"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getChestExerciseName()));
-                barChart.invalidate();
-            }
-
-            // 어깨운동 차트를 눌렀을 때
-            if (selectedLabel.equals("shoulder")) {
-                DeleteImage();
-                shoulderButton.setAlpha(shoulderAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getShoulderExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#FA7F41"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getShoulderExerciseName()));
-                barChart.invalidate();
-            }
-
-            // 다리운동 차트를 눌렀을 때
-            if (selectedLabel.equals("leg")) {
-                DeleteImage();
-                legButton.setAlpha(legAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getLegExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#0098FF"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getLegExerciseName()));
-                barChart.invalidate();
-            }
-
-            // 팔운동 차트를 눌렀을 때
-            if (selectedLabel.equals("arm")) {
-                DeleteImage();
-                armButton.setAlpha(armAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getArmExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#FFBD2E"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getArmExerciseName()));
-                barChart.invalidate();
-            }
-
-            // 코어운동 차트를 눌렀을 때
-            if (selectedLabel.equals("core")) {
-                DeleteImage();
-                coreButton.setAlpha(coreAlpha * 1.0f);
-
-                BarDataSet barDataSet = new BarDataSet(getCoreExerciseDataValues(), "data");
-                barDataSet.setDrawValues(true);
-
-                BarData barData = new BarData(barDataSet);
-                barDataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value) {
-                        return (String.valueOf((int) value)) + "%";
-                    }
-                });
-
-                int barCount = barDataSet.getEntryCount();
-                float barWidth = barCount * 0.08f;
-                barData.setBarWidth(barWidth);
-                barData.setValueTextSize(15);
-
-                barDataSet.setColor(Color.parseColor("#32F0B1"));
-
-                barChart.setData(barData);
-                setChart();
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(getCoreExerciseName()));
-                barChart.invalidate();
-            }
-        }
-
-        @Override
-        public void onNothingSelected() {
-
-        }
-    };
-
-    private final View.OnClickListener onClickBodyButton =new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            BarDataSet barDataSet = new BarDataSet(getExerciseTypeDataValues(), "data");
-            barDataSet.setDrawValues(true);
-
-
-            BarData barData = new BarData(barDataSet);
-            barDataSet.setValueFormatter(new ValueFormatter() {
-                @Override
-                public String getFormattedValue(float value) {
-                    return (String.valueOf((int)value)) + "%";
-                }
-            });
-
-            int barCount = barDataSet.getEntryCount();
-            float barWidth = barCount * 0.08f;
-            barData.setBarWidth(barWidth);
-            barData.setValueTextSize(15);
-
-            barChart.setData(barData);
-            setChart();
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(getExerciseType()));
-
-            // 운동 부위에 따라 다른 색상으로 차트를 표시
-            int[] colors = new int[barCount];
-
-            for(int i = 0; i < barCount; i++) {
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
-                    colors[i] = Color.rgb(255, 77, 106);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
-                    colors[i] = Color.rgb(151, 226, 0);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
-                    colors[i] = Color.rgb(250, 127, 65);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
-                    colors[i] = Color.rgb(0, 152, 255);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
-                    colors[i] = Color.rgb(255, 189, 46);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
-                    colors[i] = Color.rgb(50, 240, 177);
-                }
-            }
-            barDataSet.setColors(colors);
-
-            barChart.invalidate();
-
-            // 달성률에 따른 운동부위 이미지 투명도 조절
-            for(int i = 0; i < barCount; i++) {
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("back")) {
-                    backAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    backButton.setAlpha(backAlpha * 1.0f);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("chest")) {
-                    chestAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    chestButton.setAlpha(chestAlpha * 1.0f);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("shoulder")) {
-                    shoulderAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    shoulderButton.setAlpha(shoulderAlpha * 1.0f);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("leg")) {
-                    legAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    legButton.setAlpha(legAlpha * 1.0f);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("arm")) {
-                    armAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    armButton.setAlpha(armAlpha * 1.0f);
-                }
-                if (xAxis.getValueFormatter().getFormattedValue(i).equals("core")) {
-                    coreAlpha = barDataSet.getEntryForIndex(i).getY() / 100;
-                    coreButton.setAlpha(coreAlpha * 1.0f);
-                }
-            }
-        }
-    };
-
-    // 신체 부위를 인자로 받아서 해당하는 운동기록을 반환
-    private Cursor getClickedExerciseDetail(String body) {
-        ArrayList<String> date = getWeekDate();
-
-        String[] projection = {
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME + "." +UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_SET_COUNT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_TOTAL_SET_COUNT,
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE
-        };
-
-        String sortOrder = UcanHealth.UserExerciseLogEntry.COLUMN_ORDER + " ASC";
-
-        String selection = String.format("%s = ? AND %s = %s AND %s IN(?, ?, ?, ?, ?, ?, ?)",
-                UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE_TYPE,
-                UcanHealth.ExerciseTypeEntry.TABLE_NAME+ "."+ UcanHealth.ExerciseTypeEntry.COLUMN_EXERCISE,
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME+ "."+ UcanHealth.UserExerciseLogEntry.COLUMN_EXERCISE,
-                UcanHealth.UserExerciseLogEntry.COLUMN_DATE );
-
-        String[] selectionArgs = {
-                body,
-                date.get(0),
-                date.get(1),
-                date.get(2),
-                date.get(3),
-                date.get(4),
-                date.get(5),
-                date.get(6)
-        };
-
-        Cursor cursor = db.query(
-                UcanHealth.UserExerciseLogEntry.TABLE_NAME + ", " + UcanHealth.ExerciseTypeEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
-        );
-        Log.i("Statistics : cursor_length",String.valueOf(cursor.getCount()));
-        while(cursor.moveToNext()) {
-            Log.i("Statistics : exercise", cursor.getString(0));
-            Log.i("Statistics : doing set", cursor.getString(1));
-            Log.i("Statistics : total set", cursor.getString(2));
-            Log.i("Statistics : date",cursor.getString(3));
-        }
-
-        return cursor;
-    }
-
-    public ArrayList<String> getWeekDate() {
-        Calendar calendar = Calendar.getInstance();
-        ArrayList<String> result = new ArrayList();
-
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // month는 0부터 시작하므로 1을 더해줍니다.
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        int count = 0;
-        dayOfWeek = -dayOfWeek;
-        while(count <= 7){
-            Date date = new Date(year,month,day + dayOfWeek);
-            result.add(date.getDate());
-            Log.i("dayOfWeek",String.valueOf(dayOfWeek));
-            Log.i("getDate()",date.getDate());
-
-            dayOfWeek++; count++;
-        }
-
-        return result;
-    }
-
-    class Date{
-        private int year;
-        private int month;
-        private int day;
-
-        Date(int year, int month, int day) {
-            this.year = year; this.month = month; this.day = day;
-            converting();
-        }
-
-        void dayIsMinus(){
-            // 8 -> 7월 은 31일임
-            // 1월 -> 12월은 연도가 넘어감
-            // 3 -> 2 월은 28일임
-            if(month == 5 ||month == 7 ||month == 10 ||month == 12 ){
-                month--;
-                day = 30 + day;
-            }
-            else if(month == 3) {
-                month--;
-                day = 28 + day;
-            }
-            else if(month == 8){
-                month--;
-                day = 31 + day;
-            }
-            else if(month == 1) {
-                month = 12;
-                year--;
-                day = 31 + day;
-            }
-            else {
-                month--;
-                day = 31 + day;
-            }
-        }
-
-        boolean isMinus(){
-            return day <= 0;
-        }
-
-        boolean isOver() {
-            if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
-                if(day > 31) return true;
-                else return false;
-            }
-            else if (month == 2){
-                if(day > 28) return true;
-                else return false;
-            }
-            else{
-                if(day > 30) return true;
-                else return false;
-            }
-        }
-
-        void dayIsOver() {
-            if(month == 12) {
-                month = 1;
-                year++;
-                day = day - 31;
-            }
-            else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10){
-                month++;
-                day = day - 31;
-            }
-            else if(month == 2) {
-                month++;
-                day = day - 28;
-            }
-            else{
-                month++;
-                day = day - 30;
-            }
-        }
-
-        void converting(){
-            if(isMinus()) {
-                Log.i("converting","day is minus");
-                dayIsMinus();
-                Log.i("after converting",String.valueOf(day));
-            };
-            if(isOver()) {
-                Log.i("converting","day is over");
-                dayIsOver();
-            }
-        }
-
-        String getDate() {
-            return String.format("%04d-%02d-%02d", year, month, day);
-        }
     }
 
 }
