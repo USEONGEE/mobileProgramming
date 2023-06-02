@@ -31,7 +31,7 @@
             android:name=".recommend.FirstFragment"
             android:exported="false" />
         <activity
-            android:name=".menu_Routine"
+            android:name=".recommend.menu_Routine"
             android:exported="false" />
         <activity
             android:name=".schedule.exerciseScheduler"

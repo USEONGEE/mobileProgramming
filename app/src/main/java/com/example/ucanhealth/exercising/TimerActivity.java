@@ -29,8 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
-import com.example.ucanhealth.menu_Routine;
-import com.example.ucanhealth.recommend.RecommendRoutine;
+import com.example.ucanhealth.recommend.menu_Routine;
 import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;

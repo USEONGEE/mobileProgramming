@@ -1,4 +1,4 @@
-package com.example.ucanhealth;
+package com.example.ucanhealth.recommend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,11 +17,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
-import com.example.ucanhealth.recommend.FirstFragment;
-import com.example.ucanhealth.recommend.SecondFragment;
-import com.example.ucanhealth.recommend.ThirdFragment;
+import com.example.ucanhealth.MainActivity;
+import com.example.ucanhealth.R;
 import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.statistic.Statistics;
 import com.google.android.material.navigation.NavigationView;
