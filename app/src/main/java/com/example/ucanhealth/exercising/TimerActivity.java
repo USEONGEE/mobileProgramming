@@ -92,11 +92,11 @@ public class TimerActivity extends AppCompatActivity {
         input_weight = findViewById(R.id.input_weight);
         btn_next = findViewById(R.id.btn_next);
         currentSet = findViewById(R.id.current_set);
-        TextView_order = findViewById(R.id.TextView_order);
+//        TextView_order = findViewById(R.id.TextView_order);
         TextView_reps = findViewById(R.id.TextView_reps);
         TextView_totalSet = findViewById(R.id.TextView_totalSet);
         TextView_timer_exercise = findViewById(R.id.timer_exercise);
-        TextView_total_exercise = findViewById(R.id.total_exercise);
+//        TextView_total_exercise = findViewById(R.id.total_exercise);
         timer_rest_second = findViewById(R.id.timer_rest_second);
         timer_rest_minute = findViewById(R.id.timer_rest_minute);
         goPrevious = findViewById(R.id.goPreviousBtn);
