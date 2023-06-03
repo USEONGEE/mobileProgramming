@@ -25,15 +25,16 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r1" />
 
                 <Button
                     android:id="@+id/button_Routine1"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView1"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
@@ -41,11 +42,11 @@
                     android:textSize="30dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine1"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView1"
                     android:src="@drawable/person" />
 
@@ -66,15 +67,16 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r3" />
 
                 <Button
                     android:id="@+id/button_Routine2"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView2"
                     android:text="Routine 2"
                     android:background="@drawable/rounded_button"
@@ -82,11 +84,11 @@
                     android:textSize="30dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine2"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView2"
                     android:src="@drawable/person" />
 
@@ -107,15 +109,16 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r4" />
 
                 <Button
                     android:id="@+id/button_Routine3"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView3"
                     android:text="Routine 3"
                     android:background="@drawable/rounded_button"
@@ -123,11 +126,11 @@
                     android:textSize="30dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine3"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView3"
                     android:src="@drawable/person" />
 
@@ -148,15 +151,16 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r5" />
 
                 <Button
                     android:id="@+id/button_Routine4"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView4"
                     android:text="Routine 4"
                     android:background="@drawable/rounded_button"
@@ -164,11 +168,11 @@
                     android:textSize="30dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine4"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView4"
                     android:src="@drawable/person" />
 
@@ -189,15 +193,16 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r6" />
 
                 <Button
                     android:id="@+id/button_Routine5"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView5"
                     android:text="Routine 5"
                     android:background="@drawable/rounded_button"
@@ -205,11 +210,11 @@
                     android:textSize="30dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine5"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView5"
                     android:src="@drawable/person" />
 

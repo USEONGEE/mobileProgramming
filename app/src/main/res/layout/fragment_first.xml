@@ -25,27 +25,29 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r1" />
 
                 <Button
                     android:id="@+id/button_Routine1"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
+                    android:layout_alignParentBottom="false"
+                    android:layout_centerInParent="true"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView1"
                     android:background="@drawable/rounded_button"
-                    android:textColor="#ffffff"
                     android:text="Routine 1"
-                    android:textSize="30dp" />
+                    android:textColor="#ffffff"
+                    android:textSize="25dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine1"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView1"
                     android:src="@drawable/person" />
 
@@ -58,6 +60,7 @@
                     android:layout_toRightOf="@id/imageView1"
                     android:text="79"
                     android:textSize="25dp" />
+                -->
             </RelativeLayout>
 
             <RelativeLayout
@@ -66,30 +69,30 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r3" />
 
                 <Button
                     android:id="@+id/button_Routine2"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/imageView2"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
                     android:text="Routine 2"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine2"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView2"
                     android:src="@drawable/person" />
-
                 <TextView
                     android:layout_width="54dp"
                     android:layout_height="wrap_content"
@@ -98,7 +101,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_toRightOf="@id/imageView2"
                     android:text="88"
-                    android:textSize="25dp" />
+                    android:textSize="25dp" /> -->
             </RelativeLayout>
 
             <RelativeLayout
@@ -107,27 +110,29 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="168dp"
+                    android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/r4" />
 
                 <Button
                     android:id="@+id/button_Routine3"
-                    android:layout_width="219dp"
+                    android:layout_width="180dp"
                     android:layout_height="62dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_centerInParent="true"
+
                     android:layout_toRightOf="@+id/imageView3"
                     android:text="Routine 3"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <ImageView
-                    android:layout_width="53dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/button_Routine3"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/imageView3"
                     android:src="@drawable/person" />
 
@@ -139,7 +144,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_toRightOf="@id/imageView3"
                     android:text="49"
-                    android:textSize="25dp" />
+                    android:textSize="25dp" /> -->
             </RelativeLayout>
             <!--
                         <RelativeLayout

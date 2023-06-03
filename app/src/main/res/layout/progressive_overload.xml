@@ -42,13 +42,16 @@
                 android:id="@+id/lastWeekText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:textColor="@color/black"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_percent="1.0">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[Last week]"
+                    android:text="지난 주"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/font_kor"
                     android:textSize="20sp"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintVertical_bias="0.5"
@@ -146,14 +149,17 @@
                 android:id="@+id/thisWeekText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:textColor="@color/black"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_percent="1.0">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[This week]"
+                    android:text="이번 주"
                     android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/font_kor"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintVertical_bias="0.5"
                     app:layout_constraintTop_toTopOf="parent"
