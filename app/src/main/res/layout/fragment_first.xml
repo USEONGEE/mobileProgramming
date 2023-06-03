@@ -60,7 +60,7 @@
                     android:layout_toRightOf="@id/imageView1"
                     android:text="79"
                     android:textSize="25dp" />
-                -->
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -101,7 +101,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_toRightOf="@id/imageView2"
                     android:text="88"
-                    android:textSize="25dp" /> -->
+                    android:textSize="25dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -144,7 +144,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_toRightOf="@id/imageView3"
                     android:text="49"
-                    android:textSize="25dp" /> -->
+                    android:textSize="25dp" />
             </RelativeLayout>
             <!--
                         <RelativeLayout

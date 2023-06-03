@@ -22,12 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"
-            android:text="수정하기"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="25sp"
             android:fontFamily="@font/font_kor"
+            android:gravity="center"
+            android:text="수정하기"
+            android:textAlignment="center"
             android:textColor="@color/black"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +39,8 @@
             android:layout_width="342dp"
             android:layout_height="327dp"
             android:orientation="vertical"
-            android:paddingTop="30dp"
             android:paddingLeft="50dp"
+            android:paddingTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
@@ -60,51 +60,55 @@
             <EditText
                 android:id="@+id/rep"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="반복 횟수 "
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/button1_color"
                 android:fontFamily="@font/font_kor"
-                android:backgroundTint = "@color/button1_color"
-                android:inputType="number"
-                android:layout_marginTop="20dp" />
+                android:hint="반복 횟수 "
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/totalSet"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/button1_color"
                 android:fontFamily="@font/font_kor"
-                android:backgroundTint = "@color/button1_color"
                 android:hint="총 횟수"
-                android:inputType="number"
-                android:layout_marginTop="20dp" />
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/weight"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="중량"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/button1_color"
                 android:fontFamily="@font/font_kor"
-                android:backgroundTint = "@color/button1_color"
-                android:inputType="number"
-                android:layout_marginTop="20dp" />
+                android:hint="중량"
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/restTimeBtn"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="쉬는 시간"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/button1_color"
                 android:fontFamily="@font/font_kor"
-                android:backgroundTint = "@color/button1_color"
-                android:inputType="number"
-                android:layout_marginTop="20dp" />
+                android:hint="쉬는 시간"
+                android:inputType="number" />
         </LinearLayout>
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="336dp"
             android:background="@drawable/x_button"
-            tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="6dp" />
+            app:layout_constraintBottom_toTopOf="@+id/modifyBtn"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/deleteBtn"
@@ -123,6 +127,7 @@
             android:id="@+id/modifyBtn"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_button"
             android:text="MODIFY"
             android:textColor="@color/white"
@@ -130,7 +135,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.991"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/closeBtn"
             app:layout_constraintVertical_bias="0.448" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

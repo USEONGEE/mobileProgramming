@@ -63,15 +63,16 @@
                 <Button
                     android:id="@+id/deleteAllBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="48dp"
                     android:layout_marginLeft="60dp"
                     android:background="@drawable/rounded_button"
                     android:textColor="@color/white"
                     android:text="delete all"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <ScrollView
+                tools:ignore="SpeakableTextPresentCheck"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -93,17 +94,20 @@
                     android:layout_height="wrap_content"
                     android:text="운동 목록"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/font_kor"
                     android:textColor="@color/black"
                     />
                 <Spinner
+                    tools:ignore="SpeakableTextPresentCheck"
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="48dp" />
             </LinearLayout>
 
 
             <ScrollView
+                tools:ignore="SpeakableTextPresentCheck"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">

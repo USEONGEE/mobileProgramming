@@ -43,22 +43,27 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/lastWeekImage"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="1.0">
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_kor"
                     android:text="지난 주"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/font_kor"
                     android:textSize="20sp"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -66,35 +71,38 @@
                 android:id="@+id/lastWeekImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lastWeekChart"
                 app:layout_constraintHeight_percent="0.8"
-                app:layout_constraintWidth_percent="0.3"
-                app:layout_constraintTop_toBottomOf="@+id/lastWeekText">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekText"
+                app:layout_constraintWidth_percent="0.3">
 
                 <ImageView
                     android:id="@+id/lastWeekWeak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/weak"
                     android:visibility="gone"
-                    android:src="@drawable/weak" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <ImageView
                     android:id="@+id/lastWeekHard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/hard"
                     android:visibility="gone"
-                    android:src="@drawable/hard" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,10 +110,11 @@
                 android:id="@+id/lastWeekChart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.8"
-                app:layout_constraintWidth_percent="0.7"
                 app:layout_constraintStart_toEndOf="@+id/lastWeekImage"
-                app:layout_constraintTop_toBottomOf="@+id/lastWeekText">
+                app:layout_constraintTop_toBottomOf="@+id/lastWeekText"
+                app:layout_constraintWidth_percent="0.7">
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/lastPieChart"
@@ -150,22 +159,27 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/thisWeekImage"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="1.0">
 
                 <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="이번 주"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/font_kor"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="이번 주"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -173,35 +187,38 @@
                 android:id="@+id/thisWeekImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/thisWeekChart"
                 app:layout_constraintHeight_percent="0.8"
-                app:layout_constraintWidth_percent="0.3"
-                app:layout_constraintTop_toBottomOf="@+id/thisWeekText">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/thisWeekText"
+                app:layout_constraintWidth_percent="0.3">
 
                 <ImageView
                     android:id="@+id/thisWeekWeak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/weak"
                     android:visibility="gone"
-                    android:src="@drawable/weak" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <ImageView
                     android:id="@+id/thisWeekHard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintVertical_bias="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/hard"
                     android:visibility="gone"
-                    android:src="@drawable/hard" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -209,10 +226,11 @@
                 android:id="@+id/thisWeekChart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.8"
-                app:layout_constraintWidth_percent="0.7"
                 app:layout_constraintStart_toEndOf="@+id/thisWeekImage"
-                app:layout_constraintTop_toBottomOf="@+id/thisWeekText">
+                app:layout_constraintTop_toBottomOf="@+id/thisWeekText"
+                app:layout_constraintWidth_percent="0.7">
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/thisPieChart"
