@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -36,8 +38,14 @@ import java.util.Calendar;
 public class ProgressiveOverload extends AppCompatActivity {
     UcanHealthDbHelper dbHelper;
     SQLiteDatabase db;
+    int[] colors;
     PieChart lastWeekPieChart;
     PieChart thisWeekPieChart;
+    ImageView lastWeakImage;
+    ImageView lastHardImage;
+    ImageView thisWeakImage;
+    ImageView thisHardImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,20 +57,75 @@ public class ProgressiveOverload extends AppCompatActivity {
         ///
         setLastWeekPieChart();
         setThisWeekPieChart();
-
         ///
+
+        ProgressiveOverloadState();
     }
 
     private void init() {
+        colors = new int[] {
+                Color.rgb(255, 189, 46),    // arm
+                Color.rgb(255, 77, 106),    // back
+                Color.rgb(151, 226, 0),     // chest
+                Color.rgb(50, 240, 177),    // core
+                Color.rgb(0, 152, 255),     // leg
+                Color.rgb(250, 127, 65)     // shoulder
+        };
         lastWeekPieChart = findViewById(R.id.lastPieChart);
         thisWeekPieChart = findViewById(R.id.thisPieChart);
 
         dbHelper = new UcanHealthDbHelper(this);
         db = dbHelper.getReadableDatabase();
+
+        lastWeakImage = findViewById(R.id.lastWeekWeak);
+        lastHardImage = findViewById(R.id.lastWeekHard);
+        thisWeakImage = findViewById(R.id.thisWeekWeak);
+        thisHardImage = findViewById(R.id.thisWeekHard);
+    }
+
+    private void ProgressiveOverloadState() {
+        // set_count 총합을 비교
+        // 이번 주 set_count 총합
+        Cursor thisCursor = getCurrWeekData();
+
+        int thisSetCount = 0;
+        int sum_thisSetCount = 0;
+        while(thisCursor.moveToNext()) {
+            thisSetCount += Integer.parseInt(thisCursor.getString(1));
+        }
+        thisCursor.moveToFirst(); thisCursor.moveToPrevious();
+
+        while(thisCursor.moveToNext()) {
+            sum_thisSetCount = Integer.parseInt(thisCursor.getString(1));
+        }
+
+        // 지난 주 set_count 총합
+        Cursor lastCursor = getLastWeekData();
+
+        int lastSetCount = 0;
+        int sum_lastSetCount = 0;
+        while(lastCursor.moveToNext()) {
+            lastSetCount += Integer.parseInt(lastCursor.getString(1));
+        }
+        lastCursor.moveToFirst(); lastCursor.moveToPrevious();
+
+        while(lastCursor.moveToNext()) {
+            sum_lastSetCount = Integer.parseInt(lastCursor.getString(1));
+        }
+
+        if(sum_lastSetCount < sum_thisSetCount){
+            lastWeakImage.setVisibility(View.VISIBLE);
+            thisHardImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            lastHardImage.setVisibility(View.VISIBLE);
+            thisWeakImage.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setThisWeekPieChart() {
-        ArrayList<PieEntry> visitors = new ArrayList<>();
+        ArrayList<PieEntry> exerciseType = new ArrayList<>();
         Cursor cursor = getCurrWeekData();
 
         int all = 0;
@@ -74,27 +137,28 @@ public class ProgressiveOverload extends AppCompatActivity {
         while(cursor.moveToNext()) {
             int sum_total = Integer.parseInt(cursor.getString(0));
             int sum_setCount = Integer.parseInt(cursor.getString(1));
-            visitors.add(new PieEntry((float)sum_setCount / all * 100,cursor.getString(2)));
+            exerciseType.add(new PieEntry((float)sum_setCount / all * 100,cursor.getString(2)));
             Log.i("overload : 신체 부위", cursor.getString(2));
             Log.i("overload: 세트값" , cursor.getString(1));
             Log.i("overload: 전체값", cursor.getString(0));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(visitors, "Visitors");
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieDataSet pieDataSet = new PieDataSet(exerciseType, "");
+        pieDataSet.setColors(colors);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
+
 
         PieData pieData = new PieData(pieDataSet);
 
         thisWeekPieChart.setData(pieData);
         thisWeekPieChart.getDescription().setEnabled(false);
-        thisWeekPieChart.setCenterText("Visitors");
+        thisWeekPieChart.setCenterText("Exercise Type");
         thisWeekPieChart.animate();
     }
 
     private void setLastWeekPieChart() {
-        ArrayList<PieEntry> visitors = new ArrayList<>();
+        ArrayList<PieEntry> exerciseType = new ArrayList<>();
         Cursor cursor = getLastWeekData();
 
         int all = 0;
@@ -106,14 +170,14 @@ public class ProgressiveOverload extends AppCompatActivity {
         while(cursor.moveToNext()) {
             int sum_total = Integer.parseInt(cursor.getString(0));
             int sum_setCount = Integer.parseInt(cursor.getString(1));
-            visitors.add(new PieEntry((float)sum_setCount / all * 100,cursor.getString(2)));
+            exerciseType.add(new PieEntry((float)sum_setCount / all * 100,cursor.getString(2)));
             Log.i("overload : 신체 부위", cursor.getString(2));
             Log.i("overload: 세트값" , cursor.getString(1));
             Log.i("overload: 전체값", cursor.getString(0));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(visitors, "Visitors");
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieDataSet pieDataSet = new PieDataSet(exerciseType, "");
+        pieDataSet.setColors(colors);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
 
@@ -121,7 +185,7 @@ public class ProgressiveOverload extends AppCompatActivity {
 
         lastWeekPieChart.setData(pieData);
         lastWeekPieChart.getDescription().setEnabled(false);
-        lastWeekPieChart.setCenterText("Visitors");
+        lastWeekPieChart.setCenterText("Exercise Type");
         lastWeekPieChart.animate();
     }
 
