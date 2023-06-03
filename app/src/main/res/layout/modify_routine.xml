@@ -102,9 +102,11 @@
             android:id="@+id/closeBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginStart="292dp"
+            android:layout_marginBottom="404dp"
             android:background="@drawable/x_button"
-            tools:layout_editor_absoluteX="293dp"
-            tools:layout_editor_absoluteY="6dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/deleteBtn"
