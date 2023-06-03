@@ -20,7 +20,7 @@
             android:name=".statistic.Statistics"
             android:exported="false" />
         <activity
-            android:name=".recommend.RecommendRoutine"
+            android:name=".recommend.menu_Routine"
             android:exported="false" />
         <activity
             android:name=".recommend.ThirdFragment"
@@ -30,9 +30,6 @@
             android:exported="false" />
         <activity
             android:name=".recommend.FirstFragment"
-            android:exported="false" />
-        <activity
-            android:name=".recommend.menu_Routine"
             android:exported="false" />
         <activity
             android:name=".schedule.exerciseScheduler"

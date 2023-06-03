@@ -26,35 +26,37 @@ import com.google.android.material.navigation.NavigationView;
 
 public class menu_Routine extends AppCompatActivity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu_routine);
+
+        InitializeLayout();
+
+        Button button1 = findViewById(R.id.firstBtn);
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_menu_routine);
-
-                Button button1 = findViewById(R.id.button1);
-                button1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        loadFragment(new FirstFragment());
-                    }
-                });
-
-                Button button2 = findViewById(R.id.button2);
-                button2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        loadFragment(new SecondFragment());
-                    }
-                });
-
-                Button button3 = findViewById(R.id.button3);
-                button3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        loadFragment(new ThirdFragment());
-                    }
-                });
+            public void onClick(View view) {
+                loadFragment(new FirstFragment());
             }
+        });
+
+        Button button2 = findViewById(R.id.secondBtn);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new SecondFragment());
+            }
+        });
+
+        Button button3 = findViewById(R.id.thirdBtn);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new ThirdFragment());
+            }
+        });
+    }
 
     public void InitializeLayout() {
         // toolBar를 통해 App Bar 생성
@@ -107,11 +109,11 @@ public class menu_Routine extends AppCompatActivity {
         });
     }
 
-            private void loadFragment(Fragment fragment) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-            }
-        }
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
+}
 
