@@ -47,8 +47,8 @@
 
         <!--이미지 아래 들어가는 전체 부분-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="403dp"
+            android:layout_height="363dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
@@ -59,356 +59,341 @@
             <!--exercise n 컨테이너-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/container_1"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <Button
                     android:id="@+id/goPreviousBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이전"
-                    android:textSize="19sp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/arrow_button"
+                    android:fontFamily="@font/font_kor"
                     android:textColor="@color/black"
-                    android:background="#00000000"
-                    android:fontFamily="@font/multicore"/>
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/exercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/exercise"
-                    android:textSize="19sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/font_kor"
+                    android:text="운동하기"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/multicore"
-                    />
+                    android:textSize="19sp" />
+
                 <Button
                     android:id="@+id/goNextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이후"
-                    android:textSize="19sp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="35dp"
+                    android:background="@drawable/arrow_button2"
+                    android:fontFamily="@font/font_kor"
                     android:textColor="@color/black"
-                    android:background="#00000000"
-                    android:fontFamily="@font/multicore"/>
+                    android:textSize="19sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!--총 운동 컨테이너-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/container_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/button2_color"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/TextView_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="0"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/slicer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="/"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/total_exercise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="0"
-                    android:textSize="20sp" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!--weight,number,set가 들어가는 컨테이너-->
+
             <LinearLayout
-                android:id="@+id/container_3"
-                android:layout_width="250dp"
-                android:layout_height="220dp"
-                android:background="@color/button2_color"
+                android:id="@+id/container_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="81dp"
+                tools:layout_editor_absoluteY="60dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="2">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Add your layout here -->
+
+
+                        <!-- exercise 타이머 -->
+                        <TextView
+                            android:id="@+id/timer_exercise"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0:00"
+                            android:textColor="@color/black"
+                            android:textAlignment="center"
+                            android:textSize="30sp" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <!-- rest 타이머 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/timer_rest_minute"
+                                android:layout_width="65dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:inputType="time"
+                                android:text="01"
+                                android:textAlignment="center"
+                                android:textSize="30sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text=":"
+                                android:textSize="30sp" />
+
+                            <EditText
+                                android:id="@+id/timer_rest_second"
+                                android:layout_width="65dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:inputType="time"
+                                android:text="30"
+                                android:textAlignment="center"
+                                android:textSize="30sp" />
+                        </RelativeLayout>
+
+
+                    </FrameLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="310dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+
+                    <!-- exercise 버튼 -->
+                    <Button
+                        android:id="@+id/btn_exercise"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_button"
+                        android:fontFamily="@font/font_kor"
+                        android:text="운동 시작"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+
+                    <!-- rest 버튼 -->
+                    <Button
+                        android:id="@+id/btn_rest"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_button"
+                        android:text="휴식 시작"
+                        android:fontFamily="@font/font_kor"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="180dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!--Weight를 담는 컨테이너-->
-                <LinearLayout
-                    android:id="@+id/container_weight"
+                <TextView
+                    android:id="@+id/label_set"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/font_kor"
+                    android:text="세트"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-                    <TextView
-                        android:id="@+id/label_weight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/weight"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/input_weight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="#00ffffff"
-                        android:ems="4"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/label_kg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/kg"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <!--Number를 담는 컨테이너-->
                 <LinearLayout
-                    android:id="@+id/container_number"
+                    android:id="@+id/container_1_n"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
-                        android:id="@+id/label_number"
+                        android:id="@+id/current_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/number"
+                        android:layout_margin="4dp"
+                        android:fontFamily="@font/font_kor"
+                        android:text="1"
+                        android:textColor="@color/black"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/TextView_reps"
+                        android:id="@+id/slicer_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="#00ffffff"
-                        android:ems="4" />
-
-                    <TextView
-                        android:id="@+id/label_times"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/times"
+                        android:text="/"
+                        android:textColor="@color/black"
                         android:textSize="20sp" />
 
+                    <TextView
+                        android:id="@+id/TextView_totalSet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
-                <!-- Set를 담는 컨테이너-->
-                <LinearLayout
-                    android:id="@+id/container_set"
+                <TextView
+                    android:id="@+id/set_2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/font"
+                    android:text="@string/set"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
-                    <TextView
-                        android:id="@+id/label_set"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/set_label"
-                        android:textSize="20sp" />
+                <!-- 다음 세트 버튼-->
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="next"
+                    android:textColor="#ffffff" />
 
-                    <LinearLayout
-                        android:id="@+id/container_1_n"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent">
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/current_set"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="1"
-                            android:textSize="20sp" />
+            <LinearLayout
+                android:id="@+id/container_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="250dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/slicer_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="/"
-                            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/label_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/font_kor"
+                    android:text="갯수"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/TextView_totalSet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text=""
-                            android:textSize="20sp" />
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/TextView_reps"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:background="#00ffffff"
+                    android:ems="4"
+                    android:textColor="@color/black" />
 
-                    <TextView
-                        android:id="@+id/set_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="@string/set"
-                        android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/label_times"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/font"
+                    android:text="@string/times"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
-                    <!-- 다음 세트 버튼-->
-                    <Button
-                        android:id="@+id/btn_next"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/rounded_button"
-                        android:text="next"
-                        android:textColor="#ffffff" />
+            </LinearLayout>
 
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/container_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="220dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <!--타이머 컨테이너-->
-                <LinearLayout
-                    android:id="@+id/container_timer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/label_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_kor"
+                    android:text="중량"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:layout_conversion_absoluteHeight="27dp"
+                    tools:layout_conversion_absoluteWidth="67dp"
+                    tools:layout_editor_absoluteX="86dp"
+                    tools:layout_editor_absoluteY="440dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2">
+                <TextView
+                    android:id="@+id/input_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00ffffff"
+                    android:ems="4"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="66dp"
+                    tools:layout_editor_absoluteX="163dp"
+                    tools:layout_editor_absoluteY="446dp" />
 
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/border"
-                            android:orientation="vertical">
-
-                            <!-- Add your layout here -->
-
-                            <TextView
-                                android:id="@+id/label_exercise"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="@string/exercise" />
-
-                            <!-- exercise 타이머 -->
-                            <TextView
-                                android:id="@+id/timer_exercise"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="0:00"
-                                android:textAlignment="center"
-                                android:textSize="30sp" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/border"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/label_rest"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:text="@string/rest"
-                                android:textAlignment="center" />
-
-                            <!-- rest 타이머 -->
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <EditText
-                                    android:id="@+id/timer_rest_minute"
-                                    android:layout_width="65dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_centerVertical="true"
-                                    android:inputType="time"
-                                    android:text="01"
-                                    android:textAlignment="center"
-                                    android:textSize="30sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:text=":"
-                                    android:textSize="30sp" />
-
-                                <EditText
-                                    android:id="@+id/timer_rest_second"
-                                    android:layout_width="65dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_gravity="center"
-                                    android:inputType="time"
-                                    android:text="30"
-                                    android:textAlignment="center"
-                                    android:textSize="30sp" />
-                            </RelativeLayout>
-
-
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/border">
-
-                            <!-- exercise 버튼 -->
-                            <Button
-                                android:id="@+id/btn_exercise"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/rounded_button"
-                                android:text="@string/start"
-                                android:textColor="#ffffff"
-                                android:textSize="10sp" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/border">
-
-                            <!-- rest 버튼 -->
-                            <Button
-                                android:id="@+id/btn_rest"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/rounded_button"
-                                android:text="@string/start"
-                                android:textColor="#ffffff"
-                                android:textSize="10sp" />
-                        </FrameLayout>
-                    </LinearLayout>
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/label_kg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font"
+                    android:text="@string/kg"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:layout_conversion_absoluteHeight="27dp"
+                    tools:layout_conversion_absoluteWidth="22dp"
+                    tools:layout_editor_absoluteX="238dp"
+                    tools:layout_editor_absoluteY="440dp" />
 
             </LinearLayout>
 

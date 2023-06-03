@@ -36,9 +36,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView1"
                     android:text="Routine 1"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
@@ -77,9 +78,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView2"
                     android:text="Routine 2"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
@@ -118,9 +120,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView3"
                     android:text="Routine 3"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
@@ -159,9 +162,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView4"
                     android:text="Routine 4"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
@@ -200,9 +204,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView5"
                     android:text="Routine 5"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
@@ -241,9 +246,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/imageView6"
                     android:text="Routine 6"
+                    android:fontFamily="@font/font"
                     android:background="@drawable/rounded_button"
                     android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
                 <ImageView
                     android:layout_width="53dp"
