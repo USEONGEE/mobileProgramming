@@ -1,5 +1,6 @@
 package com.example.ucanhealth.aboutAddRoutine;
 
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.example.ucanhealth.R;
 import com.example.ucanhealth.sqlite.UcanHealth;
@@ -213,8 +215,15 @@ public class ExerciseSettingDialog extends Dialog {
         for (int i = 0 ; i < exerciseList.size(); i++) {
             String exercise = exerciseList.get(i);
             Button button = new Button(getContext());
+
             button.setText(exercise);
             button.setTypeface(null, Typeface.BOLD);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 10, 0, 0); // marginTop 값을 여기서 조정
+            button.setLayoutParams(layoutParams);
+
+            button.setBackground(  ContextCompat.getDrawable(getContext(), R.drawable.exercise_setting_button));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -238,6 +247,8 @@ public class ExerciseSettingDialog extends Dialog {
         while(cursor.moveToNext()) {
             Log.i("makeButton","success");
             Button button = new Button(getContext());
+
+
             String exercise = cursor.getString(0);
             String reps = cursor.getString(1).toString();
             String weight = cursor.getString(2).toString();
@@ -245,9 +256,16 @@ public class ExerciseSettingDialog extends Dialog {
             
             String text = exercise + " / " + reps + "회 / " + totalSet + "세트 / " + weight + "kg ";
             button.setText(text);
-//            button.setBackgroundColor(Color.TRANSPARENT);
+
             button.setTypeface(null, Typeface.BOLD);
             button.setTextColor(Color.rgb(0, 0, 0));
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 10, 0, 0); // marginTop 값을 여기서 조정
+            button.setLayoutParams(layoutParams);
+
+            button.setBackground(  ContextCompat.getDrawable(getContext(), R.drawable.exercise_setting_button));
+            button.setElevation(20);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
