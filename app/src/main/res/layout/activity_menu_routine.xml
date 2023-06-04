@@ -16,60 +16,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-            <ScrollView
-                android:id="@+id/scrollContainer"
+        <ScrollView
+            android:id="@+id/scrollContainer"
+            android:layout_width="411dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="411dp"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="411dp"
-                    android:layout_height="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/firstBtn"
+                    android:layout_width="378dp"
+                    android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rounded_button_trans"
+                    android:fontFamily="@font/font_kor"
+                    android:text="초급자"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="57dp" />
 
-                    <Button
-                        android:id="@+id/firstBtn"
-                        android:layout_width="378dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/rounded_button_trans"
-                        android:fontFamily="@font/font_kor"
-                        android:text="초급자"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="57dp" />
+                <Button
+                    android:id="@+id/secondBtn"
+                    android:layout_width="378dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rounded_button_trans"
+                    android:fontFamily="@font/font_kor"
+                    android:text="중급자"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="155dp"
+                    tools:layout_editor_absoluteY="57dp" />
 
-                    <Button
-                        android:id="@+id/secondBtn"
-                        android:layout_width="378dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/rounded_button_trans"
-                        android:fontFamily="@font/font_kor"
-                        android:text="중급자"
-                        android:textColor="#000000"
-                        android:textSize="20sp"
-                        tools:layout_editor_absoluteX="155dp"
-                        tools:layout_editor_absoluteY="57dp" />
-
-                    <Button
-                        android:id="@+id/thirdBtn"
-                        android:layout_width="378dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/rounded_button_trans"
-                        android:fontFamily="@font/font_kor"
-                        android:text="상급자"
-                        android:textColor="#000000"
-                        android:textSize="20sp"
-                        tools:layout_editor_absoluteX="296dp"
-                        tools:layout_editor_absoluteY="57dp" />
-                </LinearLayout>
-            </ScrollView>
+                <Button
+                    android:id="@+id/thirdBtn"
+                    android:layout_width="378dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rounded_button_trans"
+                    android:fontFamily="@font/font_kor"
+                    android:text="상급자"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="296dp"
+                    tools:layout_editor_absoluteY="57dp" />
+            </LinearLayout>
+        </ScrollView>
         <LinearLayout
             android:id="@+id/fragment_container"
             android:layout_width="411dp"
@@ -93,108 +93,4 @@
         app:menu="@menu/drawerlayout">
 
     </com.google.android.material.navigation.NavigationView>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/button1_color"
-    android:fitsSystemWindows="true"
-    tools:context=".recommend.menu_Routine"
-    tools:openDrawer="start">
-
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="120dp"
-        android:layout_height="95dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"
-        android:text="Today's Routine"
-        android:textColor="#ffffff"
-        android:textSize="30dp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_container"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="411dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/firstBtn"
-                android:layout_width="378dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rounded_button_trans"
-                android:fontFamily="@font/font_kor"
-                android:text="초급자"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="57dp" />
-
-            <Button
-                android:id="@+id/secondBtn"
-                android:layout_width="378dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rounded_button_trans"
-                android:fontFamily="@font/font_kor"
-                android:text="중급자"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                tools:layout_editor_absoluteX="155dp"
-                tools:layout_editor_absoluteY="57dp" />
-
-            <Button
-                android:id="@+id/thirdBtn"
-                android:layout_width="378dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/rounded_button_trans"
-                android:fontFamily="@font/font_kor"
-                android:text="상급자"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                tools:layout_editor_absoluteX="296dp"
-                tools:layout_editor_absoluteY="57dp" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="411dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="-7dp"
-        android:layout_marginBottom="2dp"
-        android:orientation="vertical"
-        app:itemTextColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> Stashed changes
 </androidx.drawerlayout.widget.DrawerLayout>
