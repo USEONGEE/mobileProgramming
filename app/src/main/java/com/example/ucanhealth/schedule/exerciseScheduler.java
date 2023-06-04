@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -208,47 +209,10 @@ public class exerciseScheduler extends AppCompatActivity {
             datas.add(data);
         }
 
-        exerciseScheduler.exerciseListAdapter adapter = new exerciseListAdapter(this, datas);
+        int fontColor = Color.BLACK; // 검은색 폰트 색상
+        ExerciseListAdapter adapter = new ExerciseListAdapter(this, datas, fontColor);
+
         listview.setAdapter(adapter);
-    }
-
-    public class ExerciseListAdapter extends BaseAdapter {
-        private Context context;
-        private ArrayList<String> dataList;
-
-        public ExerciseListAdapter(Context context, ArrayList<String> dataList) {
-            this.context = context;
-            this.dataList = dataList;
-        }
-
-        @Override
-        public int getCount() {
-            return dataList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return dataList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(context);
-                convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-            }
-
-            TextView textView = convertView.findViewById(android.R.id.text1);
-            String item = dataList.get(position);
-            textView.setText(item);
-
-            return convertView;
-        }
     }
 
     @SuppressLint("WrongConstant")
@@ -501,13 +465,17 @@ public class exerciseScheduler extends AppCompatActivity {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
-    public class exerciseListAdapter extends BaseAdapter {
+    public class ExerciseListAdapter extends BaseAdapter {
         private Context context;
         private ArrayList<String> dataList;
 
-        public exerciseListAdapter(Context context, ArrayList<String> dataList) {
+        private int fontColor; // 폰트 색상 변수 추가
+
+
+        public ExerciseListAdapter(Context context, ArrayList<String> dataList, int fontColor) {
             this.context = context;
             this.dataList = dataList;
+            this.fontColor = fontColor; // 폰트 색상 초기화
         }
 
         @Override
@@ -535,6 +503,8 @@ public class exerciseScheduler extends AppCompatActivity {
             TextView textView = convertView.findViewById(android.R.id.text1);
             String item = dataList.get(position);
             textView.setText(item);
+            textView.setTextColor(fontColor); // 폰트 색상 설정
+
 
             return convertView;
         }
