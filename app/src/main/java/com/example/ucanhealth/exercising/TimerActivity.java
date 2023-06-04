@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,10 @@ import com.example.ucanhealth.schedule.exerciseScheduler;
 import com.example.ucanhealth.sqlite.UcanHealth;
 import com.example.ucanhealth.sqlite.UcanHealthDbHelper;
 import com.example.ucanhealth.statistic.Statistics;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -63,6 +69,20 @@ public class TimerActivity extends AppCompatActivity {
     TextView TextView_total_exercise;
     EditText timer_rest_minute;
     EditText timer_rest_second;
+
+    private ImageButton backButton;
+    private ImageButton chestButton;
+    private ImageButton shoulderButton;
+    private ImageButton legButton;
+    private ImageButton armButton;
+    private ImageButton coreButton;
+    private ImageButton bodyButton;
+    private float backAlpha = 0.0f;
+    private float chestAlpha  = 0.0f;
+    private float shoulderAlpha = 0.0f;
+    private float legAlpha  = 0.0f;
+    private float armAlpha = 0.0f;
+    private float coreAlpha  = 0.0f;
 
     int numOfExercise;
     int indexCurrentExercise;
@@ -102,6 +122,21 @@ public class TimerActivity extends AppCompatActivity {
         goPrevious = findViewById(R.id.goPreviousBtn);
         goNext = findViewById(R.id.goNextBtn);
 
+        // 이미지
+        bodyButton = findViewById(R.id.bodyButton);
+        backButton = findViewById(R.id.backButton);
+        backButton.setAlpha(backAlpha * 1.0f);
+        chestButton = findViewById(R.id.chestButton);
+        chestButton.setAlpha(chestAlpha * 1.0f);
+        shoulderButton = findViewById(R.id.shoulderButton);
+        shoulderButton.setAlpha(shoulderAlpha * 1.0f);
+        legButton = findViewById(R.id.legButton);
+        legButton.setAlpha(legAlpha * 1.0f);
+        armButton = findViewById(R.id.armButton);
+        armButton.setAlpha(armAlpha * 1.0f);
+        coreButton = findViewById(R.id.coreButton);
+        coreButton.setAlpha(coreAlpha * 1.0f);
+
         ReadDB();
         // 운동 리스트
         exerciseArrayList = new ArrayList<>();
@@ -131,6 +166,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public class Exercise {
+        String category;
         String item;
         int reps;
         float weight;
@@ -371,6 +407,8 @@ public class TimerActivity extends AppCompatActivity {
     // 특정 운동이 끝나거나, 화면 전환 시에 호출됨.
     // exerciseArrayList.get(indexCurrentExercise).
     public void setUI() {
+        showExercisePartition();
+
         exercise.setText(exerciseArrayList.get(indexCurrentExercise).item);
         input_weight.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).weight));
         currentSet.setText(String.valueOf(exerciseArrayList.get(indexCurrentExercise).set_count));
@@ -401,6 +439,9 @@ public class TimerActivity extends AppCompatActivity {
             finish();
             return;
         }
+        cursor.close();
+
+        getCategroy();
     }
 
     // 완료되지 않은 운동의 index를 가져와서 보여줌
@@ -426,7 +467,7 @@ public class TimerActivity extends AppCompatActivity {
 
         int count = cursor.getInt(0);
         Log.i("count", String.valueOf(count));
-
+        cursor.close();
         return count;
     }
 
@@ -561,8 +602,9 @@ public class TimerActivity extends AppCompatActivity {
         int second = totalExerciseTime % 60;
         TextView_timer_exercise.setText(String.format("%02d:%02d",minute,second));
 
-        return totalExerciseTime;
+        cursor.close();
 
+        return totalExerciseTime;
     }
 
     public View.OnClickListener nextSetClickListener = new View.OnClickListener() {
@@ -657,5 +699,66 @@ public class TimerActivity extends AppCompatActivity {
                 dismiss();
             }
         };
+    }
+
+    public void showExercisePartition() {
+        String selectedLabel = exerciseArrayList.get(indexCurrentExercise).category;
+
+        // 등운동 차트를 눌렀을 때
+        if (selectedLabel.equals("back")) {
+            DeleteImage();
+            backButton.setAlpha(1.0f);
+        }
+        // 가슴운동 차트를 눌렀을 때
+        if (selectedLabel.equals("chest")) {
+            DeleteImage();
+            chestButton.setAlpha(1.0f);
+        }
+        // 어깨운동 차트를 눌렀을 때
+        if (selectedLabel.equals("shoulder")) {
+            DeleteImage();
+            shoulderButton.setAlpha(1.0f);
+        }
+
+        // 다리운동 차트를 눌렀을 때
+        if (selectedLabel.equals("leg")) {
+            DeleteImage();
+            legButton.setAlpha(1.0f);
+        }
+        // 팔운동 차트를 눌렀을 때
+        if (selectedLabel.equals("arm")) {
+            DeleteImage();
+            armButton.setAlpha(1.0f);
+
+        }
+
+        // 코어운동 차트를 눌렀을 때
+        if (selectedLabel.equals("core")) {
+            DeleteImage();
+            coreButton.setAlpha(coreAlpha * 1.0f);
+        }
+    }
+    private void DeleteImage() {
+        backButton.setAlpha(0.0f);
+        chestButton.setAlpha(0.0f);
+        shoulderButton.setAlpha(0.0f);
+        legButton.setAlpha(0.0f);
+        armButton.setAlpha(0.0f);
+        coreButton.setAlpha(0.0f);
+    }
+
+    public void getCategroy() {
+        for(Exercise object : exerciseArrayList) {
+            String[] exercise = {object.item};
+            cursor = db_write.rawQuery("SELECT exercise_type from ExerciseType, UserExerciseLog " +
+                    "where ExerciseType.exercise = UserExerciseLog.exercise AND UserExerciseLog.exercise = ?",exercise);
+            cursor.moveToNext();
+            String category = cursor.getString(0);
+            object.category = category;
+            Log.i("category", category);
+
+            cursor.close();
+        }
+
     }
 }
