@@ -63,31 +63,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
+
         <Button
             android:id="@+id/getBtn"
             android:layout_width="65sp"
             android:layout_height="48sp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="364dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="264dp"
             android:background="@drawable/rounded_button"
             android:fontFamily="@font/font_kor"
-            android:textSize="12sp"
             android:text="가져오기"
             android:textColor="#ffffff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/addExampleBtn"
-            android:layout_width="60sp"
-            android:layout_height="48sp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="420dp"
-            android:background="@drawable/rounded_button"
-            android:fontFamily="@font/font_kor"
             android:textSize="12sp"
-            android:text="루틴 추가"
-            android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

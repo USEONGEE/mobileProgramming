@@ -78,7 +78,6 @@ public class exerciseScheduler extends AppCompatActivity {
     private int getButton_selectedDay;
 
     Button getButton; // 오늘로 루틴 추가하는 버튼
-    Button addExampleButton; // 예제 추가하는 버튼
 
     public String getButton_string_day;
 
@@ -89,14 +88,9 @@ public class exerciseScheduler extends AppCompatActivity {
 
         todayExerciseListContainer = findViewById(R.id.todayExerciseListContainer);
 
-        addExampleButton = findViewById(R.id.addExampleBtn);
 
         InitializeLayout();
 
-
-        //루틴 추가, 가져오기 버튼 선언
-        addExampleButton = findViewById(R.id.addExampleBtn);
-        addExampleButton.setOnClickListener(openExerciseSettingDialog);
 
         getButton = findViewById(R.id.getBtn);
         getButton.setOnClickListener(addRoutineToDB);
