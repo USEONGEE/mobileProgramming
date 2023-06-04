@@ -126,6 +126,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="@color/back_color"
+        app:itemTextColor="@color/black"
         app:menu="@menu/drawerlayout"
         app:headerLayout="@layout/header">
 

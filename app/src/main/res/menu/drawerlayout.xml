@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/MainPage"
         android:title="메인 페이지" />
+
     <item
         android:id="@+id/recommendRoutine"
-        android:title="추천 루틴" />
+        android:title="추천 루틴"
+        android:titleTextColor="#ffffff"/>
+
     <item
         android:id="@+id/SchdulerPage"
         android:title="캘린더" />
@@ -16,5 +20,6 @@
     <item
         android:id="@+id/overload"
         android:title="점진적 과부하" />
+
 
 </menu>

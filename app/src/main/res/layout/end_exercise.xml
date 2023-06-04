@@ -53,6 +53,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_button2"
             android:text="not yet"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.062"

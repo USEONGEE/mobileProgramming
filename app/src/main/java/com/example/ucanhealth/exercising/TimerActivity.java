@@ -122,7 +122,7 @@ public class TimerActivity extends AppCompatActivity {
         }else{
             indexCurrentExercise = notClearExerciseIndex.get(0);
         }
-        
+
         setUI();
 
         this.settingSideBar();

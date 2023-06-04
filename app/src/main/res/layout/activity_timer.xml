@@ -23,6 +23,7 @@
         android:fitsSystemWindows="true"
         android:visibility="visible"
         app:headerLayout="@layout/header"
+        app:itemTextColor="@color/black"
         app:menu="@menu/drawerlayout">
 
     </com.google.android.material.navigation.NavigationView>
@@ -362,6 +363,7 @@
                                     android:layout_centerVertical="true"
                                     android:inputType="time"
                                     android:text="01"
+                                    android:textColor="@color/black"
                                     android:textAlignment="center"
                                     android:textSize="30sp" />
 
@@ -370,6 +372,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:text=":"
+                                    android:textColor="@color/black"
                                     android:textSize="30sp" />
 
                                 <EditText
@@ -380,6 +383,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_gravity="center"
                                     android:inputType="time"
+                                    android:textColor="@color/black"
                                     android:text="30"
                                     android:textAlignment="center"
                                     android:textSize="30sp" />
