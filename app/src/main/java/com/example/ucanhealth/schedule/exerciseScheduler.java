@@ -436,8 +436,7 @@ public class exerciseScheduler extends AppCompatActivity {
                     }
                 }
             };
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(exerciseScheduler.this, dateSetListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(exerciseScheduler.this, R.style.DatePickerStyle, dateSetListener, year, month, day);
 
             // DatePickerDialog를 표시합니다.
             datePickerDialog.show();

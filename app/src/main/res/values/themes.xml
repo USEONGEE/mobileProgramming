@@ -17,4 +17,7 @@
     <style name="CalendarViewCustomTextAppearance" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="DatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
 </resources>

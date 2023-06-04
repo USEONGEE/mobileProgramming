@@ -101,6 +101,7 @@
                 <Spinner
                     tools:ignore="SpeakableTextPresentCheck"
                     android:id="@+id/spinner"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="48dp" />
             </LinearLayout>
