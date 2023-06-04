@@ -240,7 +240,7 @@ public class ProgressiveOverload extends AppCompatActivity {
         int count = 0;
         dayOfWeek = -dayOfWeek;
         while(count < 7){
-            Date date = new Date(year,month,day + dayOfWeek + 2);
+            Date date = new Date(year,month,day + dayOfWeek + 1);
             result.add(date.getDate());
             Log.i("dayOfWeek",String.valueOf(dayOfWeek));
             Log.i("getDate()",date.getDate());
@@ -303,7 +303,7 @@ public class ProgressiveOverload extends AppCompatActivity {
         int count = 0;
         dayOfWeek = -dayOfWeek;
         while(count < 7){
-            Date date = new Date(year,month,day + dayOfWeek - 5);
+            Date date = new Date(year,month,day + dayOfWeek - 4);
             result.add(date.getDate());
             Log.i("dayOfWeek",String.valueOf(dayOfWeek));
             Log.i("getDate()",date.getDate());

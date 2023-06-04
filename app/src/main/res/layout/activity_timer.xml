@@ -139,7 +139,7 @@
                     android:fontFamily="@font/multicore"
                     android:text="@string/exercise"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="24dp" />
 
                 <Button
                     android:id="@+id/goNextBtn"
@@ -157,6 +157,8 @@
                 android:id="@+id/container_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:background="#00ffffff"
+                        android:textColor="@color/black"
                         android:ems="4"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -262,6 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
+                        android:textColor="@color/black"
                         android:background="#00ffffff"
                         android:ems="4" />
 
