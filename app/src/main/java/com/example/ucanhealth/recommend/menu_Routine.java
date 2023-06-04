@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import com.example.ucanhealth.MainActivity;
 import com.example.ucanhealth.R;
@@ -36,7 +37,8 @@ public class menu_Routine extends AppCompatActivity {
         Button button1 = findViewById(R.id.firstBtn);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
+                hideScrollView();
                 loadFragment(new FirstFragment());
             }
         });
@@ -45,6 +47,7 @@ public class menu_Routine extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideScrollView();
                 loadFragment(new SecondFragment());
             }
         });
@@ -53,6 +56,7 @@ public class menu_Routine extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideScrollView();
                 loadFragment(new ThirdFragment());
             }
         });
@@ -108,12 +112,26 @@ public class menu_Routine extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void loadFragment(Fragment fragment) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void hideScrollView() {
+        ScrollView scrollView = findViewById(R.id.scrollContainer);
+        scrollView.setVisibility(View.GONE);
     }
 }
 
